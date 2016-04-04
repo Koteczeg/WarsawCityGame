@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WarsawCityGame</string>
+    <string name="applicationLogo">application logo</string>
+    <string name="imageDesc">image</string>
 </resources>
