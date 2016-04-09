@@ -100,7 +100,4 @@
                 style="@style/roundedbutton"/>
         </RelativeLayout>
     </LinearLayout>
-
-
-
 </RelativeLayout>
