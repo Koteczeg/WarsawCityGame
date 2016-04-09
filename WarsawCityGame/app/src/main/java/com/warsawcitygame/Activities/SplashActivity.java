@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Activities;
 
 
 import android.animation.AnimatorSet;
@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import com.warsawcitygame.CustomControls.KenBurnsView;
+import com.warsawcitygame.R;
+
 public class SplashActivity extends Activity {
 
     private KenBurnsView mKenBurns;

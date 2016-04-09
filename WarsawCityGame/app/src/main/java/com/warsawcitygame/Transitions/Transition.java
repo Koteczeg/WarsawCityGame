@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Transitions;
 
 /*
 * Copyright 2014 Flavio Faria
@@ -19,6 +19,9 @@ package com.warsawcitygame;
 
 import android.graphics.RectF;
 import android.view.animation.Interpolator;
+
+import com.warsawcitygame.Exceptions.IncompatibleRatioException;
+import com.warsawcitygame.Utils.MathUtils;
 
 public class Transition {
 
@@ -51,7 +54,7 @@ public class Transition {
 
     public Transition(RectF srcRect, RectF dstRect, long duration, Interpolator interpolator) {
         if (!MathUtils.haveSameAspectRatio(srcRect, dstRect)) {
-            throw new com.warsawcitygame.IncompatibleRatioException();
+            throw new IncompatibleRatioException();
         }
         mSrcRect = srcRect;
         mDstRect = dstRect;

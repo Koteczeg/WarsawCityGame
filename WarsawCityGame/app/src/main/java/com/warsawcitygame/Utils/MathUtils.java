@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Utils;
 
 /*
 * Copyright 2014 Flavio Faria
@@ -31,7 +31,7 @@ public final class MathUtils {
      * will be truncated to.
      * @return a truncated representation of {@code f}.
      */
-    protected static float truncate(float f, int decimalPlaces) {
+    public static float truncate(float f, int decimalPlaces) {
         float decimalShift = (float) Math.pow(10, decimalPlaces);
         return Math.round(f * decimalShift) / decimalShift;
     }
@@ -44,7 +44,7 @@ public final class MathUtils {
      * @return {@code true} if both rectangles have the same aspect ratio,
      * {@code false} otherwise.
      */
-    protected static boolean haveSameAspectRatio(RectF r1, RectF r2) {
+    public static boolean haveSameAspectRatio(RectF r1, RectF r2) {
 // Reduces precision to avoid problems when comparing aspect ratios.
         float srcRectRatio = MathUtils.truncate(MathUtils.getRectRatio(r1), 2);
         float dstRectRatio = MathUtils.truncate(MathUtils.getRectRatio(r2), 2);
@@ -59,7 +59,7 @@ public final class MathUtils {
      * @param rect the rect to have its aspect ratio computed.
      * @return the rect aspect ratio.
      */
-    protected static float getRectRatio(RectF rect) {
+    public static float getRectRatio(RectF rect) {
         return rect.width() / rect.height();
     }
 }

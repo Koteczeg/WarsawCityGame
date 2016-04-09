@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Transitions;
 
 /*
 * Copyright 2014 Flavio Faria
@@ -18,6 +18,8 @@ package com.warsawcitygame;
 
 
 import android.graphics.RectF;
+
+import com.warsawcitygame.CustomControls.KenBurnsView;
 
 public interface TransitionGenerator {
 

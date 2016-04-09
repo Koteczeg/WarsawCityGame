@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Exceptions;
 
 public class IncompatibleRatioException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.Transitions;
 
 /*
 * Copyright 2014 Flavio Faria
@@ -21,9 +21,11 @@ import android.graphics.RectF;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import com.warsawcitygame.Utils.MathUtils;
+
 import java.util.Random;
 
-public class RandomTransitionGenerator implements com.warsawcitygame.TransitionGenerator {
+public class RandomTransitionGenerator implements TransitionGenerator {
 
     /** Default value for the transition duration in milliseconds. */
     public static final int DEFAULT_TRANSITION_DURATION = 10000;
@@ -102,7 +104,7 @@ the last transition. */
      * @return an arbitrary generated rect with the same aspect ratio of {@code viewportRect}
      * that will be contained within {@code drawableBounds}.
      */
-    private RectF generateRandomRect(RectF drawableBounds, RectF viewportRect) {
+    public RectF generateRandomRect(RectF drawableBounds, RectF viewportRect) {
         float drawableRatio = MathUtils.getRectRatio(drawableBounds);
         float viewportRectRatio = MathUtils.getRectRatio(viewportRect);
         RectF maxCrop;

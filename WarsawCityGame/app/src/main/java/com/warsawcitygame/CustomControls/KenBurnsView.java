@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.CustomControls;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
+import com.warsawcitygame.Transitions.RandomTransitionGenerator;
+import com.warsawcitygame.Transitions.Transition;
+import com.warsawcitygame.Transitions.TransitionGenerator;
 
 
 public class KenBurnsView extends ImageView {

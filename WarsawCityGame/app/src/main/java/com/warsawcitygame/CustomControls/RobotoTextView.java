@@ -1,4 +1,4 @@
-package com.warsawcitygame;
+package com.warsawcitygame.CustomControls;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.warsawcitygame.R;
 
 
 public class RobotoTextView extends TextView {
