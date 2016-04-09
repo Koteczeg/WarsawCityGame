@@ -39,23 +39,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setRegisterButtonFeatures(final Animation animAlpha) {
         loginButton.setActivated(false);
-        loginButton.setOnClickListener(new View.OnClickListener()
+        registerButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(final View v)
             {
                 v.startAnimation(animAlpha);
-                v.postDelayed(new Runnable()
-                {
+                v.postDelayed(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         finish();
-                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        Intent intent = new Intent(v.getContext(), RegisterActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 }, delay);
-                finish();
             }
         });
     }
@@ -68,17 +66,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(final View v)
             {
                 v.startAnimation(animAlpha);
-                v.postDelayed(new Runnable()
-                {
+                v.postDelayed(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         finish();
                         Intent intent = new Intent(v.getContext(), MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 }, delay);
-                finish();
             }
         });
     }

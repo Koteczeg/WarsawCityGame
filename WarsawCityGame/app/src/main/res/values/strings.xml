@@ -7,4 +7,5 @@
     <string name="LogIntoText">Log in</string>
     <string name="RegisterDescriptionText">Don\'t have an account?</string>
     <string name="RegisterText">Register</string>
+    <string name="ForceRegisterText">Register</string>
 </resources>
