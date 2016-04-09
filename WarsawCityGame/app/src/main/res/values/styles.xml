@@ -12,6 +12,12 @@
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/global_color_primary_light</item>
     </style>
+    <style name="roundedbutton">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/roundedbutton</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
 
     <style name="TextViewAppearance" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>

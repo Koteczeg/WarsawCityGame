@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
