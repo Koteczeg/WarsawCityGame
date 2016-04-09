@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 v.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        finish();
                         Intent intent = new Intent(v.getContext(), RegisterActivity.class);
                         startActivity(intent);
                         finish();
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 v.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        finish();
                         Intent intent = new Intent(v.getContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
