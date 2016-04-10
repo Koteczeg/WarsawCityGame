@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import com.warsawcitygame.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    final int delay = 500;
+    final int delay = 250;
     private KenBurnsView mKenBurns;
     private Button loginButton;
     private Button registerButton;
@@ -38,6 +39,27 @@ public class LoginActivity extends AppCompatActivity {
         joinButtons();
         setLoginButtonFeatures(animAlpha);
         setRegisterButtonFeatures(animAlpha);
+        final View loginElementsLayout = findViewById(R.id.loginElementsLayout);
+        Animation fadeOut = new AlphaAnimation(0f, 1f);
+        fadeOut.setDuration(1000);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loginElementsLayout.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        loginElementsLayout.startAnimation(fadeOut);
     }
 
     private void joinButtons() {
@@ -82,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             showShortToast("Login failed");
                             return;
                         }
+
                         Intent intent = new Intent(v.getContext(), MainActivity.class);
                         startActivity(intent);
                         finish();

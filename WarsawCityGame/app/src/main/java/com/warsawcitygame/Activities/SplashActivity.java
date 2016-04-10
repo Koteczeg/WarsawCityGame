@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -28,7 +29,27 @@ public class SplashActivity extends Activity {
 
         mKenBurns = (KenBurnsView) findViewById(com.warsawcitygame.R.id.ken_burns_images);
         mKenBurns.setImageResource(com.warsawcitygame.R.drawable.splash_background);
+        final View splashElementsLayout = findViewById(R.id.splashElementsLayout);
+        Animation fadeOut = new AlphaAnimation(0f, 1f);
+        fadeOut.setDuration(1000);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                splashElementsLayout.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        splashElementsLayout.startAnimation(fadeOut);
         int SPLASH_TIME_OUT = 5000;
         new Handler().postDelayed(new Runnable() {
 
@@ -40,6 +61,7 @@ public class SplashActivity extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+
     }
 
     private void setAnimation() {
