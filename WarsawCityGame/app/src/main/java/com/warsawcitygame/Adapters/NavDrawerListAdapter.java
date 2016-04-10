@@ -1,4 +1,4 @@
-package com.warsawcitygame.adapter;
+package com.warsawcitygame.Adapters;
 
 
 
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.warsawcitygame.R;
-import com.warsawcitygame.model.NavDrawerItem;
+import com.warsawcitygame.CustomControls.NavDrawerItem;
 
 import java.util.ArrayList;
 

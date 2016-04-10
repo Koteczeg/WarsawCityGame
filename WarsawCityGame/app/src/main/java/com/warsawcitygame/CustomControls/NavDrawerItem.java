@@ -1,4 +1,4 @@
-package com.warsawcitygame.model;
+package com.warsawcitygame.CustomControls;
 
 public class NavDrawerItem {
 	

@@ -3,6 +3,7 @@ package com.warsawcitygame.Activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -15,15 +16,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.warsawcitygame.CommunityFragment;
-import com.warsawcitygame.FindPeopleFragment;
-import com.warsawcitygame.HomeFragment;
-import com.warsawcitygame.PagesFragment;
-import com.warsawcitygame.PhotosFragment;
+import com.warsawcitygame.Fragments.CommunityFragment;
+import com.warsawcitygame.Fragments.FindPeopleFragment;
+import com.warsawcitygame.Fragments.HomeFragment;
+import com.warsawcitygame.Fragments.PagesFragment;
+import com.warsawcitygame.Fragments.PhotosFragment;
 import com.warsawcitygame.R;
-import com.warsawcitygame.WhatsHotFragment;
-import com.warsawcitygame.adapter.NavDrawerListAdapter;
-import com.warsawcitygame.model.NavDrawerItem;
+import com.warsawcitygame.Fragments.WhatsHotFragment;
+import com.warsawcitygame.Adapters.NavDrawerListAdapter;
+import com.warsawcitygame.CustomControls.NavDrawerItem;
 
 import java.util.ArrayList;
 
@@ -181,7 +182,12 @@ public class MainActivity extends Activity {
                         case 5:
                                 fragment = new WhatsHotFragment();
                                 break;
-
+                        case 6:
+                                // logging off logic async somehow
+                                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(i);
+                                finish();
+                                break;
                         default:
                                 break;
                 }
