@@ -32,12 +32,13 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <!-- i will add it ASAP. working on it. currently not showing -->
-        <item>"dsda"</item>
-        <item>"dsda"</item>
-        <item>"dsda"</item>
-        <item>"dsda"</item>
-        <item>"dsda"</item>
-        <item>"dsda"</item>
+        <item>@drawable/currentmission</item>
+        <item>@drawable/profile</item>
+        <item>@drawable/friends</item>
+        <item>@drawable/getmission</item>
+        <item>@drawable/achievements</item>
+        <item>@drawable/halloffame</item>
+        <item>@drawable/logout</item>
     </array>
 
     <!-- Content Description -->
