@@ -18,7 +18,7 @@ import android.widget.ListView;
 
 import com.warsawcitygame.Fragments.CommunityFragment;
 import com.warsawcitygame.Fragments.FindPeopleFragment;
-import com.warsawcitygame.Fragments.HomeFragment;
+import com.warsawcitygame.Fragments.ProfileFragment;
 import com.warsawcitygame.Fragments.PagesFragment;
 import com.warsawcitygame.Fragments.PhotosFragment;
 import com.warsawcitygame.R;
@@ -31,9 +31,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
         private DrawerLayout mDrawerLayout;
-        private ListView mDrawerList;
         private ActionBarDrawerToggle mDrawerToggle;
 
+        private ListView mDrawerList;
 
         // slide menu items
         private String[] navMenuTitles;
@@ -165,7 +165,7 @@ public class MainActivity extends Activity {
                 Fragment fragment = null;
                 switch (position) {
                         case 0:
-                                fragment = new HomeFragment();
+                                fragment = new ProfileFragment();
                                 break;
                         case 1:
                                 fragment = new FindPeopleFragment();
