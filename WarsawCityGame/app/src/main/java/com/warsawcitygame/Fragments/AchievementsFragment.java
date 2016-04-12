@@ -44,15 +44,15 @@ public class AchievementsFragment extends Fragment {
 
         listCountry.add("Account created");
         listCountry.add("Logged in for a very first time");
-        listCountry.add("Jak Wenus i Mars jesteśmy z innych gwiazd");
-        listCountry.add("Estoy cantando pero mi nombre es Pablito");
-        listCountry.add("Traveled over 10 kilometers");
-        listCountry.add("Fala akustyczna przemieszcza się w powietrzu w postaci lokalnych zagęszczeń i rozrzedzeń ośrodka");
-        listCountry.add("Sunday morning rain is fallin, steal some covers share some skin");
-        listCountry.add("I've got the move like Jagger, I've got the mooooove like Jagger");
-        listCountry.add("Can you feel the love tonight");
-        listCountry.add("Jak Wenus i Mars jesteśmy z innych gwiazd");
-        listCountry.add("Jak Wenus i Mars jesteśmy z innych gwiazd");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
+        listCountry.add("");
 
 
         listFlag = new ArrayList<>();
