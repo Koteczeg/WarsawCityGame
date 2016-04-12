@@ -1,3 +1,52 @@
 <resources>
-    <string name="app_name">WarsawCityGame</string>
+    <string name="app_name">Warsaw City Game</string>
+    <string name="applicationLogo">application logo</string>
+    <string name="imageDesc">image</string>
+    <string name="LoginText">Login:</string>
+    <string name="PasswordText">Password:</string>
+    <string name="LogIntoText">Log in</string>
+    <string name="RegisterDescriptionText">Don\'t have an account?</string>
+    <string name="RegisterText">Register</string>
+    <string name="ForceRegisterText">Register</string>
+    <string name="hello">Hello World, MainActivity!</string>
+    <color name="White">#FFFFFF</color>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="menu_settings">Settings</string>
+    <string name="ranklabel">"Rank : "</string>
+    <string name="levellabel">"Level : "</string>
+    <string name="namelabel">"Name : "</string>
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Current mission</item>
+        <item >Profile</item>
+        <item >Friends</item>
+        <item >Get mission</item>
+        <item >Achievements</item>
+        <item >Hall of fame</item>
+        <item >Log out</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <!-- i will add it ASAP. working on it. currently not showing -->
+        <item>@drawable/currentmission</item>
+        <item>@drawable/profile</item>
+        <item>@drawable/friends</item>
+        <item>@drawable/getmission</item>
+        <item>@drawable/achievements</item>
+        <item>@drawable/halloffame</item>
+        <item>@drawable/logout</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="backTxt">BACK</string>
+    <string name="dummyTxt">There is something about a Martini,\n A tingle remarkably pleasant;\n A yellow, a mellow Martini;\n I wish I had one at present.</string>
+
 </resources>

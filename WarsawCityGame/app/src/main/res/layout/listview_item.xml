@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    >
+
+    <TextView
+        android:id="@+id/ranklabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ranklabel"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ranklabel"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/levellabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ranklabel"
+        android:text="@string/levellabel"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rank"
+        android:layout_toRightOf="@+id/levellabel"
+        android:textColor="#000000"/>
+    <TextView
+        android:id="@+id/levelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rank"
+        android:layout_toRightOf="@+id/rank"
+        android:textColor="#FF0000"
+        android:layout_marginLeft="100dp"
+        android:rotation="25"/>
+    <TextView
+        android:id="@+id/namelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/levellabel"
+        android:text="@string/namelabel"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/level"
+        android:layout_toRightOf="@+id/namelabel"
+        android:textColor="#000000"/>
+
+    <com.warsawcitygame.CustomControls.MLRoundedImageView
+        android:id="@+id/userpic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:padding="1dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>
