@@ -25,6 +25,8 @@ public class MLRoundedImageView extends ImageView {
 
     public MLRoundedImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        //int src_resource = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", 0);
+        //Drawable d=getDrawable(getResources(),src_resource);
     }
 
     public MLRoundedImageView(Context context, AttributeSet attrs, int defStyle) {
@@ -34,7 +36,8 @@ public class MLRoundedImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        Drawable drawable = getContext().getResources().getDrawable(R.drawable.tiger);
+
+        Drawable drawable = getDrawable();//getContext().getResources().getDrawable(R.drawable.tiger);
 
         if (drawable == null) {
             return;
@@ -48,7 +51,7 @@ public class MLRoundedImageView extends ImageView {
 
         int w = getWidth(), h = getHeight();
 
-        int radius = w > h ? h:w; // set the smallest edge as radius.
+        int radius = w > h ? h : w; // set the smallest edge as radius.
         Bitmap roundBitmap = getCroppedBitmap(bitmap, radius);
         //Bitmap.createS
         canvas.drawBitmap(roundBitmap, 0, 0, null);
