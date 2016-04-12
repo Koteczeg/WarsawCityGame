@@ -13,8 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
+
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -30,6 +29,8 @@ import com.warsawcitygame.Adapters.NavDrawerListAdapter;
 import com.warsawcitygame.CustomControls.NavDrawerItem;
 
 import java.util.ArrayList;
+
+import static com.warsawcitygame.Transitions.Animations.fadeOutAnimationNewFragment;
 
 
 public class MainActivity extends Activity {
@@ -168,45 +169,37 @@ public class MainActivity extends Activity {
                 Fragment fragment = null;
 
                 final FrameLayout fl = (FrameLayout)findViewById(R.id.frame_container);
+                fl.setVisibility(View.INVISIBLE);
                 switch (position) {
                         case 0:
                                 fragment = new CurrentMissionFragment();
+                                fadeOutAnimationNewFragment(fl);
+
                                 break;
                         case 1: {
-                                fl.setVisibility(View.INVISIBLE);
                                 fragment = new ProfileFragment();
-                                Animation fadeOut = new AlphaAnimation(0f, 1f);
-                                fadeOut.setDuration(800);
-                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
-
-                                        @Override
-                                        public void onAnimationStart(Animation animation) {
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animation animation) {
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animation animation) {
-                                                fl.setVisibility(View.VISIBLE);
-
-                                        }
-                                });
-                                fl.startAnimation(fadeOut);
+                                fadeOutAnimationNewFragment(fl);
                                 break;
                         }
                         case 2:
                                 fragment = new FriendsFragment();
+                                fadeOutAnimationNewFragment(fl);
+
                                 break;
                         case 3:
                                 fragment = new GetMissionFragment();
+                                fadeOutAnimationNewFragment(fl);
+
                                 break;
                         case 4:
                                 fragment = new AchievementsFragment();
+                                fadeOutAnimationNewFragment(fl);
+
                                 break;
                         case 5:
                                 fragment = new HallOfFameFragment();
+                                fadeOutAnimationNewFragment(fl);
+
                                 break;
                         case 6:
                                 // logging off logic async somehow
@@ -233,6 +226,7 @@ public class MainActivity extends Activity {
                         Log.e("MainActivity", "Error in creating fragment");
                 }
         }
+
 
         /**
          * When using the ActionBarDrawerToggle, you must call it during
