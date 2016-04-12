@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 
 import com.warsawcitygame.R;
 
-public class PagesFragment extends Fragment {
+public class CurrentMissionFragment extends Fragment {
 	
-	public PagesFragment(){}
+	public CurrentMissionFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.fragment_pages, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
          
         return rootView;
     }

@@ -13,16 +13,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.warsawcitygame.Fragments.CommunityFragment;
-import com.warsawcitygame.Fragments.FindPeopleFragment;
+import com.warsawcitygame.Fragments.GetMissionFragment;
+import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.Fragments.ProfileFragment;
-import com.warsawcitygame.Fragments.PagesFragment;
-import com.warsawcitygame.Fragments.PhotosFragment;
+import com.warsawcitygame.Fragments.AchievementsFragment;
+import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.R;
-import com.warsawcitygame.Fragments.WhatsHotFragment;
+import com.warsawcitygame.Fragments.HallOfFameFragment;
 import com.warsawcitygame.Adapters.NavDrawerListAdapter;
 import com.warsawcitygame.CustomControls.NavDrawerItem;
 
@@ -163,24 +166,47 @@ public class MainActivity extends Activity {
         private void displayView(int position) {
                 // update the main content by replacing fragments
                 Fragment fragment = null;
+
+                final FrameLayout fl = (FrameLayout)findViewById(R.id.frame_container);
                 switch (position) {
                         case 0:
+                                fragment = new CurrentMissionFragment();
+                                break;
+                        case 1: {
+                                fl.setVisibility(View.INVISIBLE);
                                 fragment = new ProfileFragment();
+                                Animation fadeOut = new AlphaAnimation(0f, 1f);
+                                fadeOut.setDuration(800);
+                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
+
+                                        @Override
+                                        public void onAnimationStart(Animation animation) {
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animation animation) {
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animation animation) {
+                                                fl.setVisibility(View.VISIBLE);
+
+                                        }
+                                });
+                                fl.startAnimation(fadeOut);
                                 break;
-                        case 1:
-                                fragment = new FindPeopleFragment();
-                                break;
+                        }
                         case 2:
-                                fragment = new PhotosFragment();
+                                fragment = new FriendsFragment();
                                 break;
                         case 3:
-                                fragment = new CommunityFragment();
+                                fragment = new GetMissionFragment();
                                 break;
                         case 4:
-                                fragment = new PagesFragment();
+                                fragment = new AchievementsFragment();
                                 break;
                         case 5:
-                                fragment = new WhatsHotFragment();
+                                fragment = new HallOfFameFragment();
                                 break;
                         case 6:
                                 // logging off logic async somehow

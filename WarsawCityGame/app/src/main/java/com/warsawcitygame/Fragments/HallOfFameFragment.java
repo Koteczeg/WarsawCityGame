@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 
 import com.warsawcitygame.R;
 
-public class PhotosFragment extends Fragment {
+public class HallOfFameFragment extends Fragment {
 	
-	public PhotosFragment(){}
+	public HallOfFameFragment(){}
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.fragment_photos, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_hall_of_fame, container, false);
          
         return rootView;
     }

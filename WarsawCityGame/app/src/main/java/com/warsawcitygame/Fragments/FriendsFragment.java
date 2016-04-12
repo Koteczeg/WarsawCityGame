@@ -8,16 +8,15 @@ import android.view.ViewGroup;
 
 import com.warsawcitygame.R;
 
-public class WhatsHotFragment extends Fragment {
+public class FriendsFragment extends Fragment {
 	
-	public WhatsHotFragment(){}
-	
+	public FriendsFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.fragment_whats_hot, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
          
         return rootView;
     }
