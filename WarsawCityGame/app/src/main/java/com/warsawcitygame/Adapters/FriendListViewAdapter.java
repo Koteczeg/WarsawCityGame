@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.warsawcitygame.R;
@@ -18,10 +19,17 @@ public class FriendListViewAdapter extends BaseAdapter {
 
     private Context context;
     private List<String> friends;
+    private int layoutId;
 
     public FriendListViewAdapter(Context context, List<String> friends){
         this.context = context;
         this.friends = friends;
+        this.layoutId = R.layout.friend_list_item;
+    }
+
+    public FriendListViewAdapter(Context context, List<String> friends, int layoutId){
+        this(context, friends);
+        this.layoutId = layoutId;
     }
 
     @Override
@@ -44,7 +52,7 @@ public class FriendListViewAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.friend_list_item, parent, false);
+        View itemView = inflater.inflate(layoutId, parent, false);
         TextView friendName = (TextView) itemView.findViewById(R.id.friendName);
         friendName.setText(friends.get(position));
         return itemView;
