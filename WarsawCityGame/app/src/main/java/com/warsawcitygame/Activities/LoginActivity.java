@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         String b = passwordTxt.getText().toString();
 
 
-        if(a.equals("a") && b.equals("b"))
+        if(a.equals("") && b.equals(""))
         {
             showShortToast("Login succeed");
             return true;
