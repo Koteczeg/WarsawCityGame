@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.R;
 
 import java.util.List;
@@ -20,15 +23,17 @@ public class FriendListViewAdapter extends BaseAdapter {
     private Context context;
     private List<String> friends;
     private int layoutId;
+    private final FriendsFragment friendsFragment;
 
-    public FriendListViewAdapter(Context context, List<String> friends){
+    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment){
         this.context = context;
         this.friends = friends;
         this.layoutId = R.layout.friend_list_item;
+        this.friendsFragment = friendsFragment;
     }
 
-    public FriendListViewAdapter(Context context, List<String> friends, int layoutId){
-        this(context, friends);
+    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment, int layoutId){
+        this(context, friends, friendsFragment);
         this.layoutId = layoutId;
     }
 
@@ -55,6 +60,15 @@ public class FriendListViewAdapter extends BaseAdapter {
         View itemView = inflater.inflate(layoutId, parent, false);
         TextView friendName = (TextView) itemView.findViewById(R.id.friendName);
         friendName.setText(friends.get(position));
+        if(layoutId != R.layout.friend_list_item) {
+            Button button = (Button)itemView.findViewById(R.id.addFriendButton);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    friendsFragment.onAddFriend(view);
+                }
+            });
+        }
         return itemView;
     }
 }
