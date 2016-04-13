@@ -20,88 +20,92 @@
         android:layout_centerVertical="true"
         android:id="@+id/loginElementsLayout"
         >
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="150sp"
-                android:layout_height="wrap_content"
-                android:id="@+id/loginTxt"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                />
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight=".37"
                 android:text="@string/LoginText"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:id="@+id/textView"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-        </RelativeLayout>
-        <RelativeLayout
+                />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight=".63"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/loginTxt"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight=".37"
+                android:textSize="20sp"
                 android:text="@string/PasswordText"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:id="@+id/editText2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                />
             <EditText
-                android:layout_width="150sp"
+                android:layout_width="0dp"
+                android:layout_weight=".63"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
+                android:fontFamily="sans-serif-light"
                 android:id="@+id/passwordTxt"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-        <RelativeLayout
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:text="@string/LogIntoText"
                 android:id="@+id/loginButton"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                style="@style/roundedbutton"/>
-        </RelativeLayout>
+                android:fontFamily="sans-serif-light"
+                style="@style/roundedbuttontransparent"/>
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/RegisterDescriptionText"
                 android:id="@+id/textView3"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:text="@string/RegisterText"
+                android:fontFamily="sans-serif-light"
                 android:id="@+id/registerButton"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                style="@style/roundedbutton"/>
-        </RelativeLayout>
+                style="@style/roundedbuttontransparent"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
 

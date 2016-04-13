@@ -25,6 +25,9 @@
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginTxt"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -32,9 +35,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/LoginText"
                 android:id="@+id/textView"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -45,7 +50,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:text="@string/PasswordText"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
@@ -56,6 +63,9 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/passwordTxt"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -66,7 +76,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:text="Email"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
@@ -75,6 +87,9 @@
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/emailTxt"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -88,19 +103,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/backTxt"
                 android:id="@+id/backButton"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                style="@style/roundedbutton"/>
+                style="@style/roundedbuttontransparent"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ForceRegisterText"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:id="@+id/registerButton"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                style="@style/roundedbutton"/>
+                style="@style/roundedbuttontransparent"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
