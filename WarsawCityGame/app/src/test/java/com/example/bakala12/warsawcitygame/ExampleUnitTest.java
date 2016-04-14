@@ -1,4 +1,4 @@
-package com.example.bakala12.warsawcitygame;
+package com.warsawcitygame.Tests.warsawcitygame;
 
 import org.junit.Test;
 
