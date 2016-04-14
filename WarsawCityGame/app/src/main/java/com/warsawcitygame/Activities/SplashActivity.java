@@ -55,7 +55,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void run() {
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
 
                 finish();
