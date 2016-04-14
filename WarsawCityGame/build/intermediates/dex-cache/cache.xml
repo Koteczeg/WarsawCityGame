@@ -1,3 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-nearby-8.4.0_035703f72e13fe98ad93078326a03640118f48a1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-8.4.0_7336acbfdea66a832ed8257692cec25bf79d2757.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-auth-8.4.0_955087e0b215dd80cc8bbf21c61b8d625649eeaa.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-cast-8.4.0_7793e6f9b5bcf136828f665a2d2e6dd568710dd1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-safetynet-8.4.0_509de8558ec8e47c1bf66ee020823d9252b03551.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-fitness-8.4.0_10f754d3aa14762b632fd9c73156c1eda6e6cb0f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-analytics-8.4.0_28c08ac73348c6fd4cde174f5573f8a8c8491efa.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-wallet-8.4.0_640d45b2c83d566e7a7e2a780c5967592ea16a8a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-wearable-8.4.0_afa4edb750a00687de60ef9da2eff40344e57b6e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-8.4.0_4a7d3c4326d794e0053bfbc61213382e5b109fd2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-appindexing-8.4.0_801714238a0d4442ac0c9a857c0826978daf07a5.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-measurement-8.4.0_41df26be5f88971fcf3284236d56756c9a5c375e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-location-8.4.0_0480f6689503e46d7037788bca9a859fd7918aeb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-drive-8.4.0_4169cd996175c09e084643e1e0a5d3a3c87f1984.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-identity-8.4.0_0456a84fa773b370f4312d3903e9fbd21f6b8d5a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.android.support-mediarouter-v7-23.0.0_72401952a79b9e94a15e4219a7e4f026884fdce3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-plus-8.4.0_cd5a423c03e34e3998cd3db9d698e55ba04d81f9.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-vision-8.4.0_c75cab2becf1dbf9b7f821829b0b057fa7efe2d5.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-gcm-8.4.0_10fe242ee14fb9a946fd5fdc005c3b224785e7b7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-appinvite-8.4.0_7672e3ce974e1e3b6d98445b2d190244643a485c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-games-8.4.0_34036c4e8a694fd9381ca117ae32a5757422a45a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-maps-8.4.0_e458675f50d9723e50cc89e87339a25ac8d6c3c2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.0_c4eae7e34273bf86b7ad98aea01b603a84d20649.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-panorama-8.4.0_64bc6a30e80d333f15633aa5bd42ef2d7000ea4b.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\warsawcitygame\WarsawCityGame\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-ads-8.4.0_05af47ee857ff27977c34d139c3adb4aea2fac80.jar" />
+    </item>
+
+</items>
