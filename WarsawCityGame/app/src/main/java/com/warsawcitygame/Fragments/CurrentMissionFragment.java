@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.R;
 
@@ -27,7 +28,13 @@ public class CurrentMissionFragment extends Fragment {
     public View onCreateView( final LayoutInflater inflater,final ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
+        View rootView;
+       // if(true == this.getArguments().getBoolean("isMissionAvailable"))
+            rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
+      //  else
+      //  {
+           // rootView = inflater.inflate(R.layout.fragment_blank_current_mission, container, false);
+      //  }
 
         Button button = (Button) rootView.findViewById(R.id.abortButton);
         button.setOnClickListener(new View.OnClickListener()
@@ -65,10 +72,12 @@ public class CurrentMissionFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        showBlank();
                     }
                 });
 
-                showBlank();
+               // ((MainActivity)getActivity()).missionContext.isMissionAvailable = false;
+                dialog.show();
             }
         });
         return rootView;
