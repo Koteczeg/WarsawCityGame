@@ -48,5 +48,5 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="backTxt">BACK</string>
     <string name="dummyTxt">There is something about a Martini,\n A tingle remarkably pleasant;\n A yellow, a mellow Martini;\n I wish I had one at present.</string>
-
+    <string name="missionTxt">Kalesch the orc leader in front of the temple of Mora Sul, requires all five keys for opening the temple. One of them is in his possession, already. As he doesn\'t want to enter Mora Sul, he will order you to retrieve the missing four keys for him.</string>
 </resources>
