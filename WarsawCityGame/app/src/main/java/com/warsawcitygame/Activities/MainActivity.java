@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.warsawcitygame.Fragments.GetMissionFragment;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
+import com.warsawcitygame.Fragments.LoadingFragment;
 import com.warsawcitygame.Fragments.ProfileFragment;
 import com.warsawcitygame.Fragments.AchievementsFragment;
 import com.warsawcitygame.Fragments.FriendsFragment;
@@ -161,13 +162,13 @@ public class MainActivity extends Activity {
                 menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
                 return super.onPrepareOptionsMenu(menu);
         }
+        Fragment fragment = null;
 
         /**
          * Diplaying fragment view for selected nav drawer list item
          * */
         private void displayView(int position) {
                 // update the main content by replacing fragments
-                Fragment fragment = null;
 
                 final FrameLayout fl = (FrameLayout)findViewById(R.id.frame_container);
                 fl.setVisibility(View.INVISIBLE);
@@ -193,8 +194,46 @@ public class MainActivity extends Activity {
 
                                 break;
                         case 4:
-                                fragment = new AchievementsFragment();
+
+                                fragment = new LoadingFragment();
                                 fadeOutAnimationNewFragment(fl);
+                            // update selected item and title, then close the drawer
+                            //mDrawerList.setItemChecked(position, true);
+                            //mDrawerList.setSelection(position);
+                            //setTitle(navMenuTitles[position]);
+
+//                            mDrawerLayout.closeDrawer(mDrawerList);
+//                            new Thread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                            try {
+//                                                Thread.sleep(5000);
+//                                            } catch (InterruptedException e) {
+//                                                    e.printStackTrace();
+//                                            }
+//                                            fragment = new AchievementsFragment();
+//
+//                                            fadeOutAnimationNewFragment(fl);
+//                                            if (fragment != null) {
+//                                                    FragmentManager fragmentManager = getFragmentManager();
+//                                                    fragmentManager.beginTransaction()
+//                                                            .replace(R.id.frame_container, fragment).commit();
+//
+//                                                    // update selected item and title, then close the drawer
+//                                                    //mDrawerList.setItemChecked(position, true);
+//                                                    //mDrawerList.setSelection(position);
+//                                                    //setTitle(navMenuTitles[position]);
+//                                                    mDrawerLayout.closeDrawer(mDrawerList);
+//                                            } else {
+//                                                    // error in creating fragment
+//                                                    Log.e("MainActivity", "Error in creating fragment");
+//                                            }
+//                                    }
+//                            }).start();
+
+                                //FragmentManager fragmentManager = getFragmentManager();
+                                //fragmentManager.beginTransaction()
+                                //        .replace(R.id.frame_container, fragment).commit();
 
                                 break;
                         case 5:
@@ -207,6 +246,10 @@ public class MainActivity extends Activity {
                                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(i);
                                 finish();
+                                break;
+                        case 7:
+                                fragment = new LoadingFragment();
+                                fadeOutAnimationNewFragment(fl);
                                 break;
                         default:
                                 break;
