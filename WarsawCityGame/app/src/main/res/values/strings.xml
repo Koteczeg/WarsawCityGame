@@ -29,6 +29,7 @@
         <item>Achievements</item>
         <item>Hall of fame</item>
         <item>Log out</item>
+        <item>About</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -42,6 +43,7 @@
         <item>@drawable/achievements</item>
         <item>@drawable/halloffame</item>
         <item>@drawable/logout</item>
+        <item>@drawable/profile</item>
     </array>
 
     <!-- Content Description -->

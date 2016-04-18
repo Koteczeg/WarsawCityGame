@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.warsawcitygame.Context.MissionContext;
+import com.warsawcitygame.Fragments.DonateFragment;
 import com.warsawcitygame.Fragments.GetMissionFragment;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.Fragments.LoadingFragment;
@@ -81,7 +82,10 @@ public class MainActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // What's hot, We  will add a counter here
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+
 
         // Recycle the typed array
         navMenuIcons.recycle();
@@ -254,8 +258,9 @@ public class MainActivity extends Activity {
                 finish();
                 break;
             case 7:
-                fragment = new LoadingFragment();
-                fadeOutAnimationNewFragment(fl);break;
+                fragment = new DonateFragment();
+                fadeOutAnimationNewFragment(fl);
+                    break;
             default:
                 break;
         }

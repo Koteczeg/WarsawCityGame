@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/augi"
+        android:id="@+id/augi"
+        android:layout_gravity="top"
+        android:scaleType="fitStart"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:text="Founded by:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:layout_gravity="start"
+            android:text="Paweł Duszak"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginTop="5dp"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            android:text="Mateusz Bąkała"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            android:text="Mateusz Jabłoński"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="end"
+            android:text="Feel free to donate us:"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONATE"
+            android:layout_marginTop="20dp"
+            android:id="@+id/donateButton"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/proba"
+            style="@style/roundedbuttonorange"/>
+    </LinearLayout>
+</LinearLayout>
