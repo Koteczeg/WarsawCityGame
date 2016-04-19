@@ -1,7 +1,9 @@
 package com.warsawcitygame.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.warsawcitygame.Adapters.GridViewAdapter;
 import com.warsawcitygame.R;
 
 import java.util.ArrayList;
+
+import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogShowProfile;
 
 public class AchievementsFragment extends Fragment {
 
@@ -52,6 +56,8 @@ public class AchievementsFragment extends Fragment {
         // ((MainActivity)getActivity()).missionContext.isMissionAvailable = false;
         dialog.show();
 
+        RaiseDialogShowProfile(getActivity(), getActivity(), "Tajger", "Lvl. 2 Siren");
+        
         // prepared arraylist and passed it to the Adapter class
         mAdapter = new GridViewAdapter(getActivity(),listCountry, listFlag);
 

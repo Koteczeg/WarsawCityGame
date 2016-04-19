@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.RaiseDialog(getActivity(),getActivity(), ((TextView)v).getText().toString(), text, textView);
+                DialogUtils.RaiseDialogEditTextView(getActivity(), getActivity(), ((TextView) v).getText().toString(), text, textView);
             }
         });
     }

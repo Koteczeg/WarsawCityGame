@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.warsawcitygame.R;
 
 public class DialogUtils
 {
-    public static void RaiseDialog(Context context, Activity activity, String textToEdit, String description, final TextView oldText)
+    public static void RaiseDialogEditTextView(Context context, Activity activity, String textToEdit, String description, final TextView oldText)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -43,5 +44,29 @@ public class DialogUtils
             }
         });
           dialog.show();
+    }
+
+    public static void RaiseDialogShowProfile(Context context, Activity activity, String name, String levelDescription)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_profile_layout, null);
+        builder.setView(dialogView);
+        final TextView descriptionTxt = (TextView)dialogView.findViewById(R.id.level);
+        descriptionTxt.setText(levelDescription);
+        final TextView usernameTxt = (TextView)dialogView.findViewById(R.id.userNameTop);
+        usernameTxt.setText(name);
+        final ImageView imageView = (ImageView)dialogView.findViewById(R.id.profilePic);
+        imageView.setImageResource(R.drawable.tiger);
+        final Button negativeButton = (Button)dialogView.findViewById(R.id.btn_dialog);
+        final Dialog dialog = builder.create();
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
