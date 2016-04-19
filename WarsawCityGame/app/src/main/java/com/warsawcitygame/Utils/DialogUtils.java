@@ -69,4 +69,15 @@ public class DialogUtils
 
         dialog.show();
     }
+
+    public static Dialog RaiseDialogLoading(Context context, Activity activity)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_loading, null);
+        builder.setView(dialogView);
+        final Dialog dialog = builder.create();
+        dialog.show();
+        return dialog;
+    }
 }
