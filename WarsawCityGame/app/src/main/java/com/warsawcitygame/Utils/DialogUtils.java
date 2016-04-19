@@ -80,4 +80,30 @@ public class DialogUtils
         dialog.show();
         return dialog;
     }
+
+    public static void RaiseDialogAbortMissionConfirmation(Context context, Activity activity)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_confirmation_layout, null);
+        builder.setView(dialogView);
+
+        final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
+        final Dialog dialog = builder.create();
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final Button positiveButton = (Button)dialogView.findViewById(R.id.positiveButton);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }
