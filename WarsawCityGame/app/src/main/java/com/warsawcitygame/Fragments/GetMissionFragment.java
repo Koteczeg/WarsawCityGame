@@ -52,8 +52,8 @@ public class GetMissionFragment extends Fragment {
         final Animation fadeOut = new AlphaAnimation(0f, 1f);
         final Animation fadeOut2 = new AlphaAnimation(0f, 1f);
 
-        fadeOut.setDuration(1000);
-        fadeOut2.setDuration(1000);
+        fadeOut.setDuration(500);
+        fadeOut2.setDuration(500);
 
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
@@ -127,7 +127,7 @@ public class GetMissionFragment extends Fragment {
                         .height((int) getResources().getDimension(R.dimen.mb_height_56)) // 60 dp
                         .color(getResources().getColor(R.color.global_color_green_primary)) // normal state color
                         .colorPressed(getResources().getColor(R.color.global_color_green_primary)) // pressed state color
-                        .icon(R.drawable.checked); // icon
+                        .icon(R.drawable.little_checked); // icon
                 btnMorph.morph(circle);
                 btnMorph.setClickable(false);
 
