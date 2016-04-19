@@ -1,8 +1,10 @@
 package com.warsawcitygame.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.R;
 
 import static android.content.DialogInterface.*;
+import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfirmation;
 
 public class CurrentMissionFragment extends Fragment {
 
@@ -42,7 +45,9 @@ public class CurrentMissionFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                showBlank();
+                Dialog d = RaiseDialogAbortMissionConfirmation(getActivity(), getActivity());
+                //TODO, wlasciwie to trzeba nadpisac te guziki chyba tu dopiero
+                //showBlank();
             }
         });
 

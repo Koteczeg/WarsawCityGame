@@ -81,7 +81,7 @@ public class DialogUtils
         return dialog;
     }
 
-    public static void RaiseDialogAbortMissionConfirmation(Context context, Activity activity)
+    public static Dialog RaiseDialogAbortMissionConfirmation(Context context, Activity activity)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -101,9 +101,11 @@ public class DialogUtils
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO abort mission
                 dialog.dismiss();
             }
         });
         dialog.show();
+        return dialog;
     }
 }
