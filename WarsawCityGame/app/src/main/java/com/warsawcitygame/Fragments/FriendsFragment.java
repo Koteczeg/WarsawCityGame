@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -44,12 +45,15 @@ public class FriendsFragment extends Fragment {
         SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView);
         int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText editText = (EditText) searchView.findViewById(id);
-        editText.setText("Wyszukaj");
         editText.setTextColor(Color.BLACK);
+        searchView.setBackgroundColor(0xFFC0E8FC);
 
         friendsNames = getFriends(null);
         FriendListViewAdapter adapter = new FriendListViewAdapter(rootView.getContext(), friendsNames, this);
         ListView listView = (ListView)rootView.findViewById(R.id.friendsList);
+        int[] colors = {0, 0xFF00BFFF, 0};//0xFFFFA500
+        listView.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
+        listView.setDividerHeight(3);
         listView.setAdapter(adapter);
 
         List<String> searchResults = new LinkedList<String>();
