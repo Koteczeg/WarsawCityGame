@@ -52,8 +52,8 @@ public class GetMissionFragment extends Fragment {
         final Animation fadeOut = new AlphaAnimation(0f, 1f);
         final Animation fadeOut2 = new AlphaAnimation(0f, 1f);
 
-        fadeOut.setDuration(500);
-        fadeOut2.setDuration(500);
+        fadeOut.setDuration(300);
+        fadeOut2.setDuration(300);
 
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
