@@ -58,7 +58,11 @@
     <Compile Include="Entities\MissionHistory.cs" />
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserAcheivements.cs" />
+    <Compile Include="Entities\UserAchievements.cs" />
+    <Compile Include="Migrations\201604211257303_Add context.cs" />
+    <Compile Include="Migrations\201604211257303_Add context.Designer.cs">
+      <DependentUpon>201604211257303_Add context.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,7 +70,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604211257303_Add context.resx">
+      <DependentUpon>201604211257303_Add context.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
