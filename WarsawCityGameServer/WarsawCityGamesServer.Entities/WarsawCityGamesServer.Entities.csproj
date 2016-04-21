@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\CityGamesContext.cs" />
     <Compile Include="Entities\Achievement.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Friendships.cs" />
@@ -58,15 +59,14 @@
     <Compile Include="Entities\Place.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserAcheivements.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Context\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
