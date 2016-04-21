@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,6 +123,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config" />
+    <None Include="Properties\PublishProfiles\WarsawCityGamesAPI - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -131,7 +133,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WarsawCityGamesServer.Entities\WarsawCityGamesServer.Entities.csproj">
+      <Project>{C45CA7DC-FE60-4C69-B6FA-6F8C96B3A560}</Project>
+      <Name>WarsawCityGamesServer.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
