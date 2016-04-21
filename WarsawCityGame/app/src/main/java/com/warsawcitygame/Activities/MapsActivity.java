@@ -64,8 +64,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(center).title("Centrum"));
         LatLng dsRiviera = new LatLng(52.216689, 21.020656);
         mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DS Riviera"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 14));
         mMap.moveCamera(CameraUpdateFactory.scrollBy(5, 50));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 14), 4000, null);
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
