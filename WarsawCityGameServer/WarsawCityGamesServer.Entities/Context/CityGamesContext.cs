@@ -19,6 +19,11 @@ namespace WarsawCityGamesServer.Entities.Context
         public IDbSet<MissionHistory> MissionHistory { get; set; }
         public IDbSet<Place> Places { get; set; }
 
+        public CityGamesContext() : base("CityGamesContext")
+        {
+            
+        }
+
         static CityGamesContext()
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<CityGamesContext>());
