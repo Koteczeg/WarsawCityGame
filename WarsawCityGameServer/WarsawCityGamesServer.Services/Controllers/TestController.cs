@@ -16,7 +16,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("Sample"), HttpGet]
         public IHttpActionResult GetAddress()
         {
-            var level = new CityGamesContext().Levels.First();
+            var level = context.Levels.First();
             return Ok(level.Name);
         }
     }
