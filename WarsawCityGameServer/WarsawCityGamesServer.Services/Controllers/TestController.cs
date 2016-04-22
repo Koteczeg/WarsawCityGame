@@ -12,9 +12,16 @@ namespace WarsawCityGamesServer.Services.Controllers
         {
             this.context = context;
         }
-        
-        [Route("Sample"), HttpGet]
-        public IHttpActionResult GetAddress()
+        [Authorize]
+        [Route("AuthorizationSample"), HttpGet]
+        public IHttpActionResult Sample()
+        {
+            var level = context.Levels.First();
+            return Ok(level.Name);
+        }
+
+        [Route("NoAuthorizationSample"), HttpGet]
+        public IHttpActionResult Sample2()
         {
             var level = context.Levels.First();
             return Ok(level.Name);
