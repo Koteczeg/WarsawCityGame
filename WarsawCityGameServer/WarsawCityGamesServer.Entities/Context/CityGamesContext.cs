@@ -1,20 +1,21 @@
 ﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using WarsawCityGamesServer.Entities.Entities;
 
 namespace WarsawCityGamesServer.Entities.Context
 {
-    public class CityGamesContext : DbContext
+    public class CityGamesContext : IdentityDbContext<User>
     {
         public IDbSet<Level> Levels { get; set; } 
-        public IDbSet<User> Users { get; set; }
-        public IDbSet<UserAchievements> UserAcheivements { get; set; }
+        public IDbSet<Player> Players { get; set; }
+        public IDbSet<PlayerAchievements> UserAcheivements { get; set; }
         public IDbSet<Achievement> Achievements { get; set; }
         public IDbSet<Friendships> Friendships { get; set; }
         public IDbSet<Mission> Missions { get; set; }
         public IDbSet<MissionHistory> MissionHistory { get; set; }
         public IDbSet<Place> Places { get; set; }
 
-        public CityGamesContext() : base("CityGamesContext"){}
+        public CityGamesContext() : base("CityGamesContext") { }//DefaultConnection
 
         static CityGamesContext()
         {

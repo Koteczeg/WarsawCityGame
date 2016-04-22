@@ -1,17 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace WarsawCityGamesServer.Entities.Entities
 {
-    public class User : Entity
+    public class User : IdentityUser
     {
-        public string Username { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public string HashedPassword { get; set; }
-        public string Salt { get; set; }
-        public byte[] UserImage { get; set; }
-        public virtual Level Level { get; set; }
-        public int Exp { get; set; }
-        public virtual Mission CurrentMission { get; set; }
+        /// <summary>
+        /// Generates user identity
+        /// </summary>
+        /// <param name="manager">Identity manager instance</param>
+        /// <param name="authenticationType">Authentication type</param>
+        /// <returns></returns>
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
+        {
+            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+            return userIdentity;
+        }
     }
 }

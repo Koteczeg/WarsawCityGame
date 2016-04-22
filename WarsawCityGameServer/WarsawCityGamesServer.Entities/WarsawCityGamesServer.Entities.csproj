@@ -34,6 +34,17 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\WarsawCityGamesServer.Services\bin\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -47,11 +58,12 @@
     <Compile Include="Entities\Mission.cs" />
     <Compile Include="Entities\MissionHistory.cs" />
     <Compile Include="Entities\Place.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\PlayerAchievements.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserAchievements.cs" />
-    <Compile Include="Migrations\201604211257303_Add context.cs" />
-    <Compile Include="Migrations\201604211257303_Add context.Designer.cs">
-      <DependentUpon>201604211257303_Add context.cs</DependentUpon>
+    <Compile Include="Migrations\201604221504570_Init.cs" />
+    <Compile Include="Migrations\201604221504570_Init.Designer.cs">
+      <DependentUpon>201604221504570_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,9 +75,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604211257303_Add context.resx">
-      <DependentUpon>201604211257303_Add context.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604221504570_Init.resx">
+      <DependentUpon>201604221504570_Init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WarsawCityGamesServer.Common\WarsawCityGamesServer.Common.csproj">
+      <Project>{E83ACFCD-1FCB-4D55-BC75-136ED3AEA983}</Project>
+      <Name>WarsawCityGamesServer.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
