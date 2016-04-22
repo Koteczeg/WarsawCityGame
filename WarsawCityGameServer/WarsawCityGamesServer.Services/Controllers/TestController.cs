@@ -12,15 +12,15 @@ namespace WarsawCityGamesServer.Services.Controllers
         {
             this.context = context;
         }
-        public TestController()
-        {
-            
-        }
+        //public TestController()
+        //{
+        //    //this.context = context;
+        //}
         [Route("Sample"), HttpGet]
         public IHttpActionResult GetAddress()
         {
-            //var level = new CityGamesContext().Levels.First();//.Levels.Find(1);
-            return Ok("PASSED"); //level.Name
+            var level = new CityGamesContext().Levels.First();//.Levels.Find(1);
+            return Ok(level.Name); //level.Name
         }
     }
 }
