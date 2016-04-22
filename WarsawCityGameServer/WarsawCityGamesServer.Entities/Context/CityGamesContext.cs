@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using WarsawCityGamesServer.Entities.Entities;
 
 namespace WarsawCityGamesServer.Entities.Context
@@ -19,10 +14,7 @@ namespace WarsawCityGamesServer.Entities.Context
         public IDbSet<MissionHistory> MissionHistory { get; set; }
         public IDbSet<Place> Places { get; set; }
 
-        public CityGamesContext() : base("CityGamesContext")
-        {
-            
-        }
+        public CityGamesContext() : base("CityGamesContext"){}
 
         static CityGamesContext()
         {
