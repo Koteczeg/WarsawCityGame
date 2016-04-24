@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp"
+    android:background="@xml/main_header_selector">
+
+    <GridView
+        android:layout_height="match_parent"
+        android:id="@+id/ranking_gridview"
+        android:layout_width="match_parent"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp">
+    </GridView>
+    
+
+</RelativeLayout>

@@ -1,1 +1,1 @@
-include ':app'
+include ':WarsawCityGames.App', ':WarsawCityGames.Communication', ':WarsawCityGames.Shared'
