@@ -6,33 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.R;
 
 import java.util.List;
 
-/**
- * Created by bakala12 on 13.04.2016.
- */
-public class FriendListViewAdapter extends BaseAdapter {
 
+public class FriendListViewAdapter extends BaseAdapter
+{
     private Context context;
     private List<String> friends;
     private int layoutId;
     private final FriendsFragment friendsFragment;
 
-    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment){
+    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment)
+    {
         this.context = context;
         this.friends = friends;
         this.layoutId = R.layout.friend_list_item;
         this.friendsFragment = friendsFragment;
     }
 
-    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment, int layoutId){
+    public FriendListViewAdapter(Context context, List<String> friends, FriendsFragment friendsFragment, int layoutId)
+    {
         this(context, friends, friendsFragment);
         this.layoutId = layoutId;
     }
@@ -53,22 +51,24 @@ public class FriendListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View itemView = inflater.inflate(layoutId, parent, false);
-        TextView friendName = (TextView) itemView.findViewById(R.id.friendName);
-        friendName.setText(friends.get(position));
-        if(layoutId != R.layout.friend_list_item) {
-            Button button = (Button)itemView.findViewById(R.id.addFriendButton);
-            button.setOnClickListener(new View.OnClickListener() {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View element = inflater.inflate(layoutId, parent, false);
+        TextView name = (TextView) element.findViewById(R.id.friendName);
+        name.setText(friends.get(position));
+        if(layoutId != R.layout.friend_list_item)
+        {
+            Button addButton = (Button)element.findViewById(R.id.addFriendButton);
+            addButton.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     friendsFragment.onAddFriend(view);
                 }
             });
         }
-        return itemView;
+        return element;
     }
 }
