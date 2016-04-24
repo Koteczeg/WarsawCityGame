@@ -15,79 +15,75 @@ import android.widget.TextView;
 import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.R;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfirmation;
 
-public class CurrentMissionFragment extends Fragment {
+public class CurrentMissionFragment extends Fragment
+{
+    @Bind(R.id.abort_mission_button) Button abortMissionButton;
+    @Bind(R.id.map_button) Button mapButton;
+    @Bind(R.id.acomplish_mission_button) Button acomplishMissionButton;
 
-    private String doneMsg = "Mission accomplished, Well Done !";
-	public CurrentMissionFragment(){}
+    public CurrentMissionFragment(){}
 	
 	@Override
-    public View onCreateView( final LayoutInflater inflater,final ViewGroup container,
-            Bundle savedInstanceState) {
- 
-        View rootView;
-       // if(true == this.getArguments().getBoolean("isMissionAvailable"))
-            rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
-      //  else
-      //  {
-           // rootView = inflater.inflate(R.layout.fragment_blank_current_mission, container, false);
-      //  }
+    public View onCreateView( final LayoutInflater inflater,final ViewGroup container, Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 
-        Button button = (Button) rootView.findViewById(R.id.abortButton);
-        button.setOnClickListener(new View.OnClickListener()
+    @OnClick(R.id.abort_mission_button)
+    public void abortMission()
+    {
+        Dialog confirmationDialog = RaiseDialogAbortMissionConfirmation(getActivity(), getActivity());
+        confirmationDialog.show();
+        //TODO bind methods inside dialog on cancel and confirmation
+    }
+
+    @OnClick(R.id.acomplish_mission_button)
+    public void acomplishMission()
+    {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_popup_information);
+        TextView text = ButterKnife.findById(dialog, R.id.text_dialog);
+        text.setText(R.string.missionAcomplishedMessage);
+        Button dialogButton = ButterKnife.findById(dialog, R.id.btn_dialog);
+        dialogButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Dialog d = RaiseDialogAbortMissionConfirmation(getActivity(), getActivity());
-                //TODO, wlasciwie to trzeba nadpisac te guziki chyba tu dopiero
-                //showBlank();
+                dialog.dismiss();
+                showBlank();
             }
         });
+        dialog.show();
+    }
 
-        Button mapButton = (Button) rootView.findViewById(R.id.button2);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button doneButton = (Button) rootView.findViewById(R.id.doneButton);
-        doneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setCancelable(false);
-                dialog.setContentView(R.layout.dialog_popup_information);
-
-                TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
-                text.setText(doneMsg);
-
-                Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        showBlank();
-                    }
-                });
-
-               // ((MainActivity)getActivity()).missionContext.isMissionAvailable = false;
-                dialog.show();
-            }
-        });
-        return rootView;
+    @OnClick(R.id.map_button)
+    public void showMap()
+    {
+        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        startActivity(intent);
     }
 
     private void showBlank()
     {
         Fragment fragment = new BlankCurrentMissionFragment();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+    }
+
+    @Override public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

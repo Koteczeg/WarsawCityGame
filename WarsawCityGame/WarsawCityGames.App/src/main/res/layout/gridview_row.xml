@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_height="64dp"
-        android:id="@+id/imageView1"
+        android:id="@+id/achievement_image"
         android:layout_width="64dp"
         android:src="@drawable/logo"
         android:layout_alignParentTop="true"
@@ -19,9 +19,9 @@
     <TextView
         android:text="TextView"
         android:layout_height="match_parent"
-        android:id="@+id/textView1"
+        android:id="@+id/achievement_title"
         android:layout_width="match_parent"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/achievement_image"
         android:layout_marginTop="2dp"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"

@@ -9,40 +9,33 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.warsawcitygame.R;
 
-public class MLRoundedImageView extends ImageView {
-
+public class MLRoundedImageView extends ImageView
+{
     public MLRoundedImageView(Context context) {
         super(context);
     }
-
     public MLRoundedImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //int src_resource = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", 0);
-        //Drawable d=getDrawable(getResources(),src_resource);
     }
-
-    public MLRoundedImageView(Context context, AttributeSet attrs, int defStyle) {
+    public MLRoundedImageView(Context context, AttributeSet attrs, int defStyle)
+    {
         super(context, attrs, defStyle);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-
-
-        Drawable drawable = getDrawable();//getContext().getResources().getDrawable(R.drawable.tiger);
-
-        if (drawable == null) {
+    protected void onDraw(Canvas canvas)
+    {
+        Drawable drawable = getDrawable();
+        if (drawable == null)
+        {
             return;
         }
-
         if (getWidth() == 0 || getHeight() == 0) {
             return;
         }
@@ -53,39 +46,34 @@ public class MLRoundedImageView extends ImageView {
 
         int radius = w > h ? h : w; // set the smallest edge as radius.
         Bitmap roundBitmap = getCroppedBitmap(bitmap, radius);
-        //Bitmap.createS
         canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 
-    public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+    public static Bitmap getCroppedBitmap(Bitmap bmp, int radius)
+    {
         Bitmap sbmp;
-
-        if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
+        if (bmp.getWidth() != radius || bmp.getHeight() != radius)
+        {
             float smallest = Math.min(bmp.getWidth(), bmp.getHeight());
             float factor = smallest / radius;
             sbmp = Bitmap.createScaledBitmap(bmp, (int)(bmp.getWidth() / factor), (int)(bmp.getHeight() / factor), false);
-        } else {
+        }
+        else
+        {
             sbmp = bmp;
         }
-
-        Bitmap output = Bitmap.createBitmap(radius, radius,
-                Config.ARGB_8888);
+        Bitmap output = Bitmap.createBitmap(radius, radius, Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
-
-        final int color = 0xffa19774;
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, radius, radius);
-
         paint.setAntiAlias(true);
         paint.setFilterBitmap(true);
         paint.setDither(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(Color.parseColor("#BAB399"));
-        canvas.drawCircle(radius / 2 + 0.7f,
-                radius / 2 + 0.7f, radius / 2 + 0.1f, paint);
+        canvas.drawCircle(radius / 2 + 0.7f, radius / 2 + 0.7f, radius / 2 + 0.1f, paint);
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(sbmp, rect, rect, paint);
-
         return output;
     }
 

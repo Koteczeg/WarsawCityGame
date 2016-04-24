@@ -12,7 +12,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/augi"
-        android:id="@+id/augi"
+        android:id="@+id/top_image"
         android:layout_gravity="top"
         android:scaleType="fitStart"
         />
