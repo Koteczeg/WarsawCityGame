@@ -1,8 +1,16 @@
 package com.warsawcitygame.Utils;
 
-/**
- * Created by Dell on 4/24/2016.
- */
+import android.content.Context;
+import android.view.animation.Animation;
+
+import com.warsawcitygame.R;
+
 public class AnimationUtils
 {
+    public static final int buttonFadeOutAnimationDelay = 250;
+
+    public static Animation getFadeOutAnimation(Context context)
+    {
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out);
+    }
 }

@@ -27,7 +27,7 @@ public class SplashActivity extends Activity {
         setAnimation();
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        mKenBurns = (KenBurnsView) findViewById(com.warsawcitygame.R.id.ken_burns_images);
+        mKenBurns = (KenBurnsView) findViewById(com.warsawcitygame.R.id.splash_background);
         mKenBurns.setImageResource(com.warsawcitygame.R.drawable.splash_background);
         final View splashElementsLayout = findViewById(R.id.splashElementsLayout);
         Animation fadeOut = new AlphaAnimation(0f, 1f);

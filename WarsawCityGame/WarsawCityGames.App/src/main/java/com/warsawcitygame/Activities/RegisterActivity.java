@@ -26,12 +26,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        registerButton = (Button)findViewById(R.id.registerButton);
+        registerButton = (Button)findViewById(R.id.register_button);
         backButton = (Button)findViewById(R.id.backButton);
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.fade_out);
         setRegisterButtonFeatures(animAlpha);
         setbackButtonFeatures(animAlpha);
-        mKenBurns = (KenBurnsView) findViewById(com.warsawcitygame.R.id.ken_burns_images);
+        mKenBurns = (KenBurnsView) findViewById(com.warsawcitygame.R.id.splash_background);
         mKenBurns.setImageResource(com.warsawcitygame.R.drawable.splash_background);
         final View registerElementsLayout = findViewById(R.id.registerElementsLayout);
         Animation fadeOut = new AlphaAnimation(0f, 1f);
@@ -97,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private boolean validateInput() {
-        EditText loginTxt = (EditText)findViewById(R.id.loginTxt);
-        EditText passwordTxt = (EditText)findViewById(R.id.passwordTxt);
+        EditText loginTxt = (EditText)findViewById(R.id.login_textview);
+        EditText passwordTxt = (EditText)findViewById(R.id.password_textview);
         EditText emailTxt = (EditText)findViewById(R.id.emailTxt);
         if(loginTxt.getText().toString().isEmpty())
         {

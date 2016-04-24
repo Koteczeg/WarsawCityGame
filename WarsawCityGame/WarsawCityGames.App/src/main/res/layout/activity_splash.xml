@@ -6,9 +6,10 @@
     android:orientation="vertical">
 
     <com.warsawcitygame.CustomControls.KenBurnsView
-        android:id="@+id/ken_burns_images"
+        android:id="@+id/splash_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"

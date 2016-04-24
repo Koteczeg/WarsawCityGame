@@ -70,4 +70,10 @@ public class AchievementsFragment extends Fragment
         listFlag.add(R.drawable.dontknow);
 
     }
+
+    @Override public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

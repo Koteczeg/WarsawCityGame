@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <com.warsawcitygame.CustomControls.KenBurnsView
-        android:id="@+id/ken_burns_images"
+        android:id="@+id/splash_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
@@ -38,7 +38,7 @@
                 android:layout_weight=".63"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:id="@+id/loginTxt"
+                android:id="@+id/login_textview"
                 />
         </LinearLayout>
         <LinearLayout
@@ -61,7 +61,7 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:fontFamily="sans-serif-light"
-                android:id="@+id/passwordTxt"
+                android:id="@+id/password_textview"
                 />
         </LinearLayout>
         <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:text="@string/LogIntoText"
-                android:id="@+id/loginButton"
+                android:id="@+id/login_button"
                 android:fontFamily="sans-serif-light"
                 style="@style/roundedbuttontransparent"/>
         </LinearLayout>
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/RegisterText"
                 android:fontFamily="sans-serif-light"
-                android:id="@+id/registerButton"
+                android:id="@+id/register_button"
                 style="@style/roundedbuttontransparent"/>
         </LinearLayout>
     </LinearLayout>

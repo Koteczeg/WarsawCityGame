@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.warsawcitygame.R;
 import com.warsawcitygame.Transitions.RandomTransitionGenerator;
 import com.warsawcitygame.Transitions.Transition;
 import com.warsawcitygame.Transitions.TransitionGenerator;
@@ -47,14 +48,20 @@ public class KenBurnsView extends ImageView {
 
     public KenBurnsView(Context context) {
         this(context, null);
+        super.setImageResource(R.drawable.splash_background);
+        handleImageChange();
     }
     public KenBurnsView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        super.setImageResource(R.drawable.splash_background);
+        handleImageChange();
     }
     public KenBurnsView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mInitialized = true;
         super.setScaleType(ScaleType.MATRIX);
+        super.setImageResource(R.drawable.splash_background);
+        handleImageChange();
     }
     @Override
     public void setScaleType(ScaleType scaleType) {

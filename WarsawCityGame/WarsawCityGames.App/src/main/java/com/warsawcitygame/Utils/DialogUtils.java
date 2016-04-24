@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.warsawcitygame.R;
 
@@ -131,5 +132,13 @@ public class DialogUtils
             }
         });
         dialog.show();
+    }
+
+    public static void showShortToast(String txt, Context context)
+    {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, txt, duration);
+        toast.show();
     }
 }
