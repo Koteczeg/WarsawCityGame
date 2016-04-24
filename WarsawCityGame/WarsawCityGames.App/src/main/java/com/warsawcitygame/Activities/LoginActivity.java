@@ -22,8 +22,8 @@ public class LoginActivity extends AppCompatActivity
 {
     @Bind(R.id.login_button) Button loginButton;
     @Bind(R.id.register_button) Button registerButton;
-    @Bind(R.id.login_textview) TextView loginTextView;
-    @Bind(R.id.password_textview) TextView passwordTextView;
+    @Bind(R.id.login) TextView loginTextView;
+    @Bind(R.id.password) TextView passwordTextView;
     @Bind(R.id.loginElementsLayout) View loginElementsLayout;
 
     @Override
