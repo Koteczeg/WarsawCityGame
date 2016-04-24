@@ -12,13 +12,12 @@ import com.warsawcitygame.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AchievementsFragment extends Fragment
 {
 
-    @Bind(R.id.ranking_gridview) GridView ranking;
+    GridView ranking;
 
 
 	public AchievementsFragment(){}
@@ -28,7 +27,7 @@ public class AchievementsFragment extends Fragment
     {
  
         View rootView = inflater.inflate(R.layout.fragment_achievements, container, false);
-        ButterKnife.bind(this, rootView);
+        ranking = ButterKnife.findById(rootView, R.id.ranking_gridview);
 
         //TODO we will get it from async task from main activity, look for 'pass list to fragment' in google, parcelable and so on
         ArrayList<String> descriptions= new ArrayList<>();

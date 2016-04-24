@@ -10,23 +10,23 @@ import android.widget.TextView;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.DialogUtils;
 
-public class ProfileFragment extends Fragment {
+import butterknife.ButterKnife;
 
-	public ProfileFragment(){
-        }
-	private TextView userDescriptionEditable;
+public class ProfileFragment extends Fragment
+{
+    private TextView userDescriptionEditable;
     private TextView userLoginEditable;
     private TextView userPasswordEditable;
     private TextView userEmailEditable;
+
+	public ProfileFragment(){}
+
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
         initializeTextViews(rootView);
         setListeners();
-
         return rootView;
     }
 
@@ -49,10 +49,11 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void initializeTextViews(View root) {
-        userDescriptionEditable = (TextView)root.findViewById(R.id.userDescriptionEditable);
-        userLoginEditable = (TextView)root.findViewById(R.id.userNameEditable);
-        userPasswordEditable = (TextView)root.findViewById(R.id.userPasswordEditable);
-        userEmailEditable = (TextView)root.findViewById(R.id.userEmailEditable);
+    private void initializeTextViews(View root)
+    {
+        userDescriptionEditable=ButterKnife.findById(root,R.id.userDescriptionEditable);
+        userLoginEditable=ButterKnife.findById(root,R.id.userNameEditable);
+        userPasswordEditable=ButterKnife.findById(root,R.id.userPasswordEditable);
+        userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
     }
 }

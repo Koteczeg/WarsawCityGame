@@ -65,7 +65,7 @@ public class FriendListViewAdapter extends BaseAdapter
                 @Override
                 public void onClick(View view)
                 {
-                    friendsFragment.onAddFriend(view);
+                    friendsFragment.onAddFriend();
                 }
             });
         }

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.R;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,9 +22,9 @@ import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfir
 
 public class CurrentMissionFragment extends Fragment
 {
-    @Bind(R.id.abort_mission_button) Button abortMissionButton;
-    @Bind(R.id.map_button) Button mapButton;
-    @Bind(R.id.acomplish_mission_button) Button acomplishMissionButton;
+    Button abortMissionButton;
+    Button mapButton;
+    Button acomplishMissionButton;
 
     public CurrentMissionFragment(){}
 	
@@ -33,7 +32,9 @@ public class CurrentMissionFragment extends Fragment
     public View onCreateView( final LayoutInflater inflater,final ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
-        ButterKnife.bind(this, rootView);
+        abortMissionButton = ButterKnife.findById(rootView, R.id.abort_mission_button);
+        mapButton = ButterKnife.findById(rootView, R.id.map_button);
+        acomplishMissionButton = ButterKnife.findById(rootView, R.id.acomplish_mission_button);
         return rootView;
     }
 

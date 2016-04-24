@@ -1,21 +1,5 @@
 package com.warsawcitygame.Transitions;
 
-/*
-* Copyright 2014 Flavio Faria
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 
 import android.graphics.RectF;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -69,7 +53,8 @@ public class RandomTransitionGenerator implements TransitionGenerator {
         RectF srcRect;
         RectF dstRect = null;
 
-        if (!firstTransition) {
+        if (!firstTransition)
+        {
             dstRect = mLastGenTrans.getDestinyRect();
             drawableBoundsChanged = !drawableBounds.equals(mLastDrawableBounds);
             viewportRatioChanged = !MathUtils.haveSameAspectRatio(dstRect, viewport);
@@ -77,10 +62,8 @@ public class RandomTransitionGenerator implements TransitionGenerator {
 
         if (dstRect == null || drawableBoundsChanged || viewportRatioChanged) {
             srcRect = generateRandomRect(drawableBounds, viewport);
-        } else {
-/* Sets the destiny rect of the last transition as the source one
-if the current drawable has the same dimensions as the one of
-the last transition. */
+        } else
+        {
             srcRect = dstRect;
         }
         dstRect = generateRandomRect(drawableBounds, viewport);
