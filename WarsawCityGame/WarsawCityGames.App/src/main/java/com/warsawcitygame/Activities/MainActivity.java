@@ -39,7 +39,6 @@ import butterknife.OnItemClick;
 
 import static com.warsawcitygame.Transitions.Animations.fadeOutAnimationNewFragment;
 
-
 public class MainActivity extends Activity
 {
     @Bind(R.id.menu_layout) DrawerLayout menuLayout;

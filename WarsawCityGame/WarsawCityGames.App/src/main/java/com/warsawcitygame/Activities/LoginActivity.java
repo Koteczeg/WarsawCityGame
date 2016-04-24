@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity
 {
-
     @Bind(R.id.login_button) Button loginButton;
     @Bind(R.id.register_button) Button registerButton;
     @Bind(R.id.login_textview) TextView loginTextView;
