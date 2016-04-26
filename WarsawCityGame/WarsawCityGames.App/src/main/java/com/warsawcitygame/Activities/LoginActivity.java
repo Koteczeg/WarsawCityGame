@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.AnimationUtils;
 import com.warsawcitygame.Utils.CustomCallback;
-import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygamescommunication.Services.AccountService;
@@ -134,49 +133,37 @@ public class LoginActivity extends AppCompatActivity
     @OnClick(R.id.login_button)
     public void login()
     {
+        final String login = loginTextView.getText().toString();
+        final String password = passwordTextView.getText().toString();
+        if (!validateUserCredentials())
+        {
+            showIncorrectCredentialsDialog();
+            return;
+        }
         registerButton.setActivated(false);
-        progressDialog = ProgressDialog.show(this, "Please wait...",
-                "Authenticating in progress.", true);
-        String login = loginTextView.getText().toString();
-        String password = passwordTextView.getText().toString();
-        getToken(login, password);
-//        loginButton.startAnimation(AnimationUtils.getFadeOutAnimation(this));
-//        loginButton.postDelayed(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//
-//                if (!validateUserCredentials())
-//                {
-//                    DialogUtils.showShortToast(getString(R.string.login_failed), loginButton.getContext());
-//                    return;
-//                }
-//
-//                Intent intent = new Intent(loginButton.getContext(), MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }, AnimationUtils.buttonFadeOutAnimationDelay);
+        loginButton.startAnimation(AnimationUtils.getFadeOutAnimation(this));
+        loginButton.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                progressDialog = ProgressDialog.show(loginButton.getContext(), "Please wait...",
+                        "Authenticating in progress.", true);
+
+                getToken(login, password);
+            }
+        }, AnimationUtils.buttonFadeOutAnimationDelay);
     }
 
     private boolean validateUserCredentials()
     {
         String login = loginTextView.getText().toString();
         String password = passwordTextView.getText().toString();
-        return validateUserCredentialsAsync(login, password);
+
+        return !(login.isEmpty() || password.isEmpty());
     }
 
-    //TODO async communication layer
-    private boolean validateUserCredentialsAsync(String login, String password)
-    {
-        if(login.equals("a") && password.equals("b"))
-        {
-            DialogUtils.showShortToast("Login succeed", this);
-            return true;
-        }
-        return false;
-    }
+
 
     private void fadeOutLayout()
     {
