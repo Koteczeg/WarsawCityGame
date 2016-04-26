@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -26,7 +27,7 @@ namespace WarsawCityGamesServer.Services.Controllers
 
         [AllowAnonymous]
         [Route("Register"), HttpPost]
-        public IHttpActionResult Register(PlayerRegisterDto newPlayer)
+        public async Task<IHttpActionResult> Register(PlayerRegisterDto newPlayer)
         {
             if (newPlayer == null || !ModelState.IsValid)
             {
@@ -38,18 +39,39 @@ namespace WarsawCityGamesServer.Services.Controllers
             var user = new User { UserName = newPlayer.UserName };
             if (context.Users.Any(u => user.UserName == u.UserName))
             {
-                return BadRequest("Ta nazwa użytkownika jest już zajęta");
+                return BadRequest("This username has been already taken. Try another one.");
             }
             context.Players.Add(player);
             player.User = user;
-            var result = userManager.Create(user, newPlayer.Password);
+            var result = await userManager.CreateAsync(user, newPlayer.Password);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors.ToString());
+                return GetErrorResult(result);
             }
             userManager.AddToRole(user.Id, Role.Player.ToString());
             context.SaveChanges();
             return Ok();
+        }
+
+        private IHttpActionResult GetErrorResult(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return InternalServerError();
+            }
+            if (result.Succeeded) return null;
+            if (result.Errors != null)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            return BadRequest(ModelState);
         }
     }
 }

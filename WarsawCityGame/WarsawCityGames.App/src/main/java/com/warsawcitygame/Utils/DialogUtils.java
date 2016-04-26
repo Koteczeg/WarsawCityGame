@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.warsawcitygame.R;
 
+import java.io.IOError;
+import java.util.InputMismatchException;
+
 public class DialogUtils
 {
     public static void RaiseDialogEditTextView(Context context, Activity activity, String textToEdit, String description, final TextView oldText)
@@ -72,13 +75,33 @@ public class DialogUtils
         dialog.show();
     }
 
-    public static Dialog RaiseDialogLoading(Context context, Activity activity)
+    public static Dialog RaiseDialogLoading(Context context)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = activity.getLayoutInflater();
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_loading, null);
         builder.setView(dialogView);
         final Dialog dialog = builder.create();
+        dialog.show();
+        return dialog;
+    }
+
+    public static Dialog RaiseDialogShowError(Context context, String title, String text)
+    {
+        final Dialog dialog= new Dialog(context);
+        dialog.setContentView(R.layout.dialog_error);
+        ((TextView)dialog.findViewById(R.id.error_title)).setText(title);
+        ((TextView)dialog.findViewById(R.id.error_msg)).setText(text);
+        Button ok = ((Button)dialog.findViewById(R.id.error_dismiss));
+        ok.setText("OK");
+        ok.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
         return dialog;
     }

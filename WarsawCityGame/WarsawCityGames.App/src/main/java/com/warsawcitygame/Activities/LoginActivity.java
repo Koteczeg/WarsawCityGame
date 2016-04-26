@@ -1,8 +1,6 @@
 package com.warsawcitygame.Activities;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.AnimationUtils;
 import com.warsawcitygame.Utils.CustomCallback;
+import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygamescommunication.Services.AccountService;
@@ -42,8 +41,7 @@ public class LoginActivity extends AppCompatActivity
     @Inject AccountService service;
     @Inject SharedPreferences preferences;
 
-    private ProgressDialog progressDialog;
-
+    private Dialog dialog;
     private static final String GRANT_TYPE = "password";
     public static final String ACCESS_TOKEN_KEY = "accessToken";
     public static final String USERNAME_KEY = "username";
@@ -84,7 +82,7 @@ public class LoginActivity extends AppCompatActivity
             {
                 if (!response.isSuccess() && response.code() == 400)
                 {
-                    progressDialog.dismiss();
+                    dialog.dismiss();
                     showIncorrectCredentialsDialog();
                 } else
                 {
@@ -95,22 +93,14 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void always()
             {
-                progressDialog.dismiss();
+                dialog.dismiss();
             }
         });
     }
 
     private void showIncorrectCredentialsDialog() {
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle("Incorrect credentials")
-                .setMessage("Make sure your credentials are correct and try again. Login failed.")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+        dialog = DialogUtils.RaiseDialogShowError(registerButton.getContext(), "An error occured","Make sure your credentials are correct and try again. Login failed.");
+        dialog.show();
     }
 
     @OnClick(R.id.register_button)
@@ -147,8 +137,8 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void run()
             {
-                progressDialog = ProgressDialog.show(loginButton.getContext(), "Please wait...",
-                        "Authenticating in progress.", true);
+                dialog = DialogUtils.RaiseDialogLoading(loginButton.getContext());
+                dialog.show();
 
                 getToken(login, password);
             }
