@@ -1,1 +1,1 @@
-include ':WarsawCityGames.App', ':WarsawCityGames.Communication', ':WarsawCityGames.Shared'
+include ':WarsawCityGames.App', ':WarsawCityGames.Communication', ':WarsawCityGames.Shared', ':WarsawCityGames.Models', ':WarsawCityGames.Communication'

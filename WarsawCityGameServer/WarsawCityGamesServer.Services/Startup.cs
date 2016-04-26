@@ -104,9 +104,7 @@ namespace WarsawCityGamesServer.Services
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-#if DEBUG
                 AllowInsecureHttp = true
-#endif
             };
 
             app.UseOAuthBearerTokens(OAuthOptions);
