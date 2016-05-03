@@ -65,6 +65,10 @@
     <Compile Include="Migrations\201604221504570_Init.Designer.cs">
       <DependentUpon>201604221504570_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605032220479_PlayerExtensions.cs" />
+    <Compile Include="Migrations\201605032220479_PlayerExtensions.Designer.cs">
+      <DependentUpon>201605032220479_PlayerExtensions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604221504570_Init.resx">
       <DependentUpon>201604221504570_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605032220479_PlayerExtensions.resx">
+      <DependentUpon>201605032220479_PlayerExtensions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

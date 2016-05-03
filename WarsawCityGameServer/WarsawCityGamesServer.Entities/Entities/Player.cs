@@ -10,5 +10,7 @@ namespace WarsawCityGamesServer.Entities.Entities
         public virtual Mission CurrentMission { get; set; }
         [Required]
         public virtual User User { get; set; }
+        public string Name { get; set; } = "Guest";
+        public string Description { get; set; }
     }
 }
