@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DialogUtils;
 
 import butterknife.ButterKnife;
@@ -34,9 +35,17 @@ public class ProfileFragment extends Fragment
     {
         setDialogListener(userDescriptionEditable, "Enter new description");
         setDialogListener(userLoginEditable, "Enter new login");
-        setDialogListener(userPasswordEditable, "Enter new password");
         setDialogListener(userEmailEditable, "Enter new email");
+        setPasswordDialogListener(userPasswordEditable);
+    }
 
+    private void setPasswordDialogListener(final TextView textView){
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void setDialogListener(final TextView textView,final String text)
@@ -55,5 +64,25 @@ public class ProfileFragment extends Fragment
         userLoginEditable=ButterKnife.findById(root,R.id.userNameEditable);
         userPasswordEditable=ButterKnife.findById(root,R.id.userPasswordEditable);
         userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
+    }
+
+    private void ChangeData(){
+
+    }
+
+    private void ChangePassword(){
+
+    }
+
+    class ChangeDataAction implements DelegateAction{
+        public void ExecuteAction(){
+            ChangeData();
+        }
+    }
+
+    class ChangePasswordAction implements DelegateAction{
+        public void ExecuteAction(){
+            ChangePassword();
+        }
     }
 }

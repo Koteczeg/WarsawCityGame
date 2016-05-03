@@ -51,6 +51,38 @@ public class DialogUtils
           dialog.show();
     }
 
+    public static void RaiseDialogEditTextView(Context context, Activity activity, String textToEdit, String description, final TextView oldText, final DelegateAction onSaveAction)
+    {
+        if(onSaveAction==null) RaiseDialogEditTextView(context, activity, textToEdit, description, oldText);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_edit_text, null);
+        builder.setView(dialogView);
+        final EditText editField = (EditText)dialogView.findViewById(R.id.editable_text);
+        editField.setText(textToEdit);
+        final TextView descriptionTxt = (TextView)dialogView.findViewById(R.id.description);
+        descriptionTxt.setText(description);
+        final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
+        final Dialog dialog = builder.create();
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final Button positiveButton = (Button)dialogView.findViewById(R.id.positiveButton);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldText.setText(editField.getText().toString());
+                dialog.dismiss();
+                onSaveAction.ExecuteAction();
+            }
+        });
+        dialog.show();
+    }
+
     public static void RaiseDialogShowProfile(Context context, Activity activity, String name, String levelDescription)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
