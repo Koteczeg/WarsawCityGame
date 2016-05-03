@@ -8,7 +8,7 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
-using WarsawCityGamesServer.Models.UserProfile;
+using WarsawCityGamesServer.Models.UserData;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
