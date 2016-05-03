@@ -11,6 +11,5 @@ namespace WarsawCityGamesServer.Models.UserData
         public string Description { get; set; }
         public string Username { get; set; }
         public byte[] UserImage { get; set; }
-        public string Password { get; set; }
     }
 }

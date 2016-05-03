@@ -37,7 +37,43 @@ namespace WarsawCityGamesServer.Services.Controllers
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
-            
+            player.Level = dto.Level;
+            dto.Description = player.Description;
+            dto.Email = player.User.Email;
+            dto.Exp = player.Exp;
+            dto.Name = player.Name;
+            dto.UserImage = player.UserImage;
+            dto.Username = player.User.UserName;
+            return Ok(dto);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("ChangePassword")]
+        public IHttpActionResult ChangePassword(string currentPassword, string newPassword)
+        {
+            string username = User.Identity.Name;
+            Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
+            if (player == null)
+                return BadRequest();
+            _userManager.ChangePassword(player.User.Id, currentPassword, newPassword);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("ChangeUserData")]
+        public IHttpActionResult ChangeUserData(PlayerProfileDto dto)
+        {
+            string username = User.Identity.Name;
+            Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
+            if (player == null)
+                return BadRequest();
+            player.Description = player.Description;
+            player.User.Email = player.User.Email;
+            player.Name = player.Name;
+            player.UserImage = player.UserImage;
+            _context.SaveChanges();
             return Ok(dto);
         }
     }
