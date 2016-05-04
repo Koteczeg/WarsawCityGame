@@ -34,7 +34,7 @@ namespace WarsawCityGamesServer.Services.Controllers
                 return BadRequest(ModelState);
             }
             var player = mapper.Map<Player>(newPlayer);
-            player.Level = context.Levels.FirstOrDefault(x => x.Name==nameof(Role.Player));
+            player.Level = context.Levels.FirstOrDefault(x=>x.Id==1);
             player.Exp = 0;
             var user = new User { UserName = newPlayer.UserName };
             if (context.Users.Any(u => user.UserName == u.UserName))

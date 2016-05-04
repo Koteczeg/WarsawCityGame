@@ -36,7 +36,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
-            //dto.Level = player.Level.Name;
+            dto.Level = player?.Level.Name;
             dto.Description = player.Description;
             dto.Email = player.User.Email;
             dto.Exp = player.Exp;
