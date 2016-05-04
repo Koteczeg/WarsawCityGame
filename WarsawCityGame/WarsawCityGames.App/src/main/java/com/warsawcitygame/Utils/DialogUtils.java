@@ -23,37 +23,11 @@ public class DialogUtils
 {
     public static void RaiseDialogEditTextView(Context context, Activity activity, String textToEdit, String description, final TextView oldText)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_edit_text, null);
-        builder.setView(dialogView);
-        final EditText editField = (EditText)dialogView.findViewById(R.id.editable_text);
-        editField.setText(textToEdit);
-        final TextView descriptionTxt = (TextView)dialogView.findViewById(R.id.description);
-        descriptionTxt.setText(description);
-        final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
-        final Dialog dialog = builder.create();
-
-        negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        final Button positiveButton = (Button)dialogView.findViewById(R.id.positiveButton);
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                oldText.setText(editField.getText().toString());
-                dialog.dismiss();
-            }
-        });
-          dialog.show();
+        RaiseDialogEditTextView(context, activity, textToEdit, description, oldText, null);
     }
 
     public static void RaiseDialogEditTextView(Context context, Activity activity, String textToEdit, String description, final TextView oldText, final DelegateAction onSaveAction)
     {
-        if(onSaveAction==null) RaiseDialogEditTextView(context, activity, textToEdit, description, oldText);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_edit_text, null);
@@ -77,7 +51,41 @@ public class DialogUtils
             public void onClick(View v) {
                 oldText.setText(editField.getText().toString());
                 dialog.dismiss();
-                onSaveAction.ExecuteAction();
+                if(onSaveAction!=null)
+                    onSaveAction.ExecuteAction();
+            }
+        });
+        dialog.show();
+    }
+
+    public static void RaiseChangePasswordDialog(Context context, Activity activity, String[] descriptions, final TextView oldText, final DelegateActionParams<String> onSaveAction){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_password_change, null);
+        builder.setView(dialogView);
+        final EditText editField1 = (EditText)dialogView.findViewById(R.id.editable_text1);
+        final TextView descriptionTxt1 = (TextView)dialogView.findViewById(R.id.description1);
+        final EditText editField2 = (EditText)dialogView.findViewById(R.id.editable_text2);
+        final TextView descriptionTxt2 = (TextView)dialogView.findViewById(R.id.description2);
+        descriptionTxt1.setText(descriptions[0]);
+        descriptionTxt2.setText(descriptions[1]);
+        final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
+        final Dialog dialog = builder.create();
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final Button positiveButton = (Button)dialogView.findViewById(R.id.positiveButton);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldText.setText(editField2.getText().toString());
+                dialog.dismiss();
+                if(onSaveAction!=null)
+                    onSaveAction.ExecuteAction(new String[]{editField1.getText().toString(), editField2.getText().toString()});
             }
         });
         dialog.show();
