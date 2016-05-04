@@ -11,6 +11,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.warsawcitygamescommunication.Services.AccountService;
+import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -90,5 +91,10 @@ public class RestServicesModule {
     }
 
 
-
+    @Provides
+    @Singleton
+    UserProfileService provideUserProfileServeice(Retrofit retrofit){
+        UserProfileService service = retrofit.create(UserProfileService.class);
+        return service;
+    }
 }

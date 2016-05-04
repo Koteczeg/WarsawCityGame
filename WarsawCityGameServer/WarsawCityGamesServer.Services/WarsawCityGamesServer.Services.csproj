@@ -161,6 +161,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config" />
+    <None Include="Properties\PublishProfiles\WarsawCityGamesAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WarsawCityGamesAPI - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

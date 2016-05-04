@@ -1,8 +1,11 @@
 package com.warsawcitygame.Fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +13,15 @@ import android.widget.TextView;
 
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygame.Activities.LoginActivity;
+import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DelegateActionParams;
 import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.AccessTokenModel;
+import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygamescommunication.Services.AccountService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
@@ -21,6 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class ProfileFragment extends Fragment
 {
@@ -29,20 +39,25 @@ public class ProfileFragment extends Fragment
     private TextView userPasswordEditable;
     private TextView userEmailEditable;
 
-    @Inject
-    UserProfileService service;
+    @Inject UserProfileService service;
 
-    @Inject
-    SharedPreferences preferences;
+    @Inject SharedPreferences preferences;
 
 	public ProfileFragment(){}
 
-	@Override
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         initializeTextViews(rootView);
         setListeners();
+        getData();
         return rootView;
     }
 
@@ -81,10 +96,31 @@ public class ProfileFragment extends Fragment
         userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
     }
 
-    private void GetData(){
+    private void getData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<ResponseBody> call = service.GetProfileData(username);
+        Call<PlayerProfileDataModel> call = service.GetProfileData(username);
+        call.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity())
+        {
+            @Override
+            public void onSuccess(PlayerProfileDataModel model) {
+            }
 
+            @Override
+            public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit){
+                DialogUtils.RaiseDialogShowError(getActivity(), "Response", "Code: "+response.code()+" "+ response.message());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
+                super.onFailure(t);
+            }
+
+            @Override
+            public void always() {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Huj", "Kurwa always");
+            }
+        });
     }
 
     private void ChangeData(){

@@ -18,7 +18,10 @@ namespace WarsawCityGamesServer.Entities.Migrations
 
         protected override void Seed(CityGamesContext context)
         {
-            context.Levels.Add(new Level {ExpRequired = 1, Id = 1, Name = "test"});
+            context.Levels.Add(new Level {ExpRequired = 1, Id = 1, Name = "Newbie"});
+            context.Levels.Add(new Level {ExpRequired = 100, Id = 2, Name = "Jar"});
+            context.Levels.Add(new Level {ExpRequired = 200, Id = 3, Name = "Siren"});
+            context.Levels.Add(new Level {ExpRequired = 1000, Id = 4, Name = "Boss"});
             GenerateRoles(context);
             context.SaveChanges();
         }

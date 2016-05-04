@@ -29,6 +29,7 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Fragments.HallOfFameFragment;
 import com.warsawcitygame.Adapters.NavDrawerListAdapter;
 import com.warsawcitygame.CustomControls.NavDrawerItem;
+import com.warsawcitygame.Utils.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        ((MyApplication) getApplication()).getServicesComponent().inject(this);
         initializeMenu();
         if (savedInstanceState == null)
         {
