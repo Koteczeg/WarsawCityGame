@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,10 +34,11 @@ namespace WarsawCityGamesServer.Services.Controllers
         public IHttpActionResult GetProfileData(string username)
         {
             PlayerProfileDto dto = new PlayerProfileDto();
-            Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
+            Player player = _context.Players.Include(x=>x.Level).FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
-            dto.Level = player?.Level.Name;
+            Level level = player.Level;
+            dto.Level = _context.Levels.FirstOrDefault(x => x.Id == level.Id)?.Name ?? "Huj";
             dto.Description = player.Description;
             dto.Email = player.User.Email;
             dto.Exp = player.Exp;

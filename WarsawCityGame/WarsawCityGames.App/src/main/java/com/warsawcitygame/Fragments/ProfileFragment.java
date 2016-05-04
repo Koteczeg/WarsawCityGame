@@ -38,6 +38,8 @@ public class ProfileFragment extends Fragment
     private TextView userLoginEditable;
     private TextView userPasswordEditable;
     private TextView userEmailEditable;
+    private TextView userLevelEditable;
+    private TextView userExpEditable;
 
     @Inject UserProfileService service;
 
@@ -94,6 +96,8 @@ public class ProfileFragment extends Fragment
         userLoginEditable=ButterKnife.findById(root,R.id.userNameEditable);
         userPasswordEditable=ButterKnife.findById(root,R.id.userPasswordEditable);
         userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
+        userLevelEditable=ButterKnife.findById(root, R.id.userRank);
+        userExpEditable = ButterKnife.findById(root, R.id.userExp);
     }
 
     private void getData(){
@@ -107,7 +111,8 @@ public class ProfileFragment extends Fragment
 
             @Override
             public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit){
-                DialogUtils.RaiseDialogShowError(getActivity(), "Response", "Code: "+response.code()+" "+ response.message());
+                DialogUtils.RaiseDialogShowError(getActivity(), "Response", "Code: "+response.code()+" "+ response.message() + response.body().toString());
+                setProfileView(response.body());
             }
 
             @Override
@@ -121,6 +126,14 @@ public class ProfileFragment extends Fragment
                 DialogUtils.RaiseDialogShowError(getActivity(), "Huj", "Kurwa always");
             }
         });
+    }
+
+    private void setProfileView(PlayerProfileDataModel model){
+        userDescriptionEditable.setText(model.Description);
+        userEmailEditable.setText(model.Email);
+        userLoginEditable.setText(model.Name);
+        userLevelEditable.setText(model.Level);
+        //userExpEditable.setText(model.Exp);
     }
 
     private void ChangeData(){
