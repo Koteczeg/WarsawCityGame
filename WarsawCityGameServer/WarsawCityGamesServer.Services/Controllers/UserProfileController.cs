@@ -30,10 +30,9 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [Route("GetProfileData")]
         [HttpGet]
-        public IHttpActionResult GetProfileData()
+        public IHttpActionResult GetProfileData(string username)
         {
             PlayerProfileDto dto = new PlayerProfileDto();
-            string username = User.Identity.Name;
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
@@ -50,9 +49,8 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [HttpPost]
         [Route("ChangePassword")]
-        public IHttpActionResult ChangePassword(string currentPassword, string newPassword)
+        public IHttpActionResult ChangePassword(string username, string currentPassword, string newPassword)
         {
-            string username = User.Identity.Name;
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
@@ -65,7 +63,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("ChangeUserData")]
         public IHttpActionResult ChangeUserData(PlayerProfileDto dto)
         {
-            string username = User.Identity.Name;
+            string username = dto.Username;
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
