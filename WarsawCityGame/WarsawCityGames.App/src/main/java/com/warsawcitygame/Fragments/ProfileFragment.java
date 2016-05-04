@@ -1,18 +1,26 @@
 package com.warsawcitygame.Fragments;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.okhttp.ResponseBody;
+import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DelegateActionParams;
 import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygamescommunication.Services.AccountService;
+import com.warsawcitygamescommunication.Services.UserProfileService;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import retrofit.Call;
 
 public class ProfileFragment extends Fragment
 {
@@ -20,6 +28,12 @@ public class ProfileFragment extends Fragment
     private TextView userLoginEditable;
     private TextView userPasswordEditable;
     private TextView userEmailEditable;
+
+    @Inject
+    UserProfileService service;
+
+    @Inject
+    SharedPreferences preferences;
 
 	public ProfileFragment(){}
 
@@ -67,8 +81,14 @@ public class ProfileFragment extends Fragment
         userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
     }
 
-    private void ChangeData(){
+    private void GetData(){
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        Call<ResponseBody> call = service.GetProfileData(username);
 
+    }
+
+    private void ChangeData(){
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
     }
 
     private void ChangePassword(String currentPassword, String newPassword){
