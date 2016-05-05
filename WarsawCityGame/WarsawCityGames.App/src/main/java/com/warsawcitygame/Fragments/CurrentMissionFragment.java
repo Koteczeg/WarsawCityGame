@@ -24,7 +24,7 @@ public class CurrentMissionFragment extends Fragment
 {
     Button abortMissionButton;
     Button mapButton;
-    Button acomplishMissionButton;
+    Button accomplishMissionButton;
 
     public CurrentMissionFragment(){}
 	
@@ -34,7 +34,7 @@ public class CurrentMissionFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
         abortMissionButton = ButterKnife.findById(rootView, R.id.abort_mission_button);
         mapButton = ButterKnife.findById(rootView, R.id.map_button);
-        acomplishMissionButton = ButterKnife.findById(rootView, R.id.acomplish_mission_button);
+        accomplishMissionButton = ButterKnife.findById(rootView, R.id.acomplish_mission_button);
         return rootView;
     }
 

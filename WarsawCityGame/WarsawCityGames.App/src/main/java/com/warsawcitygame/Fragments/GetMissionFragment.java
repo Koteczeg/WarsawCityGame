@@ -1,6 +1,7 @@
 package com.warsawcitygame.Fragments;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,11 +11,29 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dd.morphingbutton.MorphingButton;
+import com.squareup.okhttp.ResponseBody;
+import com.warsawcitygame.Activities.LoginActivity;
+import com.warsawcitygame.Activities.RegisterActivity;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.CustomCallback;
+import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.RegisterAccountModel;
+import com.warsawcitygames.models.SetCurrentMissionModel;
+import com.warsawcitygamescommunication.Services.MissionsService;
+import com.warsawcitygamescommunication.Services.UserProfileService;
+
+import java.io.IOException;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class GetMissionFragment extends Fragment
 {
@@ -28,7 +47,19 @@ public class GetMissionFragment extends Fragment
     String[] placeExpTab;
     int i = 0;
 
+    @Inject
+    MissionsService service;
+
+    @Inject
+    SharedPreferences preferences;
+
     public GetMissionFragment() {}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,11 +83,9 @@ public class GetMissionFragment extends Fragment
     private void setAcceptMissionButton(View rootView, final TextView miss)
     {
         final MorphingButton btnMorph = ButterKnife.findById(rootView, R.id.acceptMissionButton);
-        btnMorph.setOnTouchListener(new View.OnTouchListener()
-        {
+        btnMorph.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
+            public boolean onTouch(View v, MotionEvent event) {
                 MorphingButton.Params circle = MorphingButton.Params.create()
                         .duration(500)
                         .cornerRadius((int) getResources().getDimension(R.dimen.mb_height_56))
@@ -70,7 +99,25 @@ public class GetMissionFragment extends Fragment
                 miss.setVisibility(View.VISIBLE);
                 leftButton.setVisibility(View.GONE);
                 rightButton.setVisibility(View.GONE);
+                setNewMission();
                 return false;
+            }
+
+
+        });
+    }
+
+    private void setNewMission() {
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        SetCurrentMissionModel model = new SetCurrentMissionModel(username, "Wisla");
+        Call<ResponseBody> call = service.set(model);
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
+            @Override
+            public void onSuccess(ResponseBody model)
+            {
+                Toast toast = Toast.makeText(getActivity(), "Sucess", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
@@ -137,6 +184,7 @@ public class GetMissionFragment extends Fragment
 
     private void getData()
     {
+        //TODO take it from database
         placePicTab = new int[]{R.drawable.ppolitechniki, R.drawable.warsawcentral, R.drawable.wisla};
         placeDescriptionTab = new String[]{"Visit main building of Warsaw University of Technology","Go to the Warsaw central station.", "Get to the Wisła river and try to catch some fish."};
         placeExpTab = new String[]{"EXP: 200", "EXP: 500", "EXP: 300"};
