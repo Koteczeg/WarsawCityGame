@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.morphingbutton.MorphingButton;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.R;
@@ -23,10 +25,14 @@ import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class GetMissionFragment extends Fragment
 {
@@ -113,6 +119,56 @@ public class GetMissionFragment extends Fragment
             {
                 Toast toast = Toast.makeText(getActivity(), "Current mission added !", Toast.LENGTH_LONG);
                 toast.show();
+            }
+
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
+                if (response.code() == 400)
+                {
+                    try
+                    {
+                        DialogUtils.RaiseDialogShowError(getContext(), "An error occured",extractErrorMessage(response)).show();
+
+                    } catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                } else
+                {
+                    super.onResponse(response, retrofit);
+                }
+            }
+
+            private String extractErrorMessage(Response<ResponseBody> response) throws IOException {
+                String json = response.errorBody().string();
+                Gson gson = new Gson();
+                ErrorResponse errorResponse = gson.fromJson(json, ErrorResponse.class);
+                String errorMessage = errorResponse.getMessage();
+                return errorMessage;
+            }
+
+            class ErrorResponse {
+                private String message;
+                private ModelState modelState;
+
+                public String getMessage() {
+                    return message;
+                }
+
+                public String[] getErrorsMessages() {
+                    return modelState.getErrors();
+                }
+
+                 class ModelState
+                {
+                    @SerializedName("")
+                    private String[] errors;
+
+                    public String[] getErrors() {
+                        return errors;
+                    }
+                }
             }
 
             @Override

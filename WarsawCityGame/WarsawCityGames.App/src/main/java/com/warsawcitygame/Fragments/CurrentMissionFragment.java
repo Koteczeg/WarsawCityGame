@@ -22,6 +22,8 @@ import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.CurrentMissionModel;
+import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
 
@@ -30,6 +32,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfirmation;
 
@@ -114,23 +118,32 @@ public class CurrentMissionFragment extends Fragment
     {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         //only for testing
-        UserMissionModel model = new UserMissionModel(username, "");
-        Call<ResponseBody> call = service.AbortCurrentMission(model);
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        Call<CurrentMissionModel> call = service.GetCurrentMission(username);
+        call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity())
         {
             @Override
-            public void onSuccess(ResponseBody model)
-            {
-                Toast toast = Toast.makeText(getActivity(), "Aborted !", Toast.LENGTH_LONG);
-                toast.show();
+            public void onSuccess(CurrentMissionModel model) {
+                updateView(model);
+                return;
             }
+
+
 
             @Override
             public void onFailure(Throwable t) {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
                 super.onFailure(t);
             }
+
         });
+        if(missionName.getText() == "") showBlank();
+
+    }
+
+    private void updateView(CurrentMissionModel model)
+    {
+        this.missionDesc.setText(model.Description.toString());
+        this.missionName.setText(model.Name.toString());
     }
 
     public void abortCurrentMission() {
