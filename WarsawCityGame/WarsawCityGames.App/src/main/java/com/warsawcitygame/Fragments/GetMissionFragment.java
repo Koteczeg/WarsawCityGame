@@ -16,24 +16,17 @@ import android.widget.Toast;
 import com.dd.morphingbutton.MorphingButton;
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygame.Activities.LoginActivity;
-import com.warsawcitygame.Activities.RegisterActivity;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.RegisterAccountModel;
-import com.warsawcitygames.models.SetCurrentMissionModel;
+import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
-import com.warsawcitygamescommunication.Services.UserProfileService;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import retrofit.Call;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class GetMissionFragment extends Fragment
 {
@@ -45,6 +38,7 @@ public class GetMissionFragment extends Fragment
     int[] placePicTab;
     String[] placeDescriptionTab;
     String[] placeExpTab;
+    String[] placeNameTab;
     int i = 0;
 
     @Inject
@@ -109,15 +103,22 @@ public class GetMissionFragment extends Fragment
 
     private void setNewMission() {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        SetCurrentMissionModel model = new SetCurrentMissionModel(username, "Wisla");
-        Call<ResponseBody> call = service.set(model);
+        //only for testing
+        UserMissionModel model = new UserMissionModel(username, placeNameTab[i]);
+        Call<ResponseBody> call = service.SetCurrentMission(model);
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
             public void onSuccess(ResponseBody model)
             {
-                Toast toast = Toast.makeText(getActivity(), "Sucess", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getActivity(), "Current mission added !", Toast.LENGTH_LONG);
                 toast.show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
+                super.onFailure(t);
             }
         });
     }
@@ -188,6 +189,7 @@ public class GetMissionFragment extends Fragment
         placePicTab = new int[]{R.drawable.ppolitechniki, R.drawable.warsawcentral, R.drawable.wisla};
         placeDescriptionTab = new String[]{"Visit main building of Warsaw University of Technology","Go to the Warsaw central station.", "Get to the Wisła river and try to catch some fish."};
         placeExpTab = new String[]{"EXP: 200", "EXP: 500", "EXP: 300"};
+        placeNameTab = new String[] {"WarsawUniversityOfTechnology", "WarsawCentralStation", "Wisla"};
     }
 
     private void initializeReferences(View rootView)

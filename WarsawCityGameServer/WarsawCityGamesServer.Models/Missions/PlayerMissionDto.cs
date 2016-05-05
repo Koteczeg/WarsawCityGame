@@ -2,7 +2,7 @@
 
 namespace WarsawCityGamesServer.Models.Missions
 {
-    public class SetCurrentMissionDto
+    public class PlayerMissionDto
     {
         [Required]
         public string UserName { get; set; }
