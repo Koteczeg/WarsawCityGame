@@ -2,7 +2,7 @@ package com.warsawcitygames.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SetCurrentMissionModel
+public class UserMissionModel
 {
     @SerializedName("UserName")
     public String UserName;
@@ -10,7 +10,7 @@ public class SetCurrentMissionModel
     @SerializedName("MissionName")
     public String MissionName;
 
-    public SetCurrentMissionModel(String userName, String missionName)
+    public UserMissionModel(String userName, String missionName)
     {
         this.UserName = userName;
         this.MissionName = missionName;
