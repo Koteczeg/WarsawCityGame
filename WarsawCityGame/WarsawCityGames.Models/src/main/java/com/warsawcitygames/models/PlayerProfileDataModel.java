@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName;
  * Created by bakala12 on 04.05.2016.
  */
 public class PlayerProfileDataModel {
-    @SerializedName("Email")
+    @SerializedName("email")
     public String Email;
-    @SerializedName("Name")
+    @SerializedName("name")
     public String Name;
-    @SerializedName("Exp")
+    @SerializedName("exp")
     public int Exp;
-    @SerializedName("Level")
+    @SerializedName("level")
     public String Level;
-    @SerializedName("Description")
+    @SerializedName("description")
     public String Description;
-    @SerializedName("Username")
+    @SerializedName("username")
     public String Username;
-    @SerializedName("UserImage")
+    @SerializedName("userImage")
     public byte[] UserImage;
 
     public PlayerProfileDataModel(String email, String name, int exp, String level, String username, byte[] userImage, String description) {

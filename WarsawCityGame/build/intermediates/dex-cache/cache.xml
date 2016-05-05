@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\bakala12\Desktop\warsawcitygame\WarsawCityGame\WarsawCityGames.App\build\intermediates\exploded-aar\WarsawCityGame\WarsawCityGames.Communication\unspecified\jars\classes.jar"
+        jar="C:\Users\bakala12\Desktop\warsawcitygame\WarsawCityGame\WarsawCityGames.App\build\intermediates\exploded-aar\WarsawCityGame\WarsawCityGames.Models\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="6a03a5f01b4eb055a5b44ab41cf83923136b3214">
-        <dex dex="C:\Users\bakala12\Desktop\warsawcitygame\WarsawCityGame\WarsawCityGames.App\build\intermediates\pre-dexed\debug\WarsawCityGame-WarsawCityGames.Communication-unspecified_41f9cf5997e674d3be2bfaea144d55a52c92b17c.jar" />
+        sha1="32db3ed49dc9ebef227a403399c5c6a6b67b9f7a">
+        <dex dex="C:\Users\bakala12\Desktop\warsawcitygame\WarsawCityGame\WarsawCityGames.App\build\intermediates\pre-dexed\debug\WarsawCityGame-WarsawCityGames.Models-unspecified_532cf0d816e716e35a57add304787a5b5b84a131.jar" />
     </item>
 
 </items>
