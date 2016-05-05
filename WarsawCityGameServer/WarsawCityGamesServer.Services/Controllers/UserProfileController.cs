@@ -38,7 +38,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             if (player == null)
                 return BadRequest();
             Level level = player.Level;
-            dto.Level = _context.Levels.FirstOrDefault(x => x.Id == level.Id)?.Name ?? "Huj";
+            dto.Level = _context.Levels.FirstOrDefault(x => x.Id == level.Id)?.Name;
             dto.Description = player.Description;
             dto.Email = player.User.Email;
             dto.Exp = player.Exp;
@@ -56,8 +56,8 @@ namespace WarsawCityGamesServer.Services.Controllers
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
-            _userManager.ChangePassword(player.User.Id, currentPassword, newPassword);
-            return Ok();
+            var identity = _userManager.ChangePassword(player.User.Id, currentPassword, newPassword);
+            return identity != null || _userManager.CheckPassword(player.User, newPassword) ? (IHttpActionResult)Ok() : BadRequest();
         }
 
         [Authorize]
@@ -69,12 +69,19 @@ namespace WarsawCityGamesServer.Services.Controllers
             Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
                 return BadRequest();
-            player.Description = player.Description;
-            player.User.Email = player.User.Email;
-            player.Name = player.Name;
-            player.UserImage = player.UserImage;
-            _context.SaveChanges();
-            return Ok(dto);
+            try
+            {
+                player.Description = dto.Description;
+                player.User.Email = dto.Email;
+                player.Name = dto.Name;
+                player.UserImage = dto.UserImage;
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

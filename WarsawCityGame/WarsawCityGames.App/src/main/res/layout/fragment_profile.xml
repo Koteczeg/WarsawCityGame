@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:text="Tajger"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30sp" />
     </LinearLayout>
@@ -43,7 +42,6 @@
                 android:layout_margin="20dp"
                 android:fontFamily="sans-serif-thin"
                 android:id="@+id/userDescriptionEditable"
-                android:text="@string/dummyTxt"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textStyle="italic" />
@@ -79,7 +77,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Jar"
                         android:id="@+id/userRank"
                         android:textColor="#00BFFF"
                         android:textSize="20sp" />
@@ -91,7 +88,6 @@
                         android:layout_alignParentRight="true"
                         android:fontFamily="sans-serif-medium"
                         android:id="@+id/userExp"
-                        android:text="200 exp"
                         android:textColor="#FF0000"
                         android:textSize="20sp" />
                 </RelativeLayout>
@@ -118,7 +114,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Tajger"
                     android:id="@+id/userNameEditable"
                     android:textColor="#000000"
                     android:textSize="20sp" />
@@ -146,7 +141,6 @@
                     android:ems="10"
                     android:fontFamily="sans-serif-medium"
                     android:inputType="textPassword"
-                    android:text="blebleble"
                     android:id="@+id/userPasswordEditable"
                     android:textColor="#000000"
                     android:textSize="20sp" />
@@ -172,7 +166,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
                     android:fontFamily="sans-serif-medium"
-                    android:text="koteczeg@gmail.com"
                     android:id="@+id/userEmailEditable"
                     android:textColor="#000000"
                     android:textSize="20sp" />

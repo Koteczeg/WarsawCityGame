@@ -13,6 +13,7 @@ import retrofit.http.Query;
 
 public interface UserProfileService {
     @POST("UserProfile/ChangeUserData")
+    @FormUrlEncoded
     Call<ResponseBody> ChangeUserData(
             @Field("Username") String Username,
             @Field("Email") String Email,
@@ -21,7 +22,9 @@ public interface UserProfileService {
             @Field("UserImage") byte[] UserImage);
 
     @POST("UserProfile/ChangePassword")
-    Call<ResponseBody> ChangePassword(String username, String currentPassword, String newPassword);
+    Call<ResponseBody> ChangePassword(@Query("username") String username,
+                                      @Query("currentPassword") String currentPassword,
+                                      @Query("newPassword") String newPassword);
 
     @GET("UserProfile/GetProfileData")
     Call<PlayerProfileDataModel> GetProfileData(@Query("username") String username);
