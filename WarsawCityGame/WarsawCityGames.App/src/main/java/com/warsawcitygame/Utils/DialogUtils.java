@@ -80,7 +80,6 @@ public class DialogUtils
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                oldText.setText(editField2.getText().toString());
                 dialog.dismiss();
                 if(onSaveAction!=null)
                     onSaveAction.ExecuteAction(new String[]{editField1.getText().toString(), editField2.getText().toString()});

@@ -142,9 +142,15 @@ public class ProfileFragment extends Fragment
     private void ChangeData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString(), null);
+        showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
             @Override
             public void onSuccess(ResponseBody model) {
+                if(dialog!=null)
+                {
+                    dialog.dismiss();
+                    dialog=null;
+                }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
             }
 
@@ -152,12 +158,23 @@ public class ProfileFragment extends Fragment
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                 if (!response.isSuccess())
                     DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
-                else
+                else {
                     DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
+                    if(dialog!=null)
+                    {
+                        dialog.dismiss();
+                        dialog=null;
+                    }
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
+                if(dialog!=null)
+                {
+                    dialog.dismiss();
+                    dialog=null;
+                }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
             }
         });
