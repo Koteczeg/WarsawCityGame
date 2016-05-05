@@ -41,6 +41,7 @@ public class ProfileFragment extends Fragment
     private TextView userEmailEditable;
     private TextView userLevelEditable;
     private TextView userExpEditable;
+    private Dialog dialog;
 
     @Inject UserProfileService service;
 
@@ -98,13 +99,14 @@ public class ProfileFragment extends Fragment
         userDescriptionEditable=ButterKnife.findById(root,R.id.userDescriptionEditable);
         userLoginEditable=ButterKnife.findById(root,R.id.userNameEditable);
         userPasswordEditable=ButterKnife.findById(root,R.id.userPasswordEditable);
-        userEmailEditable=ButterKnife.findById(root,R.id.userEmailEditable);
+        userEmailEditable=ButterKnife.findById(root, R.id.userEmailEditable);
         userLevelEditable=ButterKnife.findById(root, R.id.userRank);
         userExpEditable = ButterKnife.findById(root, R.id.userExp);
     }
 
     private void getData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        showLoadingDialog();
         Call<PlayerProfileDataModel> call = service.GetProfileData(username);
         call.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity()) {
             @Override
@@ -113,7 +115,6 @@ public class ProfileFragment extends Fragment
 
             @Override
             public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit) {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Response", "Code: " + response.code() + " " + response.message() + response.body().toString());
                 setProfileView(response.body());
             }
 
@@ -131,6 +132,11 @@ public class ProfileFragment extends Fragment
         userLoginEditable.setText(model.Name);
         userLevelEditable.setText(model.Level);
         userExpEditable.setText(model.Exp + " exp");
+        if(dialog!=null)
+        {
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 
     private void ChangeData(){
@@ -144,8 +150,10 @@ public class ProfileFragment extends Fragment
 
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-                if(!response.isSuccess())
+                if (!response.isSuccess())
                     DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
+                else
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
             }
 
             @Override
@@ -158,23 +166,55 @@ public class ProfileFragment extends Fragment
     private void ChangePassword(String currentPassword, String newPassword){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         Call<ResponseBody> call = service.ChangePassword(username, currentPassword, newPassword);
+        showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
             @Override
             public void onSuccess(ResponseBody model) {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user password");
+                if(dialog!=null)
+                {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+                DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user password.");
             }
 
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                 if(!response.isSuccess())
                     DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user password");
+                else
+                {
+                    if(dialog!=null)
+                    {
+                        dialog.dismiss();
+                        dialog = null;
+                    }
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user password");
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
+                if(dialog!=null)
+                {
+                    dialog.dismiss();
+                    dialog = null;
+                }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user password");
             }
         });
+    }
+
+    private void showLoadingDialog(){
+        dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
     }
 
     class ChangeDataAction implements DelegateAction{

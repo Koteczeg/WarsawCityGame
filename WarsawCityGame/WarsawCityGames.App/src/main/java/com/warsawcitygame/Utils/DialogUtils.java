@@ -67,8 +67,6 @@ public class DialogUtils
         final TextView descriptionTxt1 = (TextView)dialogView.findViewById(R.id.description1);
         final EditText editField2 = (EditText)dialogView.findViewById(R.id.editable_text2);
         final TextView descriptionTxt2 = (TextView)dialogView.findViewById(R.id.description2);
-        descriptionTxt1.setText(descriptions[0]);
-        descriptionTxt2.setText(descriptions[1]);
         final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
         final Dialog dialog = builder.create();
 
@@ -117,12 +115,17 @@ public class DialogUtils
 
     public static Dialog RaiseDialogLoading(Context context)
     {
+        return RaiseDialogLoading(context, true);
+    }
+
+    public static Dialog RaiseDialogLoading(Context context, boolean show)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_loading, null);
         builder.setView(dialogView);
         final Dialog dialog = builder.create();
-        dialog.show();
+        if(show)dialog.show();
         return dialog;
     }
 
