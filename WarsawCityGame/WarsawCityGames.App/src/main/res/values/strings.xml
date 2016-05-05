@@ -60,4 +60,5 @@
     <string name="google_app_id">128021</string>
     <string name="login_failed">Login failed</string>
     <string name="missionAcomplishedMessage">Mission accomplished, Well Done !</string>
+    <string name="missionSettingSuccess">Mission added !</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,28 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.okhttp.ResponseBody;
+import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.CustomCallback;
+import com.warsawcitygame.Utils.DelegateAction;
+import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.CurrentMissionModel;
+import com.warsawcitygames.models.PlayerProfileDataModel;
+import com.warsawcitygames.models.UserMissionModel;
+import com.warsawcitygamescommunication.Services.MissionsService;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfirmation;
 
@@ -24,49 +41,140 @@ public class CurrentMissionFragment extends Fragment
 {
     Button abortMissionButton;
     Button mapButton;
-    Button acomplishMissionButton;
+    Button accomplishMissionButton;
+
+    TextView missionDesc;
+    TextView missionName;
 
     public CurrentMissionFragment(){}
-	
+
+    @Inject
+    MissionsService service;
+
+    @Inject
+    SharedPreferences preferences;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
+
+
+    }
+
 	@Override
     public View onCreateView( final LayoutInflater inflater,final ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
         abortMissionButton = ButterKnife.findById(rootView, R.id.abort_mission_button);
         mapButton = ButterKnife.findById(rootView, R.id.map_button);
-        acomplishMissionButton = ButterKnife.findById(rootView, R.id.acomplish_mission_button);
+        accomplishMissionButton = ButterKnife.findById(rootView, R.id.accomplishMissionButton);
+        missionDesc = ButterKnife.findById(rootView,R.id.missionDesc);
+        missionName = ButterKnife.findById(rootView,R.id.missionDesc);
+
+        abortMissionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog confirmationDialog = RaiseDialogAbortMissionConfirmation(getActivity(), getActivity(), new AbortMissionAction());
+                confirmationDialog.show();
+            }
+        });
+
+        accomplishMissionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.dialog_popup_information);
+                TextView text = ButterKnife.findById(dialog, R.id.text_dialog);
+                text.setText(R.string.missionAcomplishedMessage);
+                Button dialogButton = ButterKnife.findById(dialog, R.id.btn_dialog);
+                dialogButton.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.dismiss();
+                        showBlank();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+
+        checkForCurrentMission();
         return rootView;
     }
 
-    @OnClick(R.id.abort_mission_button)
-    public void abortMission()
-    {
-        Dialog confirmationDialog = RaiseDialogAbortMissionConfirmation(getActivity(), getActivity());
-        confirmationDialog.show();
-        //TODO bind methods inside dialog on cancel and confirmation
-    }
+   // @OnClick(R.id.abort_mission_button)
+  //  public void abortMission()
+  //  {
 
-    @OnClick(R.id.acomplish_mission_button)
-    public void acomplishMission()
+   // }
+
+    private void checkForCurrentMission()
     {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_popup_information);
-        TextView text = ButterKnife.findById(dialog, R.id.text_dialog);
-        text.setText(R.string.missionAcomplishedMessage);
-        Button dialogButton = ButterKnife.findById(dialog, R.id.btn_dialog);
-        dialogButton.setOnClickListener(new View.OnClickListener()
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        //only for testing
+        Call<CurrentMissionModel> call = service.GetCurrentMission(username);
+        call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity())
         {
             @Override
-            public void onClick(View v)
+            public void onSuccess(CurrentMissionModel model) {
+                updateView(model);
+                return;
+            }
+
+
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
+                super.onFailure(t);
+            }
+
+        });
+        if(missionName.getText() == "") showBlank();
+
+    }
+
+    private void updateView(CurrentMissionModel model)
+    {
+        this.missionDesc.setText(model.Description.toString());
+        this.missionName.setText(model.Name.toString());
+    }
+
+    public void abortCurrentMission() {
+
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        //only for testing
+        UserMissionModel model = new UserMissionModel(username, "");
+        Call<ResponseBody> call = service.AbortCurrentMission(model);
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
+            @Override
+            public void onSuccess(ResponseBody model)
             {
-                dialog.dismiss();
-                showBlank();
+                Toast toast = Toast.makeText(getActivity(), "Aborted !", Toast.LENGTH_LONG);
+                toast.show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
             }
         });
-        dialog.show();
+
     }
+
+  //  @OnClick(R.id.acomplish_mission_button)
+  //  public void accomplishMission()
+ //   {
+
+   // }
 
     @OnClick(R.id.map_button)
     public void showMap()
@@ -86,5 +194,12 @@ public class CurrentMissionFragment extends Fragment
     {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    class AbortMissionAction implements DelegateAction {
+        public void ExecuteAction(){
+            abortCurrentMission();
+            showBlank();
+        }
     }
 }

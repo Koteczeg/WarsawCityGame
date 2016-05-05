@@ -11,6 +11,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.warsawcitygamescommunication.Services.AccountService;
+import com.warsawcitygamescommunication.Services.MissionsService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.io.IOException;
@@ -87,6 +88,13 @@ public class RestServicesModule {
     @Singleton
     AccountService provideAccountService(Retrofit retrofit) {
         AccountService service = retrofit.create(AccountService.class);
+        return service;
+    }
+
+    @Provides
+    @Singleton
+    MissionsService provideMissionService(Retrofit retrofit) {
+        MissionsService service = retrofit.create(MissionsService.class);
         return service;
     }
 

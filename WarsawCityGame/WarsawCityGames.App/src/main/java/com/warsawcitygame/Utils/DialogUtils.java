@@ -14,10 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.ResponseBody;
+import com.warsawcitygame.Activities.LoginActivity;
+import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.R;
+import com.warsawcitygames.models.UserMissionModel;
 
 import java.io.IOError;
 import java.util.InputMismatchException;
+
+import retrofit.Call;
 
 public class DialogUtils
 {
@@ -136,11 +142,9 @@ public class DialogUtils
         ((TextView)dialog.findViewById(R.id.error_msg)).setText(text);
         Button ok = ((Button)dialog.findViewById(R.id.error_dismiss));
         ok.setText("OK");
-        ok.setOnClickListener(new View.OnClickListener()
-        {
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
@@ -148,7 +152,7 @@ public class DialogUtils
         return dialog;
     }
 
-    public static Dialog RaiseDialogAbortMissionConfirmation(Context context, Activity activity)
+    public static Dialog RaiseDialogAbortMissionConfirmation(Context context, final Activity activity, final DelegateAction action)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -158,11 +162,9 @@ public class DialogUtils
         final Button negativeButton = (Button)dialogView.findViewById(R.id.negativeButton);
         final Dialog dialog = builder.create();
 
-        negativeButton.setOnClickListener(new View.OnClickListener()
-        {
+        negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
@@ -170,13 +172,15 @@ public class DialogUtils
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO abort mission
+                if(action != null) action.ExecuteAction();
                 dialog.dismiss();
             }
         });
         dialog.show();
         return dialog;
     }
+
+
 
     public static void RaiseAchievementDialog(String msg, Context context)
     {
