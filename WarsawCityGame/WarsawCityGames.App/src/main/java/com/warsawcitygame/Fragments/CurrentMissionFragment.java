@@ -27,6 +27,8 @@ import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -35,6 +37,7 @@ import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+import static com.warsawcitygame.Utils.DialogUtils.RaiseAchievementDialog;
 import static com.warsawcitygame.Utils.DialogUtils.RaiseDialogAbortMissionConfirmation;
 
 public class CurrentMissionFragment extends Fragment
@@ -42,6 +45,7 @@ public class CurrentMissionFragment extends Fragment
     Button abortMissionButton;
     Button mapButton;
     Button accomplishMissionButton;
+    Dialog dialog;
 
     TextView missionDesc;
     TextView missionName;
@@ -81,23 +85,7 @@ public class CurrentMissionFragment extends Fragment
         accomplishMissionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setCancelable(false);
-                dialog.setContentView(R.layout.dialog_popup_information);
-                TextView text = ButterKnife.findById(dialog, R.id.text_dialog);
-                text.setText(R.string.missionAcomplishedMessage);
-                Button dialogButton = ButterKnife.findById(dialog, R.id.btn_dialog);
-                dialogButton.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        dialog.dismiss();
-                        showBlank();
-                    }
-                });
-                dialog.show();
+                accomplishCurrentMission();
             }
         });
 
@@ -106,17 +94,61 @@ public class CurrentMissionFragment extends Fragment
         return rootView;
     }
 
-   // @OnClick(R.id.abort_mission_button)
-  //  public void abortMission()
-  //  {
+    private void showLoadingDialog(){
+        dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
+    }
 
-   // }
+    private void accomplishCurrentMission()
+    {
+        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        UserMissionModel model = new UserMissionModel(username, "");
+        Call<ResponseBody> call = service.AccomplishCurrentMission(model);
+
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
+            @Override
+            public void onSuccess(ResponseBody model)
+            {
+            }
+
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
+                if(response.code() == 200)
+                {
+                    RaiseAchievementDialog("Well Done !",getActivity());
+                    showBlank();
+                }
+                if (response.code() == 400)
+                {
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error ");
+                } else
+                {
+                    super.onResponse(response, retrofit);
+                }
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
+            }
+        });
+    }
 
     private void checkForCurrentMission()
     {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         //only for testing
         Call<CurrentMissionModel> call = service.GetCurrentMission(username);
+        showLoadingDialog();
         call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity()) {
             @Override
             public void onSuccess(CurrentMissionModel model) {
@@ -131,11 +163,19 @@ public class CurrentMissionFragment extends Fragment
                 if (response.code() == 400) {
                     showBlank();
                 }
+                if(dialog != null)
+                {
+                    dialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                if(dialog != null)
+                {
+                    dialog.dismiss();
+                }
                 super.onFailure(t);
             }
         });
@@ -160,7 +200,9 @@ public class CurrentMissionFragment extends Fragment
             {
                 Toast toast = Toast.makeText(getActivity(), "Aborted !", Toast.LENGTH_LONG);
                 toast.show();
+                showBlank();
             }
+
 
             @Override
             public void onFailure(Throwable t) {
@@ -170,12 +212,6 @@ public class CurrentMissionFragment extends Fragment
         });
 
     }
-
-  //  @OnClick(R.id.acomplish_mission_button)
-  //  public void accomplishMission()
- //   {
-
-   // }
 
     @OnClick(R.id.map_button)
     public void showMap()
@@ -200,7 +236,6 @@ public class CurrentMissionFragment extends Fragment
     class AbortMissionAction implements DelegateAction {
         public void ExecuteAction(){
             abortCurrentMission();
-           // showBlank();
         }
     }
 }

@@ -106,5 +106,33 @@ namespace WarsawCityGamesServer.Services.Controllers
             return Ok();
         }
 
+        [Route("AccomplishCurrentMission"), HttpPost]
+        public IHttpActionResult AccomplishCurrentMission(PlayerMissionDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest();
+            }
+
+            var player = context.Players.Include(x => x.CurrentMission).FirstOrDefault(x => x.User.UserName == dto.UserName);
+            if (player == null)
+            {
+                return BadRequest();
+            }
+
+            if (player.CurrentMission == null)
+            {
+                return BadRequest("You don't have a mission to accomplish !");
+             
+            }
+            else
+            {
+                //player.Exp += player.CurrentMission.ExpReward;  <-- generate error, why ?
+                player.CurrentMission = null;
+            }
+            context.SaveChanges();
+            return Ok();
+        }
+
     }
 }

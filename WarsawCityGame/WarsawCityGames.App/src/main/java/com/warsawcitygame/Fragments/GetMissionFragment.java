@@ -126,14 +126,7 @@ public class GetMissionFragment extends Fragment
             {
                 if (response.code() == 400)
                 {
-                    try
-                    {
-                        DialogUtils.RaiseDialogShowError(getActivity(), "An error occured",extractErrorMessage(response)).show();
-
-                    } catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Warning", "You already have a mission !");
                 } else
                 {
                     super.onResponse(response, retrofit);
