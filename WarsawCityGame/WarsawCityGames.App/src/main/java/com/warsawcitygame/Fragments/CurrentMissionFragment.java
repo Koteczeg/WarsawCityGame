@@ -89,6 +89,13 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         checkForCurrentMission();
         return rootView;
@@ -163,8 +170,7 @@ public class CurrentMissionFragment extends Fragment
                 if (response.code() == 400) {
                     showBlank();
                 }
-                if(dialog != null)
-                {
+                if (dialog != null) {
                     dialog.dismiss();
                 }
             }
@@ -172,8 +178,7 @@ public class CurrentMissionFragment extends Fragment
             @Override
             public void onFailure(Throwable t) {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
-                if(dialog != null)
-                {
+                if (dialog != null) {
                     dialog.dismiss();
                 }
                 super.onFailure(t);
@@ -211,13 +216,6 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
-    }
-
-    @OnClick(R.id.map_button)
-    public void showMap()
-    {
-        Intent intent = new Intent(getActivity(), MapsActivity.class);
-        startActivity(intent);
     }
 
     private void showBlank()
