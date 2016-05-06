@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserMissionModel
 {
-    @SerializedName("UserName")
+    @SerializedName("userName")
     public String UserName;
 
-    @SerializedName("MissionName")
+    @SerializedName("missionName")
     public String MissionName;
 
     public UserMissionModel(String userName, String missionName)

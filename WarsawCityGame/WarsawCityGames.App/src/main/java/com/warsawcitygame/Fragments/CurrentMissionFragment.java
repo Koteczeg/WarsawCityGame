@@ -58,8 +58,6 @@ public class CurrentMissionFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
-
-
     }
 
 	@Override
@@ -70,7 +68,7 @@ public class CurrentMissionFragment extends Fragment
         mapButton = ButterKnife.findById(rootView, R.id.map_button);
         accomplishMissionButton = ButterKnife.findById(rootView, R.id.accomplishMissionButton);
         missionDesc = ButterKnife.findById(rootView,R.id.missionDesc);
-        missionName = ButterKnife.findById(rootView,R.id.missionDesc);
+        missionName = ButterKnife.findById(rootView,R.id.missionName);
 
         abortMissionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,25 +117,28 @@ public class CurrentMissionFragment extends Fragment
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         //only for testing
         Call<CurrentMissionModel> call = service.GetCurrentMission(username);
-        call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity())
-        {
+        call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity()) {
             @Override
             public void onSuccess(CurrentMissionModel model) {
-                updateView(model);
-                return;
             }
 
+            @Override
+            public void onResponse(Response<CurrentMissionModel> response, Retrofit retrofit) {
 
+                if (response.code() == 200) {
+                    updateView(response.body());
+                }
+                if (response.code() == 400) {
+                    showBlank();
+                }
+            }
 
             @Override
             public void onFailure(Throwable t) {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
-
         });
-        if(missionName.getText() == "") showBlank();
-
     }
 
     private void updateView(CurrentMissionModel model)
@@ -199,7 +200,7 @@ public class CurrentMissionFragment extends Fragment
     class AbortMissionAction implements DelegateAction {
         public void ExecuteAction(){
             abortCurrentMission();
-            showBlank();
+           // showBlank();
         }
     }
 }

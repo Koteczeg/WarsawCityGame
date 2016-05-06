@@ -128,7 +128,7 @@ public class GetMissionFragment extends Fragment
                 {
                     try
                     {
-                        DialogUtils.RaiseDialogShowError(getContext(), "An error occured",extractErrorMessage(response)).show();
+                        DialogUtils.RaiseDialogShowError(getActivity(), "An error occured",extractErrorMessage(response)).show();
 
                     } catch (IOException e)
                     {

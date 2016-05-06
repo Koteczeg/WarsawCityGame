@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class CurrentMissionModel
 {
-    @SerializedName("Name")
+    @SerializedName("name")
     public String Name;
 
-    @SerializedName("Description")
+    @SerializedName("description")
     public String Description;
 
-    @SerializedName("ExpReward")
+    @SerializedName("expReward")
     public String ExpReward;
 
     public CurrentMissionModel(String Name, String Description, String ExpReward)

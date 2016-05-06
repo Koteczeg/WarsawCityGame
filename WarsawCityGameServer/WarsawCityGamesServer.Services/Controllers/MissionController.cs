@@ -57,18 +57,20 @@ namespace WarsawCityGamesServer.Services.Controllers
             return Ok();
         }
 
-        [Route("GetCurrentMission"), HttpPost]
-        public IHttpActionResult GetCurrentMission(PlayerMissionDto dto)
+        [Route("GetCurrentMission")]
+        [HttpGet]
+        public IHttpActionResult GetCurrentMission(string username)
         {
-            if (dto == null) return BadRequest();
-            var player = context.Players.Include("CurrentMission").FirstOrDefault(x => x.User.UserName == dto.UserName);
+            if (username == null) return BadRequest();
+            var player = context.Players.Include("CurrentMission").FirstOrDefault(x => x.User.UserName == username);
             if (player == null)
             {
                 return BadRequest();
             }
             var mission = player.CurrentMission;
             if (mission == null) return BadRequest("You don't have a current mission");
-            return Ok(mission);
+            CurrentMissionDto dto = new CurrentMissionDto(mission.Name, mission.Description, mission.ExpReward.ToString());
+            return Ok(dto);
         }
 
         [Route("GetAllMissions"), HttpGet]
