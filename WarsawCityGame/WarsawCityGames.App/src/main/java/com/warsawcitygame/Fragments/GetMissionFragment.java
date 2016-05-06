@@ -238,7 +238,7 @@ public class GetMissionFragment extends Fragment
         placePicTab = new int[]{R.drawable.ppolitechniki, R.drawable.warsawcentral, R.drawable.wisla};
         placeDescriptionTab = new String[]{"Visit main building of Warsaw University of Technology","Go to the Warsaw central station.", "Get to the Wisła river and try to catch some fish."};
         placeExpTab = new String[]{"EXP: 200", "EXP: 500", "EXP: 300"};
-        placeNameTab = new String[] {"WarsawUniversityOfTechnology", "WarsawCentralStation", "Wisla"};
+        placeNameTab = new String[] {"Warsaw University Of Technology", "Warsaw Central Station", "Wisla"};
     }
 
     private void initializeReferences(View rootView)
