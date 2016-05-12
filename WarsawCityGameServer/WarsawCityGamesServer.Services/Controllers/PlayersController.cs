@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
-using WarsawCityGamesServer.Common.Enums;
-using WarsawCityGamesServer.Entities.Context;
+using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.Players;
 
@@ -14,15 +12,13 @@ namespace WarsawCityGamesServer.Services.Controllers
     [RoutePrefix("Players")]
     public class PlayersController : ApiController
     {
-        private readonly CityGamesContext context;
-        private readonly UserManager<User, string> userManager;
+        private readonly IPlayerService service;
         private readonly IMapper mapper;
 
-        public PlayersController(CityGamesContext context, UserManager<User, string> userManager, IMapper mapper)
+        public PlayersController(IMapper mapper, IPlayerService service)
         {
-            this.context = context;
-            this.userManager = userManager;
             this.mapper = mapper;
+            this.service = service;
         }
 
         [AllowAnonymous]
@@ -33,24 +29,14 @@ namespace WarsawCityGamesServer.Services.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var player = mapper.Map<Player>(newPlayer);
-            player.Level = context.Levels.FirstOrDefault(x=>x.Id==1);
-            player.Exp = 0;
-            var user = new User { UserName = newPlayer.UserName };
-            if (context.Users.Any(u => user.UserName == u.UserName))
+            if (!service.CheckUsernameAvailability(newPlayer.UserName))
             {
                 return BadRequest("This username has been already taken. Try another one.");
             }
-            context.Players.Add(player);
-            player.User = user;
-            var result = await userManager.CreateAsync(user, newPlayer.Password);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-            userManager.AddToRole(user.Id, Role.Player.ToString());
-            context.SaveChanges();
-            return Ok();
+            var player = mapper.Map<Player>(newPlayer);
+
+            var result = await service.AddPlayer(player, newPlayer.UserName, newPlayer.Password);
+            return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

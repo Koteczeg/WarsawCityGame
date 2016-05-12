@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarsawCityGamesServer.Model
 		{E83ACFCD-1FCB-4D55-BC75-136ED3AEA983} = {E83ACFCD-1FCB-4D55-BC75-136ED3AEA983}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarsawCityGamesServer.DataAccess", "WarsawCityGamesServer.DataAccess\WarsawCityGamesServer.DataAccess.csproj", "{76285842-CF7E-40CA-B32D-90789AE7137C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{5AFB1E01-6751-4CD0-ABC2-65AB63C59F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AFB1E01-6751-4CD0-ABC2-65AB63C59F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AFB1E01-6751-4CD0-ABC2-65AB63C59F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76285842-CF7E-40CA-B32D-90789AE7137C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76285842-CF7E-40CA-B32D-90789AE7137C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76285842-CF7E-40CA-B32D-90789AE7137C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76285842-CF7E-40CA-B32D-90789AE7137C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

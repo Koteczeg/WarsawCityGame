@@ -15,6 +15,8 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using WarsawCityGamesServer.DataAccess.DataAccessServices.Instances;
+using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.Players;
@@ -35,15 +37,22 @@ namespace WarsawCityGamesServer.Services
             //GlobalConfiguration.Configure(WebApiConfig.Register);
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<CityGamesContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
+
             builder.RegisterWebApiFilterProvider(config);
-            var mapperConfig = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Player, PlayerRegisterDto>().ReverseMap();
-            });
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Player, PlayerRegisterDto>();
+                cfg.CreateMap<PlayerRegisterDto, Player>().
+                    ForMember(dest => dest.Exp,
+                        opts => opts.MapFrom(src => 0));
+            }); //TODO split into different functions
+
             builder.Register(@void => mapperConfig).AsSelf().SingleInstance();
             builder.Register(context => context.Resolve<MapperConfiguration>()
             .CreateMapper(context.Resolve))
             .As<IMapper>()
-            .InstancePerLifetimeScope();                  
+            .InstancePerLifetimeScope();
+            builder.RegisterType<PlayerService>().As<IPlayerService>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             RegisterIdentity(app, builder);
             builder.RegisterWebApiFilterProvider(config);
@@ -55,7 +64,7 @@ namespace WarsawCityGamesServer.Services
             app.UseAutofacWebApi(config);
             ConfigureOAuth(app);
             app.UseWebApi(config);
-            
+
         }
 
 

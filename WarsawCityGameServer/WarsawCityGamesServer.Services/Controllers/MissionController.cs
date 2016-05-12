@@ -1,13 +1,8 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Microsoft.AspNet.Identity;
-using WarsawCityGamesServer.Common.Enums;
 using WarsawCityGamesServer.Entities.Context;
-using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.Missions;
-using System.Collections;
 using System.Data.Entity;
 
 namespace WarsawCityGamesServer.Services.Controllers

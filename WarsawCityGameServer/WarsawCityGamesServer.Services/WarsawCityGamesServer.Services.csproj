@@ -179,6 +179,10 @@
       <Project>{E83ACFCD-1FCB-4D55-BC75-136ED3AEA983}</Project>
       <Name>WarsawCityGamesServer.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WarsawCityGamesServer.DataAccess\WarsawCityGamesServer.DataAccess.csproj">
+      <Project>{76285842-CF7E-40CA-B32D-90789AE7137C}</Project>
+      <Name>WarsawCityGamesServer.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WarsawCityGamesServer.Entities\WarsawCityGamesServer.Entities.csproj">
       <Project>{C45CA7DC-FE60-4C69-B6FA-6F8C96B3A560}</Project>
       <Name>WarsawCityGamesServer.Entities</Name>
