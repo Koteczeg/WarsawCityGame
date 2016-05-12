@@ -50,7 +50,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error);
+                    ModelState.AddModelError(string.Empty, error);
                 }
             }
             if (ModelState.IsValid)

@@ -15,6 +15,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using WarsawCityGamesServer.DataAccess;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Instances;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Context;
@@ -53,6 +54,8 @@ namespace WarsawCityGamesServer.Services
             .As<IMapper>()
             .InstancePerLifetimeScope();
             builder.RegisterType<PlayerService>().As<IPlayerService>();
+            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
+
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             RegisterIdentity(app, builder);
             builder.RegisterWebApiFilterProvider(config);

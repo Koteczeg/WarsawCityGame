@@ -11,10 +11,10 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         private readonly UnitOfWork unitOfWork;
         private readonly UserManager<User, string> userManager;
 
-        public PlayerService(CityGamesContext context, UserManager<User, string> userManager)
+        public PlayerService(UnitOfWork unitOfWork, UserManager<User, string> userManager)
         {
             this.userManager = userManager;
-            unitOfWork = new UnitOfWork(context);
+            this.unitOfWork=unitOfWork;
         }
 
         public async Task<IdentityResult> AddPlayer(Player player, string username, string password)
