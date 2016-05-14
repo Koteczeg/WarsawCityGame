@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -15,18 +16,26 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.MyApplication;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends Activity
 {
+    public static final String USER_LOGGED_IN_KEY = "userLoggedIn";
+    @Inject SharedPreferences preferences;
+
+
     @Bind(R.id.splashElementsLayout) View splashElementsLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        ((MyApplication) getApplication()).getServicesComponent().inject(this);
         ButterKnife.bind(this);
         setAnimation();
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
@@ -45,7 +54,14 @@ public class SplashActivity extends Activity
             @Override
             public void run()
             {
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent i;
+                if (preferences.contains(USER_LOGGED_IN_KEY) && preferences.getBoolean(USER_LOGGED_IN_KEY, true))
+                {
+                    i = new Intent(getApplicationContext(), MainActivity.class);
+                } else
+                {
+                    i = new Intent(getApplicationContext(), LoginActivity.class);
+                }
                 startActivity(i);
 
                 finish();
