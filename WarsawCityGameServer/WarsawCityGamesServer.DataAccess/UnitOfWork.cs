@@ -9,7 +9,7 @@ using WarsawCityGamesServer.Entities.Entities;
 
 namespace WarsawCityGamesServer.DataAccess
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private readonly CityGamesContext context;
 
@@ -30,15 +30,15 @@ namespace WarsawCityGamesServer.DataAccess
             this.context = context;
         }
 
-        public GenericRepository<User> UserRepository => userRepository ?? (userRepository = new GenericRepository<User>(context));
-        public GenericRepository<Level> LevelRepository => levelRepository ?? (levelRepository = new GenericRepository<Level>(context));
-        public GenericRepository<Player> PlayerRepository => playerRepository ?? (playerRepository = new GenericRepository<Player>(context));
-        public GenericRepository<PlayerAchievements> PlayerAchievementsRepository => playerAchievementsRepository ?? (playerAchievementsRepository = new GenericRepository<PlayerAchievements>(context));
-        public GenericRepository<Achievement> AchievementRepository => achievementRepository ?? (achievementRepository = new GenericRepository<Achievement>(context));
-        public GenericRepository<Friendships> FriendshipsRepository => friendshipsRepository ?? (friendshipsRepository = new GenericRepository<Friendships>(context));
-        public GenericRepository<Mission> MissionRepository => missionRepository ?? (missionRepository = new GenericRepository<Mission>(context));
-        public GenericRepository<MissionHistory> MissionHistoryRepository => missionHistoryRepository ?? (missionHistoryRepository = new GenericRepository<MissionHistory>(context));
-        public GenericRepository<Place> PlaceRepository => placeRepository ?? (placeRepository = new GenericRepository<Place>(context));
+        public virtual GenericRepository<User> UserRepository => userRepository ?? (userRepository = new GenericRepository<User>(context));
+        public virtual GenericRepository<Level> LevelRepository => levelRepository ?? (levelRepository = new GenericRepository<Level>(context));
+        public virtual GenericRepository<Player> PlayerRepository => playerRepository ?? (playerRepository = new GenericRepository<Player>(context));
+        public virtual GenericRepository<PlayerAchievements> PlayerAchievementsRepository => playerAchievementsRepository ?? (playerAchievementsRepository = new GenericRepository<PlayerAchievements>(context));
+        public virtual GenericRepository<Achievement> AchievementRepository => achievementRepository ?? (achievementRepository = new GenericRepository<Achievement>(context));
+        public virtual GenericRepository<Friendships> FriendshipsRepository => friendshipsRepository ?? (friendshipsRepository = new GenericRepository<Friendships>(context));
+        public virtual GenericRepository<Mission> MissionRepository => missionRepository ?? (missionRepository = new GenericRepository<Mission>(context));
+        public virtual GenericRepository<MissionHistory> MissionHistoryRepository => missionHistoryRepository ?? (missionHistoryRepository = new GenericRepository<MissionHistory>(context));
+        public virtual GenericRepository<Place> PlaceRepository => placeRepository ?? (placeRepository = new GenericRepository<Place>(context));
 
 
         public void Save()
@@ -78,6 +78,11 @@ namespace WarsawCityGamesServer.DataAccess
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        ~UnitOfWork()
+        {
+            Dispose(false);
         }
     }
 }

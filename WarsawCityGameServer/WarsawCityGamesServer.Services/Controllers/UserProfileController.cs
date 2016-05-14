@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.UserData;
@@ -14,28 +17,25 @@ namespace WarsawCityGamesServer.Services.Controllers
     [RoutePrefix("UserProfile")]
     public class UserProfileController : ApiController
     {
-        private readonly CityGamesContext _context;
-        private readonly UserManager<User, string> _userManager;
         private readonly IMapper _mapper;
+        private readonly IUserProfileService _service;
 
-        public UserProfileController(CityGamesContext context, UserManager<User, string> userManager, IMapper mapper)
+        public UserProfileController(IUserProfileService service, IMapper mapper)
         {
-            _context = context;
-            _userManager = userManager;
+            _service = service;
             _mapper = mapper;
         }
 
         [Authorize]
         [Route("GetProfileData")]
         [HttpGet]
-        public IHttpActionResult GetProfileData(string username)
+        public async Task<IHttpActionResult> GetProfileData(string username)
         {
             PlayerProfileDto dto = new PlayerProfileDto();
-            Player player = _context.Players.Include(x=>x.Level).FirstOrDefault(x => x.User.UserName == username);
+            Player player = await _service.FindPlayer(username);
             if (player == null)
                 return BadRequest();
-            Level level = player.Level;
-            dto.Level = _context.Levels.FirstOrDefault(x => x.Id == level.Id)?.Name;
+            dto.Level = await _service.GetPlayerLevelName(username);
             dto.Description = player.Description;
             dto.Email = player.User.Email;
             dto.Exp = player.Exp;
@@ -48,37 +48,17 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [HttpPost]
         [Route("ChangePassword")]
-        public IHttpActionResult ChangePassword(string username, string currentPassword, string newPassword)
+        public async Task<IHttpActionResult> ChangePassword(string username, string currentPassword, string newPassword)
         {
-            Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
-            if (player == null)
-                return BadRequest();
-            var identity = _userManager.ChangePassword(player.User.Id, currentPassword, newPassword);
-            return identity != null || _userManager.CheckPassword(player.User, newPassword) ? (IHttpActionResult)Ok() : BadRequest();
+            return await _service.TryChangePassword(username, currentPassword, newPassword) ? (IHttpActionResult)Ok() : BadRequest();
         }
 
         [Authorize]
         [HttpPost]
         [Route("ChangeUserData")]
-        public IHttpActionResult ChangeUserData(PlayerProfileDto dto)
+        public async Task<IHttpActionResult> ChangeUserData(PlayerProfileDto dto)
         {
-            string username = dto.Username;
-            Player player = _context.Players.FirstOrDefault(x => x.User.UserName == username);
-            if (player == null)
-                return BadRequest();
-            try
-            {
-                player.Description = dto.Description;
-                player.User.Email = dto.Email;
-                player.Name = dto.Name;
-                player.UserImage = dto.UserImage;
-                _context.SaveChanges();
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description, dto.UserImage) ? (IHttpActionResult)Ok() : BadRequest();
         }
     }
 }

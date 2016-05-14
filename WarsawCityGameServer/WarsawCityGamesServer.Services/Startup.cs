@@ -38,6 +38,7 @@ namespace WarsawCityGamesServer.Services
             //GlobalConfiguration.Configure(WebApiConfig.Register);
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<CityGamesContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<UnitOfWork>().AsImplementedInterfaces();
 
             builder.RegisterWebApiFilterProvider(config);
             var mapperConfig = new MapperConfiguration(cfg =>
@@ -55,6 +56,7 @@ namespace WarsawCityGamesServer.Services
             .InstancePerLifetimeScope();
             builder.RegisterType<PlayerService>().As<IPlayerService>();
             builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
+            builder.RegisterType<UserProfileService>().As<IUserProfileService>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             RegisterIdentity(app, builder);
