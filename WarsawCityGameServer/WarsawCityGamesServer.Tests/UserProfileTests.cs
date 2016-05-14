@@ -23,13 +23,7 @@ namespace WarsawCityGamesServer.Tests
     public class UserProfileTests
     {
         [Fact]
-        public void Test1()
-        {
-
-        }
-
-        [Fact]
-        public async Task Test2()
+        public async Task GetUserDataTest()
         {
             var levels = new Level[]
             {
@@ -53,20 +47,9 @@ namespace WarsawCityGamesServer.Tests
                     UserImage = null, Level = levels[0], User = users[0]
                 }
             };
-            
-
-            var mockContext = new Mock<CityGamesContext>();
-            mockContext.Setup(m => m.Players).ReturnsDbSet(players);
-            mockContext.Setup(m => m.Levels).ReturnsDbSet(levels);
-            mockContext.Setup(m => m.Set<Player>()).Returns(MockDbSetHelper.CreateMockSet(players.AsQueryable()).Object);
-            mockContext.Setup(m => m.Set<Level>()).Returns(MockDbSetHelper.CreateMockSet(levels.AsQueryable()).Object);
-            var mockStore = new Mock<UserStore<User>>(mockContext.Object);
-            var mockUserManager = new Mock<UserManager<User,string>>(mockStore.Object);
-            var mockUnitOfWork = new Mock<UnitOfWork>(mockContext.Object);
-            var mockPlayersRep = new Mock<GenericRepository<Player>>(mockContext.Object);
-            var mockLevelsRep = new Mock<GenericRepository<Level>>(mockContext.Object);
-            mockUnitOfWork.Setup(m => m.LevelRepository).Returns(mockLevelsRep.Object);
-            mockUnitOfWork.Setup(m => m.PlayerRepository).Returns(mockPlayersRep.Object);
+            var mockContext = MockHelper.MockDatabase(players, levels);
+            var mockUserManager = MockHelper.MockUserManager(mockContext.Object);
+            var mockUnitOfWork = MockHelper.MockUnitOfWork(mockContext.Object);
             IUserProfileService service = new UserProfileService(mockUnitOfWork.Object, mockUserManager.Object);
             IMapper mapper = CreateMapper();
             var controller = new UserProfileController(service, mapper);
@@ -74,7 +57,6 @@ namespace WarsawCityGamesServer.Tests
             var res = await controller.GetProfileData("bakalam");
             var ret = res as OkNegotiatedContentResult<PlayerProfileDto>;
             var dto = ret?.Content;
-
 
             Assert.NotNull(res);
             Assert.NotNull(ret);
