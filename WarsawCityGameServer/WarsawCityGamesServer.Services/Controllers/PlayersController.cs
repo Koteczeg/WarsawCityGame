@@ -48,10 +48,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             if (result.Succeeded) return null;
             if (result.Errors != null)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error);
-                }
+                ModelState.AddModelError(string.Empty, "Your password is incorrect. It must contain at least 6 characters (letters and numbers).");
             }
             if (ModelState.IsValid)
             {

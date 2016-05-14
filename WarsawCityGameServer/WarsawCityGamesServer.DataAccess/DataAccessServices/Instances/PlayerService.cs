@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Identity;
 using WarsawCityGamesServer.Common.Enums;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
-using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
 namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
 {

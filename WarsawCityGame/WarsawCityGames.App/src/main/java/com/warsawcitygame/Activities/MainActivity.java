@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -34,6 +35,8 @@ import com.warsawcitygame.Utils.MyApplication;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
@@ -45,9 +48,11 @@ public class MainActivity extends Activity
     @Bind(R.id.menu_layout) DrawerLayout menuLayout;
     @Bind(R.id.menu_list) ListView menuList;
     @Bind(R.id.frame_container) FrameLayout frameLayout;
+    @Inject SharedPreferences preferences;
 
     private ActionBarDrawerToggle menuToggle;
     private Fragment activeFragment = null;
+    public static final String USER_LOGGED_IN_KEY = "userLoggedIn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -190,7 +195,9 @@ public class MainActivity extends Activity
 
     private void logout()
     {
-        //TODO async logout
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putBoolean(USER_LOGGED_IN_KEY, false);
+        edit.apply();
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();

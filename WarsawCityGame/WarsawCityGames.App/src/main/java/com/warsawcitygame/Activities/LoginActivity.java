@@ -21,7 +21,6 @@ import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygamescommunication.Services.AccountService;
 
 import javax.inject.Inject;
-
 import butterknife.OnClick;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,6 +44,7 @@ public class LoginActivity extends AppCompatActivity
     private static final String GRANT_TYPE = "password";
     public static final String ACCESS_TOKEN_KEY = "accessToken";
     public static final String USERNAME_KEY = "username";
+    public static final String USER_LOGGED_IN_KEY = "userLoggedIn";
 
 
     @Override
@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity
                     SharedPreferences.Editor edit = preferences.edit();
                     edit.putString(ACCESS_TOKEN_KEY, token);
                     edit.putString(USERNAME_KEY, username);
+                    edit.putBoolean(USER_LOGGED_IN_KEY, true);
                     edit.apply();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);

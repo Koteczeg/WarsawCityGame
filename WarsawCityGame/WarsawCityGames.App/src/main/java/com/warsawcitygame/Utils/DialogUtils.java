@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -125,18 +126,15 @@ public class DialogUtils
 
     public static Dialog RaiseDialogLoading(Context context, boolean show)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_loading, null);
-        builder.setView(dialogView);
-        final Dialog dialog = builder.create();
+        final Dialog dialog = new Dialog(context, R.style.TransparentStretchedDialog);
+        dialog.setContentView(R.layout.dialog_loading);
         if(show)dialog.show();
         return dialog;
     }
 
     public static Dialog RaiseDialogShowError(Context context, String title, String text)
     {
-        final Dialog dialog= new Dialog(context);
+        final Dialog dialog = new Dialog(context, R.style.TransparentStretchedDialog);
         dialog.setContentView(R.layout.dialog_error);
         ((TextView)dialog.findViewById(R.id.error_title)).setText(title);
         ((TextView)dialog.findViewById(R.id.error_msg)).setText(text);
