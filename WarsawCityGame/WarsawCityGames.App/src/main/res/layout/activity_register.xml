@@ -31,7 +31,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:maxLength="10"
+                android:maxLength="15"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:maxLength="10"
+                android:maxLength="15"
                 android:ems="10"
                 android:id="@+id/password"
                 android:fontFamily="sans-serif-light"
@@ -89,7 +89,7 @@
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/email"
-                android:maxLength="10"
+                android:maxLength="20"
                 android:fontFamily="sans-serif-light"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"

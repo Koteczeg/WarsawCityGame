@@ -126,8 +126,9 @@ public class ProfileFragment extends Fragment
         });
     }
 
-    private void setProfileView(PlayerProfileDataModel model){
-        userDescriptionEditable.setText(model.Description);
+    private void setProfileView(PlayerProfileDataModel model)
+    {
+        userDescriptionEditable.setText(model.Description.isEmpty() ? "Type some quote or sth about you." : model.Description);
         userEmailEditable.setText(model.Email);
         userLoginEditable.setText(model.Name);
         userLevelEditable.setText(model.Level);

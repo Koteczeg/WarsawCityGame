@@ -9,7 +9,7 @@ import com.warsawcitygamescommunication.Infrastructure.RestServicesModule;
 public class MyApplication extends Application
 {
 
-    private static String baseUrl = "http://warsawcitygamesapi.azurewebsites.net/";
+    private static String baseUrl = "http://warsawcitygames.azurewebsites.net/";
 
     private ApplicationComponent servicesComponent;
     private static Context context;
