@@ -19,7 +19,7 @@ using WarsawCityGamesServer.Models.UserData;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("UserProfile")]
     public class UserProfileController : ApiController
     {
@@ -32,22 +32,16 @@ namespace WarsawCityGamesServer.Services.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("GetProfileData")]
         [HttpGet]
         public async Task<IHttpActionResult> GetProfileData(string username)
         {
-            PlayerProfileDto dto = new PlayerProfileDto();
             Player player = await _service.FindPlayer(username);
             if (player == null)
                 return BadRequest();
+            var dto = _mapper.Map<PlayerProfileDto>(player);
             dto.Level = await _service.GetPlayerLevelName(username);
-            dto.Description = player.Description;
-            dto.Email = player.User.Email;
-            dto.Exp = player.Exp;
-            dto.Name = player.Name;
-            dto.UserImage = player.UserImage;
-            dto.Username = player.User.UserName;
             return Ok(dto);
         }
 

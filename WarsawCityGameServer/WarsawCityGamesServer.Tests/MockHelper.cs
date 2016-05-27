@@ -21,7 +21,7 @@ namespace WarsawCityGamesServer.Tests
             IEnumerable<PlayerAchievements> playerAchievements = null, IEnumerable<Friendships> friendships = null, IEnumerable<Mission> missions = null, IEnumerable<MissionHistory> missionHistory = null,
             IEnumerable<Place> places = null)
         {
-            var mock = new Mock<CityGamesContext>();
+            var mock = new Mock<CityGamesContext>("test");
             SetMocks(mock, players, levels, achievements, playerAchievements, friendships, missions, missionHistory, places);
             return mock;
         }
@@ -48,7 +48,6 @@ namespace WarsawCityGamesServer.Tests
             var v = values ?? new List<T>();
             var dbMock = MockDbSetHelper.CreateMockSet(v.AsQueryable());
             context.Setup(expression).Returns(dbMock.Object);
-            context.Setup(m => m.Set<T>()).Returns(dbMock.Object);
         }
 
         public static Mock<UnitOfWork> MockUnitOfWork(CityGamesContext context)
@@ -79,7 +78,7 @@ namespace WarsawCityGamesServer.Tests
 
         public static Mock<UserManager<User, string>> MockUserManager(CityGamesContext context)
         {
-            Mock<UserStore<User>> store = new Mock<UserStore<User>>(context);
+            Mock<IUserStore<User>> store = new Mock<IUserStore<User>>(context);
             return new Mock<UserManager<User, string>>(store.Object);
         }
     }
