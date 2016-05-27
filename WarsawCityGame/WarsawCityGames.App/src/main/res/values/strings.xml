@@ -61,4 +61,5 @@
     <string name="login_failed">Login failed</string>
     <string name="missionAcomplishedMessage">Mission accomplished, Well Done !</string>
     <string name="missionSettingSuccess">Mission added !</string>
+    <string name="title_activity_crop_user_image">CropUserImageActivity</string>
 </resources>

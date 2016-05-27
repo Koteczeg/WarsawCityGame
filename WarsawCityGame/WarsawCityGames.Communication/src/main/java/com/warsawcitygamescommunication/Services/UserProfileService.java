@@ -1,5 +1,6 @@
 package com.warsawcitygamescommunication.Services;
 
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygames.models.PlayerProfileDataModel;
 
@@ -8,7 +9,9 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Query;
 
 public interface UserProfileService {
@@ -28,4 +31,7 @@ public interface UserProfileService {
 
     @GET("UserProfile/GetProfileData")
     Call<PlayerProfileDataModel> GetProfileData(@Query("username") String username);
+
+    @POST("UserProfile/Upload")
+    Call<ResponseBody> UpdateImage(@Body byte[] file);
 }

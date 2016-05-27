@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -13,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.okhttp.ResponseBody;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
+import com.warsawcitygame.Activities.CropUserImageActivity;
 import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.R;
@@ -45,7 +50,6 @@ public class ProfileFragment extends Fragment
     private Dialog dialog;
     private CircleImageView profilePic;
     @Inject UserProfileService service;
-
     @Inject SharedPreferences preferences;
 
 	public ProfileFragment(){}
@@ -79,7 +83,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                ////TODO
+                Intent intent = new Intent(getActivity(), CropUserImageActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -143,6 +148,10 @@ public class ProfileFragment extends Fragment
         userLoginEditable.setText(model.Name);
         userLevelEditable.setText(model.Level);
         userExpEditable.setText(model.Exp + " exp");
+        if(model.UserImage!=null)
+        {
+            profilePic.setImageBitmap(BitmapFactory.decodeByteArray(model.UserImage, 0, model.UserImage.length));
+        }
         if(dialog!=null)
         {
             dialog.dismiss();

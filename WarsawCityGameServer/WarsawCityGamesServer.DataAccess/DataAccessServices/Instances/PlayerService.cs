@@ -32,6 +32,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return result;
         }
 
+
         public bool CheckUsernameAvailability(string username)
         {
             return !unitOfWork.UserRepository.Any(u => username == u.UserName);

@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -43,6 +49,14 @@ namespace WarsawCityGamesServer.Services.Controllers
             dto.UserImage = player.UserImage;
             dto.Username = player.User.UserName;
             return Ok(dto);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("Upload")]
+        public async Task<IHttpActionResult> Upload([FromBody]byte[] file)
+        {
+            return await _service.TryUpdateProfilePicture(file, User.Identity.Name) ? (IHttpActionResult)Ok() : BadRequest();
         }
 
         [Authorize]

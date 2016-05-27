@@ -56,9 +56,9 @@ public class RestServicesModule {
                 return chain.proceed(builder.build());
             }
         });
-        client.setConnectTimeout(20, TimeUnit.SECONDS);
-        client.setReadTimeout(20, TimeUnit.SECONDS);
-        client.setWriteTimeout(20, TimeUnit.SECONDS);
+        client.setConnectTimeout(3, TimeUnit.MINUTES);
+        client.setReadTimeout(3, TimeUnit.MINUTES);
+        client.setWriteTimeout(3, TimeUnit.MINUTES);
         return client;
     }
 

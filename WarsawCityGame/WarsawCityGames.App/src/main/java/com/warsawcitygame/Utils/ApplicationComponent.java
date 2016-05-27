@@ -1,5 +1,6 @@
 package com.warsawcitygame.Utils;
 
+import com.warsawcitygame.Activities.CropUserImageActivity;
 import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.Activities.MapsActivity;
@@ -39,5 +40,6 @@ public interface ApplicationComponent {
     void inject(HallOfFameFragment fragment);
     void inject(LoadingFragment fragment);
     void inject(ProfileFragment fragment);
+    void inject(CropUserImageActivity activity);
 
 }
