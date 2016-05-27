@@ -24,7 +24,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
 
         public async Task<Player> FindPlayer(string username)
         {
-            return await Task.Run(() => _unitOfWork.PlayerRepository.DbSet.First(x => x.User.UserName.Equals(username)));
+            return await Task.Run(() => _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(x => x.User.UserName.Equals(username)));
         }
 
         public async Task<bool> TryChangePassword(string username, string oldPassword, string newPassword)

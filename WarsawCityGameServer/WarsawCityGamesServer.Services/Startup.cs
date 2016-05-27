@@ -21,6 +21,7 @@ using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.Players;
+using WarsawCityGamesServer.Models.UserData;
 using WarsawCityGamesServer.Services;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -47,6 +48,9 @@ namespace WarsawCityGamesServer.Services
                 cfg.CreateMap<PlayerRegisterDto, Player>().
                     ForMember(dest => dest.Exp,
                         opts => opts.MapFrom(src => 0));
+                cfg.CreateMap<Player, PlayerProfileDto>()
+                    .ForMember(dto => dto.Username, p => p.MapFrom(pl => pl.User.UserName))
+                    .ForMember(dto=>dto.Level, p=>p.MapFrom(s=>"Słoik"));
             }); //TODO split into different functions
 
             builder.Register(@void => mapperConfig).AsSelf().SingleInstance();
