@@ -11,16 +11,16 @@
         android:background="#00BFFF"
         android:gravity="center"
         android:orientation="vertical">
-        <com.warsawcitygame.CustomControls.MLRoundedImageView
-            android:id="@+id/profilePic"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:id="@+id/profilePic"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/tiger"/>
         <TextView
-            android:id="@+id/userNameTop"
+            android:id="@+id/userNameEditable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/userNameEditable"
+                    android:id="@+id/userNameTop"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -143,6 +143,7 @@
                     android:inputType="textPassword"
                     android:id="@+id/userPasswordEditable"
                     android:textColor="#000000"
+                    android:text="supersecret"
                     android:textSize="20sp" />
             </LinearLayout>
 

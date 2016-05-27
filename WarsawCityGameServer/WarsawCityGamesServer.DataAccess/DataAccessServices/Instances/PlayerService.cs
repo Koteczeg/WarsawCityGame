@@ -16,10 +16,10 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             this.unitOfWork=unitOfWork;
         }
 
-        public async Task<IdentityResult> AddPlayer(Player player, string username, string password)
+        public async Task<IdentityResult> AddPlayer(Player player, string username, string password, string email)
         {
             player.Level = unitOfWork.LevelRepository.GetFirst(x => x.Id == 1);
-            var user = new User { UserName = username };
+            var user = new User { UserName = username, Email=email };
             unitOfWork.PlayerRepository.Insert(player);
             player.User = user;
             var result = await userManager.CreateAsync(user, password);
