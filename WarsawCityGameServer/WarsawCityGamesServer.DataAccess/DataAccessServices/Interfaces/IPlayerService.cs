@@ -6,7 +6,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
 {
     public interface IPlayerService
     {
-        Task<IdentityResult> AddPlayer(Player user, string username, string password);
+        Task<IdentityResult> AddPlayer(Player user, string username, string password, string email);
         bool CheckUsernameAvailability(string username);
     }
 }

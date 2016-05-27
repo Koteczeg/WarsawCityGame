@@ -35,7 +35,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             }
             var player = mapper.Map<Player>(newPlayer);
 
-            var result = await service.AddPlayer(player, newPlayer.UserName, newPlayer.Password);
+            var result = await service.AddPlayer(player, newPlayer.UserName, newPlayer.Password, newPlayer.Email);
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 

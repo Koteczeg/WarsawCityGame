@@ -29,6 +29,7 @@ import com.warsawcitygamescommunication.Services.UserProfileService;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -42,7 +43,7 @@ public class ProfileFragment extends Fragment
     private TextView userLevelEditable;
     private TextView userExpEditable;
     private Dialog dialog;
-
+    private CircleImageView profilePic;
     @Inject UserProfileService service;
 
     @Inject SharedPreferences preferences;
@@ -73,6 +74,14 @@ public class ProfileFragment extends Fragment
         setDialogListener(userLoginEditable, "Enter new login", new ChangeDataAction());
         setDialogListener(userEmailEditable, "Enter new email", new ChangeDataAction());
         setPasswordDialogListener(userPasswordEditable, new ChangePasswordAction());
+        profilePic.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ////TODO
+            }
+        });
     }
 
     private void setPasswordDialogListener(final TextView textView, DelegateActionParams<String> action){
@@ -102,6 +111,7 @@ public class ProfileFragment extends Fragment
         userEmailEditable=ButterKnife.findById(root, R.id.userEmailEditable);
         userLevelEditable=ButterKnife.findById(root, R.id.userRank);
         userExpEditable = ButterKnife.findById(root, R.id.userExp);
+        profilePic = ButterKnife.findById(root, R.id.profilePic);
     }
 
     private void getData(){

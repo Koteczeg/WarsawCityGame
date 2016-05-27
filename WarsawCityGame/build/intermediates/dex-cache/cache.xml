@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\WarsawCityGame\WarsawCityGame\WarsawCityGames.App\build\intermediates\exploded-aar\com.theartofdev.edmodo\android-image-cropper\2.1.4\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="205c64fa4be224f4cbae8914a4f42db897709d77">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\WarsawCityGame\WarsawCityGame\WarsawCityGames.App\build\intermediates\pre-dexed\debug\com.theartofdev.edmodo-android-image-cropper-2.1.4_d36f6f3915b279d5012d022c24402464a1d693e0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dell\Desktop\WarsawCityGame\WarsawCityGame\WarsawCityGame\WarsawCityGames.App\build\intermediates\exploded-aar\com.isseiaoki\simplecropview\1.1.4\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dd1da81bab446923f39ec2f4bcf21ad7eeeb7806">
+        <dex dex="C:\Users\Dell\Desktop\WarsawCityGame\WarsawCityGame\WarsawCityGame\WarsawCityGames.App\build\intermediates\pre-dexed\debug\com.isseiaoki-simplecropview-1.1.4_40a9ce7aa5006ef11e4d18a9b63162836a653476.jar" />
+    </item>
+
+</items>
