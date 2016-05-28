@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity
     public static final String USERNAME_KEY = "username";
     public static final String USER_LOGGED_IN_KEY = "userLoggedIn";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private void showIncorrectCredentialsDialog() {
-        dialog = DialogUtils.RaiseDialogShowError(registerButton.getContext(), "An error occured","Make sure your credentials are correct and try again. Login failed.");
+        dialog = DialogUtils.RaiseDialogShowError(registerButton.getContext(), getString(R.string.loginFailedtext),getString(R.string.loginFailedDescription));
         dialog.show();
     }
 
@@ -153,8 +152,6 @@ public class LoginActivity extends AppCompatActivity
 
         return !(login.isEmpty() || password.isEmpty());
     }
-
-
 
     private void fadeOutLayout()
     {

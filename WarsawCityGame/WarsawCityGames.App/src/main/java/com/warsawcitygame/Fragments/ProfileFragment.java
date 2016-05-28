@@ -6,37 +6,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.ResponseBody;
-import com.theartofdev.edmodo.cropper.CropImageActivity;
-import com.theartofdev.edmodo.cropper.CropImageView;
 import com.warsawcitygame.Activities.CropUserImageActivity;
 import com.warsawcitygame.Activities.LoginActivity;
-import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DelegateActionParams;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygames.models.PlayerProfileDataModel;
-import com.warsawcitygamescommunication.Services.AccountService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.inject.Inject;
 
@@ -56,10 +43,8 @@ public class ProfileFragment extends Fragment
     private TextView userExpEditable;
     private Dialog dialog;
     private CircleImageView profilePic;
-    @Inject
-    UserProfileService service;
-    @Inject
-    SharedPreferences preferences;
+    @Inject UserProfileService service;
+    @Inject SharedPreferences preferences;
 
     public ProfileFragment()
     {
@@ -78,17 +63,15 @@ public class ProfileFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         initializeTextViews(rootView);
         setListeners();
-        TextView t = (TextView) rootView.findViewById(R.id.userNameTop);
-        t.setText(preferences.getString(LoginActivity.USERNAME_KEY, null));
-        getData();
+        getData(rootView);
         return rootView;
     }
 
     private void setListeners()
     {
-        setDialogListener(userDescriptionEditable, "Enter new description", new ChangeDataAction());
-        setDialogListener(userLoginEditable, "Enter new login", new ChangeDataAction());
-        setDialogListener(userEmailEditable, "Enter new email", new ChangeDataAction());
+        setDialogListener(userDescriptionEditable, getActivity().getString(R.string.enterNewDescription), new ChangeDataAction());
+        setDialogListener(userLoginEditable, getActivity().getString(R.string.enterLoginText), new ChangeDataAction());
+        setDialogListener(userEmailEditable, getActivity().getString(R.string.enterEmailText), new ChangeDataAction());
         setPasswordDialogListener(userPasswordEditable, new ChangePasswordAction());
         profilePic.setOnClickListener(new View.OnClickListener()
         {
@@ -108,7 +91,7 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                DialogUtils.RaiseChangePasswordDialog(getActivity(), getActivity(), new String[]{"Podaj stare hasło:", "Podaj nowe hasło"}, textView, new ChangePasswordAction());
+                DialogUtils.RaiseChangePasswordDialog(getActivity(), getActivity(), new String[]{getActivity().getString(R.string.writeOldPasswordText), getActivity().getString(R.string.writeNewPasswordText)}, textView, new ChangePasswordAction());
             }
         });
     }
@@ -136,8 +119,10 @@ public class ProfileFragment extends Fragment
         profilePic = ButterKnife.findById(root, R.id.profilePic);
     }
 
-    private void getData()
+    private void getData(View rootView)
     {
+        TextView t = (TextView)rootView.findViewById(R.id.userNameTop);
+        t.setText(preferences.getString(LoginActivity.USERNAME_KEY, null));
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         showLoadingDialog();
         Call<String> call = service.GetUserImage();
@@ -147,7 +132,6 @@ public class ProfileFragment extends Fragment
             public void onSuccess(String model)
             {
             }
-
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit)
             {
@@ -168,7 +152,6 @@ public class ProfileFragment extends Fragment
                     // TODO
                 }
             }
-
             @Override
             public void onFailure(Throwable t)
             {
@@ -181,7 +164,6 @@ public class ProfileFragment extends Fragment
             @Override
             public void onSuccess(PlayerProfileDataModel model) {
             }
-
             @Override
             public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit) {
                 setProfileView(response.body());
@@ -193,6 +175,7 @@ public class ProfileFragment extends Fragment
                 super.onFailure(t);
             }
         });
+        dialog.dismiss();
     }
 
     private void setProfileView(PlayerProfileDataModel model)
@@ -224,17 +207,17 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
+                DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangedUserDataText));
             }
 
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
             {
                 if (!response.isSuccess())
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.errorChangingUserData));
                 else
                 {
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangingUserDatatext));
                     if (dialog != null)
                     {
                         dialog.dismiss();
@@ -251,7 +234,7 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.errorChangingUserDataText));
             }
         });
     }
@@ -271,14 +254,14 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user password.");
+                DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangedPasswordText));
             }
 
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
             {
                 if (!response.isSuccess())
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user password");
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.errorChangingPasswordText));
                 else
                 {
                     if (dialog != null)
@@ -286,7 +269,7 @@ public class ProfileFragment extends Fragment
                         dialog.dismiss();
                         dialog = null;
                     }
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user password");
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangingPasswordText));
                 }
             }
 
@@ -298,7 +281,7 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user password");
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.changePasswordFailedText));
             }
         });
     }

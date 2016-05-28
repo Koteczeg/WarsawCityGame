@@ -65,12 +65,11 @@ public class RestServicesModule {
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient client, Gson gson) {
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
-        return retrofit;
     }
 
     @Provides
@@ -87,22 +86,19 @@ public class RestServicesModule {
     @Provides
     @Singleton
     AccountService provideAccountService(Retrofit retrofit) {
-        AccountService service = retrofit.create(AccountService.class);
-        return service;
+        return retrofit.create(AccountService.class);
     }
 
     @Provides
     @Singleton
     MissionsService provideMissionService(Retrofit retrofit) {
-        MissionsService service = retrofit.create(MissionsService.class);
-        return service;
+        return retrofit.create(MissionsService.class);
     }
 
 
     @Provides
     @Singleton
     UserProfileService provideUserProfileServeice(Retrofit retrofit){
-        UserProfileService service = retrofit.create(UserProfileService.class);
-        return service;
+        return retrofit.create(UserProfileService.class);
     }
 }

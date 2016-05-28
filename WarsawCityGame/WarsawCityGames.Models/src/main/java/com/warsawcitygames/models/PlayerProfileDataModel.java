@@ -2,9 +2,6 @@ package com.warsawcitygames.models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by bakala12 on 04.05.2016.
- */
 public class PlayerProfileDataModel {
     @SerializedName("email")
     public String Email;

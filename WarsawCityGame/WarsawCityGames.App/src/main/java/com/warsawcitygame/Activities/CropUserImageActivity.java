@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -15,26 +14,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.system.ErrnoException;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.ResponseBody;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.io.ByteArrayOutputStream;
@@ -47,15 +39,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit.Call;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class CropUserImageActivity extends AppCompatActivity
 {
     private CropImageView mCropImageView;
     private Uri mCropImageUri;
-    @Inject
-    UserProfileService service;
+    @Inject UserProfileService service;
     private Dialog dialog;
 
     @Override
@@ -63,14 +52,20 @@ public class CropUserImageActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_user_image);
         ((MyApplication) getApplication()).getServicesComponent().inject(this);
+        prepareCropper();
+    }
+
+    private void prepareCropper()
+    {
         mCropImageView = (CropImageView)  findViewById(R.id.CropImageView);
+        assert mCropImageView != null;
         mCropImageView.setAspectRatio(1, 1);
         mCropImageView.setFixedAspectRatio(true);
         mCropImageView.setCropShape(CropImageView.CropShape.OVAL);
     }
 
     /**
-     * On load image button click, start pick  image chooser activity.
+     * On load image button click, start pick image chooser activity.
      */
     public void onLoadImageClick(View view) {
         startActivityForResult(getPickImageChooserIntent(), 200);
@@ -80,25 +75,20 @@ public class CropUserImageActivity extends AppCompatActivity
      * Crop the image and set it back to the  cropping view.
      */
     public void onCropImageClick(View view) {
-        Bitmap cropped =  mCropImageView.getCroppedImage(100, 100);
+        Bitmap cropped = mCropImageView.getCroppedImage(100, 100);
         if (cropped != null)
         {
             showLoadingDialog();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            cropped.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String encoded = getEncodedCroppedImage(cropped);
             Call<ResponseBody> call = service.UpdateImage(encoded);
 
             call.enqueue(new CustomCallback<ResponseBody>(this) {
-
                 @Override
                 public void onSuccess(ResponseBody model)
                 {
                     dialog.dismiss();
                     finish();
                 }
-
                 @Override
                 public void onFailure(Throwable t) {
                     dialog.dismiss();
@@ -107,6 +97,14 @@ public class CropUserImageActivity extends AppCompatActivity
                 }
             });
         }
+    }
+
+    private String getEncodedCroppedImage(Bitmap cropped)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        cropped.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     private void showLoadingDialog(){
@@ -125,20 +123,14 @@ public class CropUserImageActivity extends AppCompatActivity
     protected void onActivityResult(int  requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             Uri imageUri =  getPickImageResultUri(data);
-
-            // For API >= 23 we need to check specifically that we have permissions to read external storage,
-            // but we don't know if we need to for the URI so the simplest is to try open the stream and see if we get error.
             boolean requirePermissions = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                     isUriRequiresPermissions(imageUri)) {
-
-                // request permissions and handle the result in onRequestPermissionsResult()
                 requirePermissions = true;
                 mCropImageUri = imageUri;
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             }
-
             if (!requirePermissions) {
                 mCropImageView.setImageUriAsync(imageUri);
             }
@@ -146,7 +138,7 @@ public class CropUserImageActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             mCropImageView.setImageUriAsync(mCropImageUri);
         } else {
@@ -160,14 +152,10 @@ public class CropUserImageActivity extends AppCompatActivity
      * All possible sources are added to the  intent chooser.
      */
     public Intent getPickImageChooserIntent() {
-
-// Determine Uri of camera image to  save.
         Uri outputFileUri =  getCaptureImageOutputUri();
-
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager =  getPackageManager();
 
-// collect all camera intents
         Intent captureIntent = new  Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         List<ResolveInfo> listCam =  packageManager.queryIntentActivities(captureIntent, 0);
         for (ResolveInfo res : listCam) {
@@ -179,8 +167,6 @@ public class CropUserImageActivity extends AppCompatActivity
             }
             allIntents.add(intent);
         }
-
-// collect all gallery intents
         Intent galleryIntent = new  Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         List<ResolveInfo> listGallery =  packageManager.queryIntentActivities(galleryIntent, 0);
@@ -190,8 +176,6 @@ public class CropUserImageActivity extends AppCompatActivity
             intent.setPackage(res.activityInfo.packageName);
             allIntents.add(intent);
         }
-
-// the main intent is the last in the  list (fucking android) so pickup the useless one
         Intent mainIntent =  allIntents.get(allIntents.size() - 1);
         for (Intent intent : allIntents) {
             if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {
@@ -200,13 +184,8 @@ public class CropUserImageActivity extends AppCompatActivity
             }
         }
         allIntents.remove(mainIntent);
-
-// Create a chooser from the main  intent
         Intent chooserIntent =  Intent.createChooser(mainIntent, "Select source");
-
-// Add all other intents
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,  allIntents.toArray(new Parcelable[allIntents.size()]));
-
         return chooserIntent;
     }
 
@@ -244,13 +223,14 @@ public class CropUserImageActivity extends AppCompatActivity
         try {
             ContentResolver resolver = getContentResolver();
             InputStream stream = resolver.openInputStream(uri);
+            assert stream != null;
             stream.close();
             return false;
         } catch (FileNotFoundException e) {
             if (e.getCause() instanceof ErrnoException) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }

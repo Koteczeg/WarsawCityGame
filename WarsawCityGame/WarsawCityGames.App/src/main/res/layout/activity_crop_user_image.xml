@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_horizontal_margin"
-        android:text="Load Image"
+        android:text="@string/loadImageText"
         android:onClick="onLoadImageClick"/>
 
     <com.theartofdev.edmodo.cropper.CropImageView
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_horizontal_margin"
-        android:text="Update profile image"
+        android:text="@string/updateProfileImageText"
         android:onClick="onCropImageClick"/>
 
 </LinearLayout>

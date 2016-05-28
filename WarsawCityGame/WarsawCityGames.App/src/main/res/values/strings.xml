@@ -62,4 +62,21 @@
     <string name="missionAcomplishedMessage">Mission accomplished, Well Done !</string>
     <string name="missionSettingSuccess">Mission added !</string>
     <string name="title_activity_crop_user_image">CropUserImageActivity</string>
+    <string name="loadImageText">Load Image</string>
+    <string name="updateProfileImageText">Update profile image</string>
+    <string name="enterEmailText">Enter new email</string>
+    <string name="enterLoginText">Enter new login</string>
+    <string name="enterNewDescription">Enter new description</string>
+    <string name="writeOldPasswordText">Podaj stare hasło:</string>
+    <string name="writeNewPasswordText">Podaj nowe hasło</string>
+    <string name="changePasswordFailedText">Cannot change user password</string>
+    <string name="successChangingPasswordText">Successfully changed user password</string>
+    <string name="errorChangingPasswordText">Cannot change user password</string>
+    <string name="successChangedPasswordText">Successfully changed user password.</string>
+    <string name="errorChangingUserDataText">Cannot change user data</string>
+    <string name="successChangingUserDatatext">Successfully changed user data</string>
+    <string name="errorChangingUserData">Cannot change user data</string>
+    <string name="successChangedUserDataText">Successfully changed user data</string>
+    <string name="loginFailedDescription">Make sure your credentials are correct and try again. Login failed.</string>
+    <string name="loginFailedtext">An error occured</string>
 </resources>
