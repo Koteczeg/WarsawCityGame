@@ -161,7 +161,7 @@ public class ProfileFragment extends Fragment
 
     private void ChangeData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString(), null);
+        Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString());
         showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
             @Override

@@ -67,7 +67,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("ChangeUserData")]
         public async Task<IHttpActionResult> ChangeUserData(PlayerProfileDto dto)
         {
-            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description, dto.UserImage) ? (IHttpActionResult)Ok() : BadRequest();
+            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description) ? (IHttpActionResult)Ok() : BadRequest();
         }
     }
 }
