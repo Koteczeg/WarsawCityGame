@@ -20,6 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.system.ErrnoException;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -88,11 +89,12 @@ public class CropUserImageActivity extends AppCompatActivity
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             cropped.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
+            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-            RequestBody requestBody = RequestBody
-                    .create(MediaType.parse("application/octet-stream"), byteArray);
+//            RequestBody requestBody = RequestBody
+//                    .create(MediaType.parse("application/octet-stream"), byteArray);
 
-            Call<ResponseBody> call = service.UpdateImage(requestBody);
+            Call<ResponseBody> call = service.UpdateImage(encoded);
 
             call.enqueue(new CustomCallback<ResponseBody>(this) {
 

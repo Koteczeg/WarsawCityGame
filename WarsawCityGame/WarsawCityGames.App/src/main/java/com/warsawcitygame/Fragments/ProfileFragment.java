@@ -10,9 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.ResponseBody;
@@ -127,42 +129,45 @@ public class ProfileFragment extends Fragment
     private void getData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         showLoadingDialog();
-        Call<ResponseBody> call = service.GetUserImage();
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        Call<String> call = service.GetUserImage();
+        call.enqueue(new CustomCallback<String>(getActivity())
         {
             @Override
-            public void onSuccess(ResponseBody model)
+            public void onSuccess(String model)
             {
             }
 
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            public void onResponse(Response<String> response, Retrofit retrofit)
             {
                 if (response.isSuccess()) {
                     if (response.body() != null) {
                         // display the image data in a ImageView or save it
                         Bitmap bm = null;
-                        try
-                        {
-                            //byte[] a = response.body().bytes();
-                            //bm = BitmapFactory.decodeStream(response.body().byteStream());
-                            InputStream is = new BufferedInputStream(response.body().byteStream());
-                            // get the Image bounds
-                            BitmapFactory.Options options=new BitmapFactory.Options();
-                            options.inJustDecodeBounds = true;
+//                        try
+//                        {
+                            byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
+                            bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
 
-                            bm = BitmapFactory.decodeStream(is,null,options);
-
-//get actual width x height of the image and calculate the scale factor
-                            //options.inSampleSize = getScaleFactor(options.outWidth,options.outHeight,
-                            //        view.getWidth(),view.getHeight());
-
-                            //options.inJustDecodeBounds = false;
-                           // bitmap=BitmapFactory.decodeStream(mUrl.openStream(),null,options);
-                        } catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        }
+//                            //byte[] a = response.body().bytes();
+//                            //bm = BitmapFactory.decodeStream(response.body().byteStream());
+//                            InputStream is = new BufferedInputStream(response.body().byteStream());
+//                            // get the Image bounds
+//                            BitmapFactory.Options options=new BitmapFactory.Options();
+//                            options.inJustDecodeBounds = true;
+//
+//                            bm = BitmapFactory.decodeStream(is,null,options);
+//
+////get actual width x height of the image and calculate the scale factor
+//                            //options.inSampleSize = getScaleFactor(options.outWidth,options.outHeight,
+//                            //        view.getWidth(),view.getHeight());
+//
+//                            //options.inJustDecodeBounds = false;
+//                           // bitmap=BitmapFactory.decodeStream(mUrl.openStream(),null,options);
+//                        } catch (IOException e)
+//                        {
+//                            e.printStackTrace();
+//                        }
                         profilePic.setImageBitmap(bm);
                         dialog.dismiss();
                     } else {

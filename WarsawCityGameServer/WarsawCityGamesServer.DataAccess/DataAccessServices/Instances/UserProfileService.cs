@@ -59,12 +59,12 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return player?.Level?.Name;
         }
 
-        public async Task<bool> TryUpdateProfilePicture(byte[] file, string username)
+        public async Task<bool> TryUpdateProfilePicture(string file, string username)
         {
             try
             {
                     var player = await FindPlayer(username);
-                    player.UserImage = file;
+                    player.UserImage = Convert.FromBase64String(file);
                     _unitOfWork.Save();
                     return true;
             }

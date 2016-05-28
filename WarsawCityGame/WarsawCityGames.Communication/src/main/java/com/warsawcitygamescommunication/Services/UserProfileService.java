@@ -33,8 +33,8 @@ public interface UserProfileService {
     Call<PlayerProfileDataModel> GetProfileData(@Query("username") String username);
 
     @POST("UserProfile/Upload")
-    Call<ResponseBody> UpdateImage(@Body RequestBody file);
+    Call<ResponseBody> UpdateImage(@Body String file);
 
     @GET("UserProfile/GetUserImage")
-    Call<ResponseBody> GetUserImage();
+    Call<String> GetUserImage();
 }

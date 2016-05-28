@@ -49,19 +49,19 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [Route("GetUserImage")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetUserImage()
+        public async Task<string> GetUserImage()
         {
             string username = User.Identity.Name;
             Player player = await _service.FindPlayer(username);
             if (player == null)
-                return BadRequest();
-            return Ok(player.UserImage);
+                return null;
+            return Convert.ToBase64String(player.UserImage);
         }
 
         [Authorize]
         [HttpPost]
         [Route("Upload")]
-        public async Task<IHttpActionResult> Upload([NakedBody]byte[] file)
+        public async Task<IHttpActionResult> Upload([FromBody]string file)
         {
             return await _service.TryUpdateProfilePicture(file, User.Identity.Name) ? (IHttpActionResult)Ok() : BadRequest();
         }

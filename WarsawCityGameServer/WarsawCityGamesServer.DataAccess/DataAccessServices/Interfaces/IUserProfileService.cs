@@ -15,6 +15,6 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
         Task<bool> TryChangePassword(string username, string oldPassword, string newPassword);
         Task<bool> TryChangeUserData(string username, string name, string email, string description);
         Task<string> GetPlayerLevelName(string username);
-        Task<bool> TryUpdateProfilePicture(byte[] file, string username);
+        Task<bool> TryUpdateProfilePicture(string file, string username);
     }
 }
