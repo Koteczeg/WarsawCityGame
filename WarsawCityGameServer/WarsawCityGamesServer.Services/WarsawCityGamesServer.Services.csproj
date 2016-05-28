@@ -202,6 +202,9 @@
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Essentials\EmptyTask.cs" />
+    <Compile Include="Essentials\NakedBodyAttribute.cs" />
+    <Compile Include="Essentials\NakedBodyParameterBinding.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

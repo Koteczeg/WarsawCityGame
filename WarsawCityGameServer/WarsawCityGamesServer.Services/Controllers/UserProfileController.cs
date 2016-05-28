@@ -16,10 +16,11 @@ using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 using WarsawCityGamesServer.Entities.Context;
 using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.UserData;
+using WarsawCityGamesServer.Services.Essentials;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("UserProfile")]
     public class UserProfileController : ApiController
     {
@@ -32,7 +33,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             _mapper = mapper;
         }
 
-        //[Authorize]
+        [Authorize]
         [Route("GetProfileData")]
         [HttpGet]
         public async Task<IHttpActionResult> GetProfileData(string username)
@@ -48,7 +49,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [HttpPost]
         [Route("Upload")]
-        public async Task<IHttpActionResult> Upload([FromBody]byte[] file)
+        public async Task<IHttpActionResult> Upload([NakedBody]byte[] file)
         {
             return await _service.TryUpdateProfilePicture(file, User.Identity.Name) ? (IHttpActionResult)Ok() : BadRequest();
         }

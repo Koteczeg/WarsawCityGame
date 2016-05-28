@@ -29,7 +29,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
 
         public async Task<Player> FindPlayer(string username)
         {
-            return await Task.Run(() => _unitOfWork.PlayerRepository.Context.Players.First(x => x.User.UserName.Equals(username)));
+            return await Task.Run(() => _unitOfWork.PlayerRepository.DbSet.First(x => x.User.UserName.Equals(username)));
         }
 
         public async Task<bool> TryChangePassword(string username, string oldPassword, string newPassword)
@@ -64,13 +64,10 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         {
             try
             {
-                using (MemoryStream ms = new MemoryStream())
-                {
                     var player = await FindPlayer(username);
                     player.UserImage = file;
                     _unitOfWork.Save();
                     return true;
-                }
             }
             catch (DbEntityValidationException e)
             {

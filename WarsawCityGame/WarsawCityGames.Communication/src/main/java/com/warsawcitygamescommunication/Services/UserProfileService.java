@@ -9,6 +9,7 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
@@ -33,5 +34,5 @@ public interface UserProfileService {
     Call<PlayerProfileDataModel> GetProfileData(@Query("username") String username);
 
     @POST("UserProfile/Upload")
-    Call<ResponseBody> UpdateImage(@Body byte[] file);
+    Call<ResponseBody> UpdateImage(@Body RequestBody file);
 }

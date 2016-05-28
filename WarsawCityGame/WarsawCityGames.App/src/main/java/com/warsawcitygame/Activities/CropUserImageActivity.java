@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.ResponseBody;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -78,7 +79,7 @@ public class CropUserImageActivity extends AppCompatActivity
      * Crop the image and set it back to the  cropping view.
      */
     public void onCropImageClick(View view) {
-        Bitmap cropped =  mCropImageView.getCroppedImage(500, 500);
+        Bitmap cropped =  mCropImageView.getCroppedImage(100, 100);
         if (cropped != null)
         {
 
@@ -87,7 +88,11 @@ public class CropUserImageActivity extends AppCompatActivity
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             cropped.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            Call<ResponseBody> call = service.UpdateImage(byteArray);
+
+            RequestBody requestBody = RequestBody
+                    .create(MediaType.parse("application/octet-stream"), byteArray);
+
+            Call<ResponseBody> call = service.UpdateImage(requestBody);
 
             call.enqueue(new CustomCallback<ResponseBody>(this) {
 

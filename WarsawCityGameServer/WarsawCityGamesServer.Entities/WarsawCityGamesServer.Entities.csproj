@@ -91,6 +91,10 @@
     <Compile Include="Migrations\201605032220479_PlayerExtensions.Designer.cs">
       <DependentUpon>201605032220479_PlayerExtensions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605281212199_DetachingRequired.cs" />
+    <Compile Include="Migrations\201605281212199_DetachingRequired.Designer.cs">
+      <DependentUpon>201605281212199_DetachingRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605032220479_PlayerExtensions.resx">
       <DependentUpon>201605032220479_PlayerExtensions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605281212199_DetachingRequired.resx">
+      <DependentUpon>201605281212199_DetachingRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
