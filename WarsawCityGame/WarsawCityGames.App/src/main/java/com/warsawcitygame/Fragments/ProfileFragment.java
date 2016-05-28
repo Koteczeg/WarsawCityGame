@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,10 @@ import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygamescommunication.Services.AccountService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.inject.Inject;
 
@@ -122,23 +127,76 @@ public class ProfileFragment extends Fragment
     private void getData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         showLoadingDialog();
-        Call<PlayerProfileDataModel> call = service.GetProfileData(username);
-        call.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity()) {
+        Call<ResponseBody> call = service.GetUserImage();
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
             @Override
-            public void onSuccess(PlayerProfileDataModel model) {
+            public void onSuccess(ResponseBody model)
+            {
             }
 
             @Override
-            public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit) {
-                setProfileView(response.body());
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
+                if (response.isSuccess()) {
+                    if (response.body() != null) {
+                        // display the image data in a ImageView or save it
+                        Bitmap bm = null;
+                        try
+                        {
+                            //byte[] a = response.body().bytes();
+                            //bm = BitmapFactory.decodeStream(response.body().byteStream());
+                            InputStream is = new BufferedInputStream(response.body().byteStream());
+                            // get the Image bounds
+                            BitmapFactory.Options options=new BitmapFactory.Options();
+                            options.inJustDecodeBounds = true;
+
+                            bm = BitmapFactory.decodeStream(is,null,options);
+
+//get actual width x height of the image and calculate the scale factor
+                            //options.inSampleSize = getScaleFactor(options.outWidth,options.outHeight,
+                            //        view.getWidth(),view.getHeight());
+
+                            //options.inJustDecodeBounds = false;
+                           // bitmap=BitmapFactory.decodeStream(mUrl.openStream(),null,options);
+                        } catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        profilePic.setImageBitmap(bm);
+                        dialog.dismiss();
+                    } else {
+                        // TODO
+                    }
+                } else {
+                    // TODO
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Throwable t)
+            {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
+//        Call<ResponseBody> call = service.GetProfileData(username);
+//        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
+//            @Override
+//            public void onSuccess(ResponseBody model) {
+//            }
+//
+//            @Override
+//            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+//                setProfileView(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+//                super.onFailure(t);
+//            }
+//        });
     }
 
     private void setProfileView(PlayerProfileDataModel model)
@@ -161,7 +219,7 @@ public class ProfileFragment extends Fragment
 
     private void ChangeData(){
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString(), null);
+        Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString());
         showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
             @Override

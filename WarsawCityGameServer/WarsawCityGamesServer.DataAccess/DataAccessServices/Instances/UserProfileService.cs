@@ -42,14 +42,13 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return result != null;
         }
 
-        public async Task<bool> TryChangeUserData(string username, string name, string email, string description, byte[] userImage)
+        public async Task<bool> TryChangeUserData(string username, string name, string email, string description)
         {
             Player player = await FindPlayer(username);
             if (player == null) return false;
             player.Name = name;
             player.User.Email = email;
             player.Description = description;
-            player.UserImage = userImage;
             await Task.Run(() => _unitOfWork.Save());
             return true;
         }

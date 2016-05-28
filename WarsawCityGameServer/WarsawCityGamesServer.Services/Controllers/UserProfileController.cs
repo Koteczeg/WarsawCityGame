@@ -36,14 +36,26 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [Route("GetProfileData")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetProfileData(string username)
+        public async Task<IHttpActionResult> GetProfileData()
         {
+            string username = User.Identity.Name;
             Player player = await _service.FindPlayer(username);
             if (player == null)
                 return BadRequest();
             var dto = _mapper.Map<PlayerProfileDto>(player);
             dto.Level = await _service.GetPlayerLevelName(username);
             return Ok(dto);
+        }
+        [Authorize]
+        [Route("GetUserImage")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserImage()
+        {
+            string username = User.Identity.Name;
+            Player player = await _service.FindPlayer(username);
+            if (player == null)
+                return BadRequest();
+            return Ok(player.UserImage);
         }
 
         [Authorize]
@@ -67,7 +79,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("ChangeUserData")]
         public async Task<IHttpActionResult> ChangeUserData(PlayerProfileDto dto)
         {
-            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description, dto.UserImage) ? (IHttpActionResult)Ok() : BadRequest();
+            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description) ? (IHttpActionResult)Ok() : BadRequest();
         }
     }
 }
