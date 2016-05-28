@@ -16,7 +16,7 @@ namespace WarsawCityGamesServer.Services.Essentials
         {
             var taskSource = new TaskCompletionSource<AsyncVoid>();
             taskSource.SetResult(default(AsyncVoid));
-            return taskSource.Task as Task;
+            return taskSource.Task;
         }
 
         private struct AsyncVoid

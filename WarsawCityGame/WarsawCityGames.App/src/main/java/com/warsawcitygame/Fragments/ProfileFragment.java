@@ -56,13 +56,18 @@ public class ProfileFragment extends Fragment
     private TextView userExpEditable;
     private Dialog dialog;
     private CircleImageView profilePic;
-    @Inject UserProfileService service;
-    @Inject SharedPreferences preferences;
+    @Inject
+    UserProfileService service;
+    @Inject
+    SharedPreferences preferences;
 
-	public ProfileFragment(){}
+    public ProfileFragment()
+    {
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
     }
@@ -73,7 +78,7 @@ public class ProfileFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         initializeTextViews(rootView);
         setListeners();
-        TextView t= (TextView)rootView.findViewById(R.id.userNameTop);
+        TextView t = (TextView) rootView.findViewById(R.id.userNameTop);
         t.setText(preferences.getString(LoginActivity.USERNAME_KEY, null));
         getData();
         return rootView;
@@ -96,20 +101,25 @@ public class ProfileFragment extends Fragment
         });
     }
 
-    private void setPasswordDialogListener(final TextView textView, DelegateActionParams<String> action){
-        textView.setOnClickListener(new View.OnClickListener() {
+    private void setPasswordDialogListener(final TextView textView, DelegateActionParams<String> action)
+    {
+        textView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 DialogUtils.RaiseChangePasswordDialog(getActivity(), getActivity(), new String[]{"Podaj stare hasło:", "Podaj nowe hasło"}, textView, new ChangePasswordAction());
             }
         });
     }
 
-    private void setDialogListener(final TextView textView,final String text, final DelegateAction action)
+    private void setDialogListener(final TextView textView, final String text, final DelegateAction action)
     {
-        textView.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 DialogUtils.RaiseDialogEditTextView(getActivity(), getActivity(), ((TextView) v).getText().toString(), text, textView, action);
             }
         });
@@ -117,16 +127,17 @@ public class ProfileFragment extends Fragment
 
     private void initializeTextViews(View root)
     {
-        userDescriptionEditable=ButterKnife.findById(root,R.id.userDescriptionEditable);
-        userLoginEditable=ButterKnife.findById(root,R.id.userNameEditable);
-        userPasswordEditable=ButterKnife.findById(root,R.id.userPasswordEditable);
-        userEmailEditable=ButterKnife.findById(root, R.id.userEmailEditable);
-        userLevelEditable=ButterKnife.findById(root, R.id.userRank);
+        userDescriptionEditable = ButterKnife.findById(root, R.id.userDescriptionEditable);
+        userLoginEditable = ButterKnife.findById(root, R.id.userNameEditable);
+        userPasswordEditable = ButterKnife.findById(root, R.id.userPasswordEditable);
+        userEmailEditable = ButterKnife.findById(root, R.id.userEmailEditable);
+        userLevelEditable = ButterKnife.findById(root, R.id.userRank);
         userExpEditable = ButterKnife.findById(root, R.id.userExp);
         profilePic = ButterKnife.findById(root, R.id.profilePic);
     }
 
-    private void getData(){
+    private void getData()
+    {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         showLoadingDialog();
         Call<String> call = service.GetUserImage();
@@ -140,40 +151,20 @@ public class ProfileFragment extends Fragment
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit)
             {
-                if (response.isSuccess()) {
-                    if (response.body() != null) {
-                        // display the image data in a ImageView or save it
-                        Bitmap bm = null;
-//                        try
-//                        {
-                            byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
-                            bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-
-//                            //byte[] a = response.body().bytes();
-//                            //bm = BitmapFactory.decodeStream(response.body().byteStream());
-//                            InputStream is = new BufferedInputStream(response.body().byteStream());
-//                            // get the Image bounds
-//                            BitmapFactory.Options options=new BitmapFactory.Options();
-//                            options.inJustDecodeBounds = true;
-//
-//                            bm = BitmapFactory.decodeStream(is,null,options);
-//
-////get actual width x height of the image and calculate the scale factor
-//                            //options.inSampleSize = getScaleFactor(options.outWidth,options.outHeight,
-//                            //        view.getWidth(),view.getHeight());
-//
-//                            //options.inJustDecodeBounds = false;
-//                           // bitmap=BitmapFactory.decodeStream(mUrl.openStream(),null,options);
-//                        } catch (IOException e)
-//                        {
-//                            e.printStackTrace();
-//                        }
+                if (response.isSuccess())
+                {
+                    if (response.body() != null)
+                    {
+                        byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
+                        Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
                         profilePic.setImageBitmap(bm);
                         dialog.dismiss();
-                    } else {
+                    } else
+                    {
                         // TODO
                     }
-                } else {
+                } else
+                {
                     // TODO
                 }
             }
@@ -185,23 +176,23 @@ public class ProfileFragment extends Fragment
                 super.onFailure(t);
             }
         });
-//        Call<ResponseBody> call = service.GetProfileData(username);
-//        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
-//            @Override
-//            public void onSuccess(ResponseBody model) {
-//            }
-//
-//            @Override
-//            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-//                setProfileView(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
-//                super.onFailure(t);
-//            }
-//        });
+        Call<PlayerProfileDataModel> callData = service.GetProfileData(username);
+        callData.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity()) {
+            @Override
+            public void onSuccess(PlayerProfileDataModel model) {
+            }
+
+            @Override
+            public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit) {
+                setProfileView(response.body());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
+            }
+        });
     }
 
     private void setProfileView(PlayerProfileDataModel model)
@@ -211,66 +202,71 @@ public class ProfileFragment extends Fragment
         userLoginEditable.setText(model.Name);
         userLevelEditable.setText(model.Level);
         userExpEditable.setText(model.Exp + " exp");
-        if(model.UserImage!=null)
-        {
-            profilePic.setImageBitmap(BitmapFactory.decodeByteArray(model.UserImage, 0, model.UserImage.length));
-        }
-        if(dialog!=null)
+        if (dialog != null)
         {
             dialog.dismiss();
             dialog = null;
         }
     }
 
-    private void ChangeData(){
+    private void ChangeData()
+    {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString());
         showLoadingDialog();
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
             @Override
-            public void onSuccess(ResponseBody model) {
-                if(dialog!=null)
+            public void onSuccess(ResponseBody model)
+            {
+                if (dialog != null)
                 {
                     dialog.dismiss();
-                    dialog=null;
+                    dialog = null;
                 }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
             }
 
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
                 if (!response.isSuccess())
                     DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
-                else {
+                else
+                {
                     DialogUtils.RaiseDialogShowError(getActivity(), "Success", "Successfully changed user data");
-                    if(dialog!=null)
+                    if (dialog != null)
                     {
                         dialog.dismiss();
-                        dialog=null;
+                        dialog = null;
                     }
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                if(dialog!=null)
+            public void onFailure(Throwable t)
+            {
+                if (dialog != null)
                 {
                     dialog.dismiss();
-                    dialog=null;
+                    dialog = null;
                 }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user data");
             }
         });
     }
 
-    private void ChangePassword(String currentPassword, String newPassword){
+    private void ChangePassword(String currentPassword, String newPassword)
+    {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         Call<ResponseBody> call = service.ChangePassword(username, currentPassword, newPassword);
         showLoadingDialog();
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
             @Override
-            public void onSuccess(ResponseBody model) {
-                if(dialog!=null)
+            public void onSuccess(ResponseBody model)
+            {
+                if (dialog != null)
                 {
                     dialog.dismiss();
                     dialog = null;
@@ -279,12 +275,13 @@ public class ProfileFragment extends Fragment
             }
 
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-                if(!response.isSuccess())
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
+                if (!response.isSuccess())
                     DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot change user password");
                 else
                 {
-                    if(dialog!=null)
+                    if (dialog != null)
                     {
                         dialog.dismiss();
                         dialog = null;
@@ -294,8 +291,9 @@ public class ProfileFragment extends Fragment
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                if(dialog!=null)
+            public void onFailure(Throwable t)
+            {
+                if (dialog != null)
                 {
                     dialog.dismiss();
                     dialog = null;
@@ -305,11 +303,14 @@ public class ProfileFragment extends Fragment
         });
     }
 
-    private void showLoadingDialog(){
+    private void showLoadingDialog()
+    {
         dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
-        Runnable runnable = new Runnable() {
+        Runnable runnable = new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 dialog.show();
             }
         };
@@ -317,14 +318,18 @@ public class ProfileFragment extends Fragment
         thread.run();
     }
 
-    class ChangeDataAction implements DelegateAction{
-        public void ExecuteAction(){
+    class ChangeDataAction implements DelegateAction
+    {
+        public void ExecuteAction()
+        {
             ChangeData();
         }
     }
 
-    class ChangePasswordAction implements DelegateActionParams<String> {
-        public void ExecuteAction(String[] params){
+    class ChangePasswordAction implements DelegateActionParams<String>
+    {
+        public void ExecuteAction(String[] params)
+        {
             ChangePassword(params[0], params[1]);
         }
     }

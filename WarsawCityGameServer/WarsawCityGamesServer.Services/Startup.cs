@@ -36,12 +36,35 @@ namespace WarsawCityGamesServer.Services
             var builder = new ContainerBuilder();
             var config = new HttpConfiguration();
 
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<CityGamesContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().AsImplementedInterfaces();
 
             builder.RegisterWebApiFilterProvider(config);
+            RegisterAutoMapperConfiguration(builder);
+            RegisterServices(builder);
+            RegisterIdentity(app, builder);
+
+            builder.RegisterWebApiFilterProvider(config);
+            WebApiConfig.Register(config);
+
+            var container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(config);
+            ConfigureOAuth(app);
+            app.UseWebApi(config);
+        }
+
+        private static void RegisterServices(ContainerBuilder builder)
+        {
+            builder.RegisterType<PlayerService>().As<IPlayerService>();
+            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
+            builder.RegisterType<UserProfileService>().As<IUserProfileService>();
+        }
+
+        private static void RegisterAutoMapperConfiguration(ContainerBuilder builder)
+        {
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Player, PlayerRegisterDto>();
@@ -50,33 +73,15 @@ namespace WarsawCityGamesServer.Services
                         opts => opts.MapFrom(src => 0));
                 cfg.CreateMap<Player, PlayerProfileDto>()
                     .ForMember(dto => dto.Username, p => p.MapFrom(pl => pl.User.UserName))
-                    .ForMember(dto=>dto.Level, p=>p.MapFrom(s=>"Słoik"));
-            }); //TODO split into different functions
-
+                    .ForMember(dto => dto.Email, p => p.MapFrom(pl => pl.User.Email))
+                    .ForMember(dto => dto.Level, p => p.MapFrom(s => "Słoik"));
+            });
             builder.Register(@void => mapperConfig).AsSelf().SingleInstance();
             builder.Register(context => context.Resolve<MapperConfiguration>()
-            .CreateMapper(context.Resolve))
-            .As<IMapper>()
-            .InstancePerLifetimeScope();
-            builder.RegisterType<PlayerService>().As<IPlayerService>();
-            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
-            builder.RegisterType<UserProfileService>().As<IUserProfileService>();
-
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            RegisterIdentity(app, builder);
-            builder.RegisterWebApiFilterProvider(config);
-            WebApiConfig.Register(config);
-            var container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-            //GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacWebApi(config);
-            ConfigureOAuth(app);
-            app.UseWebApi(config);
-
+                .CreateMapper(context.Resolve))
+                .As<IMapper>()
+                .InstancePerLifetimeScope();
         }
-
-
 
         [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod")]
         private static void RegisterIdentity(IAppBuilder app, ContainerBuilder builder)

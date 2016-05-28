@@ -83,17 +83,11 @@ public class CropUserImageActivity extends AppCompatActivity
         Bitmap cropped =  mCropImageView.getCroppedImage(100, 100);
         if (cropped != null)
         {
-
-
             showLoadingDialog();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             cropped.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-//            RequestBody requestBody = RequestBody
-//                    .create(MediaType.parse("application/octet-stream"), byteArray);
-
             Call<ResponseBody> call = service.UpdateImage(encoded);
 
             call.enqueue(new CustomCallback<ResponseBody>(this) {

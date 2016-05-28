@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using WarsawCityGamesServer.Entities.Context;
 
@@ -17,7 +13,6 @@ namespace WarsawCityGamesServer.Services.Controllers
         {
             var ctx = new CityGamesContext();
             return ctx.Players.Count().ToString();
-            return "elo";
         }
     }
 }

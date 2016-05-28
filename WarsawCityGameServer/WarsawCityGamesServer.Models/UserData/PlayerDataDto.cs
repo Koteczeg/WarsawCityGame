@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using WarsawCityGamesServer.Entities.Entities;
 
 namespace WarsawCityGamesServer.Models.UserData
 {
@@ -18,7 +17,5 @@ namespace WarsawCityGamesServer.Models.UserData
         public string Description { get; set; }
         [DataMember(Name = "username")]
         public string Username { get; set; }
-        [DataMember(Name = "userImage")]
-        public byte[] UserImage { get; set; }
     }
 }

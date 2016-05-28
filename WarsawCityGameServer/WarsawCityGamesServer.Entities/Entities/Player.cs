@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WarsawCityGamesServer.Entities.Entities
+﻿namespace WarsawCityGamesServer.Entities.Entities
 {
     public class Player : Entity
     {

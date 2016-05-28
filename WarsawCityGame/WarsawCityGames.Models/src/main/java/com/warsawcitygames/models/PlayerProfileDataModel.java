@@ -18,16 +18,13 @@ public class PlayerProfileDataModel {
     public String Description;
     @SerializedName("username")
     public String Username;
-    @SerializedName("userImage")
-    public byte[] UserImage;
 
-    public PlayerProfileDataModel(String email, String name, int exp, String level, String username, byte[] userImage, String description) {
+    public PlayerProfileDataModel(String email, String name, int exp, String level, String username, String description) {
         Email = email;
         Name = name;
         Exp = exp;
         Level = level;
         Username = username;
-        UserImage = userImage;
         Description = description;
     }
 }

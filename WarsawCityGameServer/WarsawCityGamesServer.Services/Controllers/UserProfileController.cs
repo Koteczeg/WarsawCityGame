@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using AutoMapper;
-using Microsoft.AspNet.Identity;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
-using WarsawCityGamesServer.Entities.Context;
-using WarsawCityGamesServer.Entities.Entities;
 using WarsawCityGamesServer.Models.UserData;
-using WarsawCityGamesServer.Services.Essentials;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
@@ -38,8 +25,8 @@ namespace WarsawCityGamesServer.Services.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetProfileData()
         {
-            string username = User.Identity.Name;
-            Player player = await _service.FindPlayer(username);
+            var username = User.Identity.Name;
+            var player = await _service.FindPlayer(username);
             if (player == null)
                 return BadRequest();
             var dto = _mapper.Map<PlayerProfileDto>(player);
@@ -51,8 +38,8 @@ namespace WarsawCityGamesServer.Services.Controllers
         [HttpGet]
         public async Task<string> GetUserImage()
         {
-            string username = User.Identity.Name;
-            Player player = await _service.FindPlayer(username);
+            var username = User.Identity.Name;
+            var player = await _service.FindPlayer(username);
             if (player == null)
                 return null;
             return Convert.ToBase64String(player.UserImage);
