@@ -160,22 +160,27 @@ public class ProfileFragment extends Fragment
             }
         });
         Call<PlayerProfileDataModel> callData = service.GetProfileData(username);
-        callData.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity()) {
+        callData.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity())
+        {
             @Override
-            public void onSuccess(PlayerProfileDataModel model) {
-            }
-            @Override
-            public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit) {
-                setProfileView(response.body());
+            public void onSuccess(PlayerProfileDataModel model)
+            {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit)
+            {
+                setProfileView(response.body());
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Throwable t)
+            {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
-        dialog.dismiss();
     }
 
     private void setProfileView(PlayerProfileDataModel model)
