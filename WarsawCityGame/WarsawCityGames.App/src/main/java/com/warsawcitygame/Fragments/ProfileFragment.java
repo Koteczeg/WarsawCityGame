@@ -119,46 +119,26 @@ public class ProfileFragment extends Fragment
         profilePic = ButterKnife.findById(root, R.id.profilePic);
     }
 
+    @Override
+    public void onResume()
+    {
+        String encoded = preferences.getString(CropUserImageActivity.USER_IMAGE, null);
+        byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
+        Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        if(bm!=null)
+        {
+            profilePic.setImageBitmap(bm);
+        }
+        super.onResume();
+
+    }
+
     private void getData(View rootView)
     {
         TextView t = (TextView)rootView.findViewById(R.id.userNameTop);
         t.setText(preferences.getString(LoginActivity.USERNAME_KEY, null));
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
+        final String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         showLoadingDialog();
-        Call<String> call = service.GetUserImage();
-        call.enqueue(new CustomCallback<String>(getActivity())
-        {
-            @Override
-            public void onSuccess(String model)
-            {
-            }
-            @Override
-            public void onResponse(Response<String> response, Retrofit retrofit)
-            {
-                if (response.isSuccess())
-                {
-                    if (response.body() != null)
-                    {
-                        byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
-                        Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-                        profilePic.setImageBitmap(bm);
-                        dialog.dismiss();
-                    } else
-                    {
-                        // TODO
-                    }
-                } else
-                {
-                    // TODO
-                }
-            }
-            @Override
-            public void onFailure(Throwable t)
-            {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
-                super.onFailure(t);
-            }
-        });
         Call<PlayerProfileDataModel> callData = service.GetProfileData(username);
         callData.enqueue(new CustomCallback<PlayerProfileDataModel>(getActivity())
         {
@@ -171,7 +151,49 @@ public class ProfileFragment extends Fragment
             public void onResponse(Response<PlayerProfileDataModel> response, Retrofit retrofit)
             {
                 setProfileView(response.body());
-                dialog.dismiss();
+                Call<String> call = service.GetUserImage();
+                call.enqueue(new CustomCallback<String>(getActivity())
+                {
+                    @Override
+                    public void onSuccess(String model)
+                    {
+                    }
+
+                    @Override
+                    public void onResponse(Response<String> response, Retrofit retrofit)
+                    {
+                        if (response.isSuccess())
+                        {
+                            if (response.body() != null)
+                            {
+                                byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
+                                Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                if(bm!=null)
+                                {
+                                    profilePic.setImageBitmap(bm);
+                                }
+                                if (dialog != null)
+                                {
+                                    dialog.dismiss();
+                                    dialog = null;
+                                }
+                            } else
+                            {
+                                // TODO
+                            }
+                        } else
+                        {
+                            // TODO
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t)
+                    {
+                        DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                        super.onFailure(t);
+                    }
+                });
             }
 
             @Override
@@ -190,11 +212,6 @@ public class ProfileFragment extends Fragment
         userLoginEditable.setText(model.Name);
         userLevelEditable.setText(model.Level);
         userExpEditable.setText(model.Exp + " exp");
-        if (dialog != null)
-        {
-            dialog.dismiss();
-            dialog = null;
-        }
     }
 
     private void ChangeData()

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.system.ErrnoException;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.squareup.okhttp.ResponseBody;
@@ -38,26 +40,43 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Call;
 
 public class CropUserImageActivity extends AppCompatActivity
 {
     private CropImageView mCropImageView;
     private Uri mCropImageUri;
-    @Inject UserProfileService service;
+    @Inject
+    UserProfileService service;
+    @Inject
+    SharedPreferences preferences;
+
     private Dialog dialog;
+    @Bind(R.id.chooseImageButton)
+    Button chooseImageButton;
+    @Bind(R.id.removePhotoButton)
+    Button removePhotoButton;
+    @Bind(R.id.cropImageButton)
+    Button cropImageButton;
+    public static final String USER_IMAGE = "userImage";
 
     @Override
-    protected void onCreate(Bundle  savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_user_image);
         ((MyApplication) getApplication()).getServicesComponent().inject(this);
+        ButterKnife.bind(this);
+        cropImageButton.setVisibility(View.INVISIBLE);
         prepareCropper();
     }
 
     private void prepareCropper()
     {
-        mCropImageView = (CropImageView)  findViewById(R.id.CropImageView);
+        mCropImageView = (CropImageView) findViewById(R.id.CropImageView);
         assert mCropImageView != null;
         mCropImageView.setAspectRatio(1, 1);
         mCropImageView.setFixedAspectRatio(true);
@@ -67,30 +86,68 @@ public class CropUserImageActivity extends AppCompatActivity
     /**
      * On load image button click, start pick image chooser activity.
      */
-    public void onLoadImageClick(View view) {
+    @OnClick(R.id.chooseImageButton)
+    public void onLoadImageClick(View view)
+    {
         startActivityForResult(getPickImageChooserIntent(), 200);
+    }
+
+    @OnClick(R.id.removePhotoButton)
+    public void onRemoveButtonClick(View view)
+    {
+        showLoadingDialog();
+        String encoded = null;
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString(USER_IMAGE, encoded);
+        edit.apply();
+        Call<ResponseBody> call = service.UpdateImage(encoded);
+
+        call.enqueue(new CustomCallback<ResponseBody>(this)
+        {
+            @Override
+            public void onSuccess(ResponseBody model)
+            {
+                dialog.dismiss();
+                finish();
+            }
+            @Override
+            public void onFailure(Throwable t)
+            {
+                dialog.dismiss();
+                DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
+                super.onFailure(t);
+            }
+        });
     }
 
     /**
      * Crop the image and set it back to the  cropping view.
      */
-    public void onCropImageClick(View view) {
+    @OnClick(R.id.cropImageButton)
+    public void onCropImageClick(View view)
+    {
         Bitmap cropped = mCropImageView.getCroppedImage(100, 100);
         if (cropped != null)
         {
             showLoadingDialog();
             String encoded = getEncodedCroppedImage(cropped);
+            SharedPreferences.Editor edit = preferences.edit();
+            edit.putString(USER_IMAGE, encoded);
+            edit.apply();
             Call<ResponseBody> call = service.UpdateImage(encoded);
 
-            call.enqueue(new CustomCallback<ResponseBody>(this) {
+            call.enqueue(new CustomCallback<ResponseBody>(this)
+            {
                 @Override
                 public void onSuccess(ResponseBody model)
                 {
                     dialog.dismiss();
                     finish();
                 }
+
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Throwable t)
+                {
                     dialog.dismiss();
                     DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
                     super.onFailure(t);
@@ -107,11 +164,14 @@ public class CropUserImageActivity extends AppCompatActivity
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    private void showLoadingDialog(){
+    private void showLoadingDialog()
+    {
         dialog = DialogUtils.RaiseDialogLoading(this, false);
-        Runnable runnable = new Runnable() {
+        Runnable runnable = new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 dialog.show();
             }
         };
@@ -120,28 +180,36 @@ public class CropUserImageActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int  requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Uri imageUri =  getPickImageResultUri(data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            cropImageButton.setVisibility(View.VISIBLE);
+            Uri imageUri = getPickImageResultUri(data);
             boolean requirePermissions = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-                    isUriRequiresPermissions(imageUri)) {
+                    isUriRequiresPermissions(imageUri))
+            {
                 requirePermissions = true;
                 mCropImageUri = imageUri;
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             }
-            if (!requirePermissions) {
+            if (!requirePermissions)
+            {
                 mCropImageView.setImageUriAsync(imageUri);
             }
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
             mCropImageView.setImageUriAsync(mCropImageUri);
-        } else {
+        } else
+        {
             Toast.makeText(this, "Required permissions are not granted", Toast.LENGTH_LONG).show();
         }
     }
@@ -151,51 +219,59 @@ public class CropUserImageActivity extends AppCompatActivity
      * The source can be camera's  (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br/>
      * All possible sources are added to the  intent chooser.
      */
-    public Intent getPickImageChooserIntent() {
-        Uri outputFileUri =  getCaptureImageOutputUri();
+    public Intent getPickImageChooserIntent()
+    {
+        Uri outputFileUri = getCaptureImageOutputUri();
         List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager =  getPackageManager();
+        PackageManager packageManager = getPackageManager();
 
-        Intent captureIntent = new  Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam =  packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new  Intent(captureIntent);
+        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam)
+        {
+            Intent intent = new Intent(captureIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
+            if (outputFileUri != null)
+            {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             }
             allIntents.add(intent);
         }
-        Intent galleryIntent = new  Intent(Intent.ACTION_GET_CONTENT);
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery =  packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new  Intent(galleryIntent);
-            intent.setComponent(new  ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+        for (ResolveInfo res : listGallery)
+        {
+            Intent intent = new Intent(galleryIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
             allIntents.add(intent);
         }
-        Intent mainIntent =  allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {
+        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+        for (Intent intent : allIntents)
+        {
+            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))
+            {
                 mainIntent = intent;
                 break;
             }
         }
         allIntents.remove(mainIntent);
-        Intent chooserIntent =  Intent.createChooser(mainIntent, "Select source");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,  allIntents.toArray(new Parcelable[allIntents.size()]));
+        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
         return chooserIntent;
     }
 
     /**
      * Get URI to image received from capture  by camera.
      */
-    private Uri getCaptureImageOutputUri() {
+    private Uri getCaptureImageOutputUri()
+    {
         Uri outputFileUri = null;
         File getImage = getExternalCacheDir();
-        if (getImage != null) {
+        if (getImage != null)
+        {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));
         }
         return outputFileUri;
@@ -207,30 +283,37 @@ public class CropUserImageActivity extends AppCompatActivity
      *
      * @param data the returned data of the  activity result
      */
-    public Uri getPickImageResultUri(Intent data) {
+    public Uri getPickImageResultUri(Intent data)
+    {
         boolean isCamera = true;
-        if (data != null && data.getData() != null) {
+        if (data != null && data.getData() != null)
+        {
             String action = data.getAction();
-            isCamera = action != null  && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
         }
-        return isCamera ?  getCaptureImageOutputUri() : data.getData();
+        return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
     /**
      * Test if we can open the given Android URI to test if permission required error is thrown.<br>
      */
-    public boolean isUriRequiresPermissions(Uri uri) {
-        try {
+    public boolean isUriRequiresPermissions(Uri uri)
+    {
+        try
+        {
             ContentResolver resolver = getContentResolver();
             InputStream stream = resolver.openInputStream(uri);
             assert stream != null;
             stream.close();
             return false;
-        } catch (FileNotFoundException e) {
-            if (e.getCause() instanceof ErrnoException) {
+        } catch (FileNotFoundException e)
+        {
+            if (e.getCause() instanceof ErrnoException)
+            {
                 return true;
             }
-        } catch (Exception ignored) {
+        } catch (Exception ignored)
+        {
         }
         return false;
     }

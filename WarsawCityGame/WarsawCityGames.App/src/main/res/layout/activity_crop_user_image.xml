@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_horizontal_margin"
         android:text="@string/loadImageText"
-        android:onClick="onLoadImageClick"/>
+        android:id="@+id/chooseImageButton"/>
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView"
@@ -17,12 +17,17 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"/>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="@string/removePhotoText"
+        android:id="@+id/removePhotoButton"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_horizontal_margin"
         android:text="@string/updateProfileImageText"
-        android:onClick="onCropImageClick"/>
+        android:id="@+id/cropImageButton"/>
 
 </LinearLayout>
