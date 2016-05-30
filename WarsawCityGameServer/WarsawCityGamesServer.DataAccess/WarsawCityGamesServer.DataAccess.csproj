@@ -53,8 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessServices\Instances\FriendshipsService.cs" />
     <Compile Include="DataAccessServices\Instances\PlayerService.cs" />
     <Compile Include="DataAccessServices\Instances\UserProfileService.cs" />
+    <Compile Include="DataAccessServices\Interfaces\IFriendshipsService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IPlayerService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IUserProfileService.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
@@ -70,6 +72,10 @@
     <ProjectReference Include="..\WarsawCityGamesServer.Entities\WarsawCityGamesServer.Entities.csproj">
       <Project>{C45CA7DC-FE60-4C69-B6FA-6F8C96B3A560}</Project>
       <Name>WarsawCityGamesServer.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WarsawCityGamesServer.Models\WarsawCityGamesServer.Models.csproj">
+      <Project>{5AFB1E01-6751-4CD0-ABC2-65AB63C59F61}</Project>
+      <Name>WarsawCityGamesServer.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

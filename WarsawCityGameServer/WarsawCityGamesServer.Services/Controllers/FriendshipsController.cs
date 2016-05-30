@@ -1,23 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
+    [RoutePrefix("Friendships")]
     public class FriendshipsController : ApiController
     {
-        private readonly IMapper _mapper;
         private readonly IFriendshipsService _service;
 
-        public FriendshipsController(IFriendshipsService service, IMapper mapper)
+        public FriendshipsController(IFriendshipsService service)
         {
             _service = service;
-            _mapper = mapper;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("GetFriends")]
+        public IHttpActionResult GetFriendsForUser()
+        {
+            var username = User.Identity.Name;
+            var friends = _service.GetFriendsForUser(username);
+            return Ok(friends);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("FindFriend")]
+        public IHttpActionResult FindFriend(string username)
+        {
+            var player = _service.FindFriend(username);
+            return Ok(player);
         }
     }
 }

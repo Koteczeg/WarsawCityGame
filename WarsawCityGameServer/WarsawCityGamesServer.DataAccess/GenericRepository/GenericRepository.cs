@@ -28,6 +28,11 @@ namespace WarsawCityGamesServer.DataAccess.GenericRepository
             return DbSet.Find(id);
         }
 
+        public virtual TEntity FirstOrDefault(Func<TEntity, bool> where)
+        {
+            return DbSet.FirstOrDefault(where);
+        }
+
         public virtual void Insert(TEntity entity)
         {
             DbSet.Add(entity);

@@ -39,7 +39,7 @@ namespace WarsawCityGamesServer.Services
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<CityGamesContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().AsImplementedInterfaces();
-
+            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
             builder.RegisterWebApiFilterProvider(config);
             RegisterAutoMapperConfiguration(builder);
             RegisterServices(builder);
@@ -59,8 +59,8 @@ namespace WarsawCityGamesServer.Services
         private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterType<PlayerService>().As<IPlayerService>();
-            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
             builder.RegisterType<UserProfileService>().As<IUserProfileService>();
+            builder.RegisterType<FriendshipsService>().As<IFriendshipsService>();
         }
 
         private static void RegisterAutoMapperConfiguration(ContainerBuilder builder)
