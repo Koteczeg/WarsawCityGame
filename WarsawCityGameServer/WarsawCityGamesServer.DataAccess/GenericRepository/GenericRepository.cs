@@ -8,8 +8,8 @@ namespace WarsawCityGamesServer.DataAccess.GenericRepository
 {
     public class GenericRepository<TEntity> where TEntity : class
     {
-        internal CityGamesContext Context;
-        internal DbSet<TEntity> DbSet;
+        public CityGamesContext Context;
+        public virtual IDbSet<TEntity> DbSet { get; }
 
         public GenericRepository(CityGamesContext context)
         {

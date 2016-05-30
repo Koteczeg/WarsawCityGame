@@ -21,7 +21,7 @@ namespace WarsawCityGamesServer.Tests
             IEnumerable<PlayerAchievements> playerAchievements = null, IEnumerable<Friendships> friendships = null, IEnumerable<Mission> missions = null, IEnumerable<MissionHistory> missionHistory = null,
             IEnumerable<Place> places = null)
         {
-            var mock = new Mock<CityGamesContext>("test");
+            var mock = new Mock<CityGamesContext>();
             SetMocks(mock, players, levels, achievements, playerAchievements, friendships, missions, missionHistory, places);
             return mock;
         }
@@ -59,21 +59,27 @@ namespace WarsawCityGamesServer.Tests
 
         public static void SetRepositiriesMocks(Mock<UnitOfWork> mock, CityGamesContext context)
         {
-            MockGenericRepository(mock, m => m.PlayerRepository, context);
-            MockGenericRepository(mock, m => m.LevelRepository, context);
-            MockGenericRepository(mock, m => m.AchievementRepository, context);
-            MockGenericRepository(mock, m => m.FriendshipsRepository, context);
-            MockGenericRepository(mock, m => m.MissionRepository, context);
-            MockGenericRepository(mock, m => m.MissionHistoryRepository, context);
-            MockGenericRepository(mock, m => m.PlayerAchievementsRepository, context);
-            MockGenericRepository(mock, m => m.PlaceRepository, context);
+            MockGenericRepository(mock, m => m.PlayerRepository, context, context.Players);
+            MockGenericRepository(mock, m => m.LevelRepository, context, context.Levels);
+            MockGenericRepository(mock, m => m.AchievementRepository, context, context.Achievements);
+            MockGenericRepository(mock, m => m.FriendshipsRepository, context, context.Friendships);
+            MockGenericRepository(mock, m => m.MissionRepository, context, context.Missions);
+            MockGenericRepository(mock, m => m.MissionHistoryRepository, context, context.MissionHistory);
+            MockGenericRepository(mock, m => m.PlayerAchievementsRepository, context, context.UserAcheivements);
+            MockGenericRepository(mock, m => m.PlaceRepository, context, context.Places);
         }
 
-        public static void MockGenericRepository<T>(Mock<UnitOfWork> mock, Expression<Func<UnitOfWork, GenericRepository<T>>> expression, CityGamesContext context)
+        public static void MockGenericRepository<T>(Mock<UnitOfWork> mock, Expression<Func<UnitOfWork, GenericRepository<T>>> expression, CityGamesContext context, IDbSet<T> set)
             where T : class
         {
             var repository = new Mock<GenericRepository<T>>(context);
             mock.Setup(expression).Returns(repository.Object);
+            MockDbSet(repository, set);
+        }
+
+        public static void MockDbSet<T>(Mock<GenericRepository<T>> repository, IDbSet<T> set) where T:class
+        {
+            repository.Setup(x => x.DbSet).Returns(set);
         }
 
         public static Mock<UserManager<User, string>> MockUserManager(CityGamesContext context)

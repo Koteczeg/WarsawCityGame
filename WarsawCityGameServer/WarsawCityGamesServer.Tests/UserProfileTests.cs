@@ -23,7 +23,7 @@ namespace WarsawCityGamesServer.Tests
     public class UserProfileTests
     {
         [Fact]
-        public void GetUserDataTest()
+        public async void GetUserDataTest()
         {
             var levels = new Level[]
             {
@@ -47,13 +47,19 @@ namespace WarsawCityGamesServer.Tests
                     UserImage = null, Level = levels[0], User = users[0]
                 }
             };
-            //var mockContext = MockHelper.MockDatabase(players, levels);
-            //var mockUnitOfWork = MockHelper.MockUnitOfWork(mockContext.Object);
-            //IUserProfileService service = new UserProfileService(mockUnitOfWork.Object, null);
-            //IMapper mapper = CreateMapper();
-            //var controller = new UserProfileController(service, mapper);
+            var mockContext = new Mock<CityGamesContext>() { CallBase = true };
+            mockContext.Setup(c => c.Players).ReturnsDbSet(players);
+            mockContext.Setup(c => c.Levels).ReturnsDbSet(levels);
 
-            //var res = await controller.GetProfileData("bakalam");
+            Assert.Equal(mockContext.Object.Players.Count(), 1);
+            //mockContext.Setup(c => c.Users).ReturnsDbSet(users);
+
+            var mockUnitOfWork = MockHelper.MockUnitOfWork(mockContext.Object);
+            IUserProfileService service = new UserProfileService(mockUnitOfWork.Object, null);
+            IMapper mapper = CreateMapper();
+            var controller = new UserProfileController(service, mapper);
+
+            var res = await controller.GetProfileData();
             //var ret = res as OkNegotiatedContentResult<PlayerProfileDto>;
             //var dto = ret?.Content;
 
