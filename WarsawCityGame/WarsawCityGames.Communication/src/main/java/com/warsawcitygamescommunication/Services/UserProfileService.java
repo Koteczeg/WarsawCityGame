@@ -15,14 +15,12 @@ public interface UserProfileService {
     @POST("UserProfile/ChangeUserData")
     @FormUrlEncoded
     Call<ResponseBody> ChangeUserData(
-            @Field("Username") String Username,
             @Field("Email") String Email,
             @Field("Name") String Name,
             @Field("Description") String Description);
 
     @POST("UserProfile/ChangePassword")
-    Call<ResponseBody> ChangePassword(@Query("username") String username,
-                                      @Query("currentPassword") String currentPassword,
+    Call<ResponseBody> ChangePassword(@Query("currentPassword") String currentPassword,
                                       @Query("newPassword") String newPassword);
 
     @GET("UserProfile/GetProfileData")

@@ -48,7 +48,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [HttpPost]
         [Route("Upload")]
-        public async Task<IHttpActionResult> Upload([FromBody]string file)
+        public async Task<IHttpActionResult> UploadProfileImage([FromBody]string file)
         {
             return await _service.TryUpdateProfilePicture(file, User.Identity.Name) ? (IHttpActionResult)Ok() : BadRequest();
         }
@@ -56,9 +56,9 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Authorize]
         [HttpPost]
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(string username, string currentPassword, string newPassword)
+        public async Task<IHttpActionResult> ChangePassword(string currentPassword, string newPassword)
         {
-            return await _service.TryChangePassword(username, currentPassword, newPassword) ? (IHttpActionResult)Ok() : BadRequest();
+            return await _service.TryChangePassword(User.Identity.Name,currentPassword, newPassword) ? (IHttpActionResult)Ok() : BadRequest();
         }
 
         [Authorize]
@@ -66,7 +66,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("ChangeUserData")]
         public async Task<IHttpActionResult> ChangeUserData(PlayerProfileDto dto)
         {
-            return await _service.TryChangeUserData(dto.Username, dto.Name, dto.Email, dto.Description) ? (IHttpActionResult)Ok() : BadRequest();
+            return await _service.TryChangeUserData(User.Identity.Name,dto.Name, dto.Email, dto.Description) ? (IHttpActionResult)Ok() : BadRequest();
         }
     }
 }

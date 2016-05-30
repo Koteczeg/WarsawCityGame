@@ -123,6 +123,7 @@ public class ProfileFragment extends Fragment
     public void onResume()
     {
         String encoded = preferences.getString(CropUserImageActivity.USER_IMAGE, null);
+        assert encoded != null;
         byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
         Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
         if(bm!=null)
@@ -216,8 +217,7 @@ public class ProfileFragment extends Fragment
 
     private void ChangeData()
     {
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<ResponseBody> call = service.ChangeUserData(username, userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString());
+        Call<ResponseBody> call = service.ChangeUserData(userEmailEditable.getText().toString(), userLoginEditable.getText().toString(), userDescriptionEditable.getText().toString());
         showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
@@ -263,8 +263,7 @@ public class ProfileFragment extends Fragment
 
     private void ChangePassword(String currentPassword, String newPassword)
     {
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<ResponseBody> call = service.ChangePassword(username, currentPassword, newPassword);
+        Call<ResponseBody> call = service.ChangePassword(currentPassword, newPassword);
         showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
