@@ -21,7 +21,7 @@ namespace WarsawCityGamesServer.Tests
     public class UserProfileTests
     {
         private readonly UserProfileController controller;
-        private Player player;
+        private readonly Player player;
         public UserProfileTests()
         {
             var levels = new[]

@@ -33,6 +33,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             dto.Level = await _service.GetPlayerLevelName(username);
             return Ok(dto);
         }
+
         [Authorize]
         [Route("GetUserImage")]
         [HttpGet]
@@ -40,9 +41,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         {
             var username = User.Identity.Name;
             var player = await _service.FindPlayer(username);
-            if (player == null)
-                return null;
-            return Convert.ToBase64String(player.UserImage);
+            return player == null ? null : Convert.ToBase64String(player.UserImage);
         }
 
         [Authorize]
