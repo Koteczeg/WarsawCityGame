@@ -26,6 +26,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {RestServicesModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
+    void inject(CropUserImageActivity activity);
     void inject(LoginActivity activity);
     void inject(MainActivity activity);
     void inject(MapsActivity activity);
@@ -40,6 +41,4 @@ public interface ApplicationComponent {
     void inject(HallOfFameFragment fragment);
     void inject(LoadingFragment fragment);
     void inject(ProfileFragment fragment);
-    void inject(CropUserImageActivity activity);
-
 }

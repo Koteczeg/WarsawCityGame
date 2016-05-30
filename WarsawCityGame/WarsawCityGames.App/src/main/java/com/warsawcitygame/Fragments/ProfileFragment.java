@@ -131,7 +131,6 @@ public class ProfileFragment extends Fragment
             profilePic.setImageBitmap(bm);
         }
         super.onResume();
-
     }
 
     private void getData(View rootView)

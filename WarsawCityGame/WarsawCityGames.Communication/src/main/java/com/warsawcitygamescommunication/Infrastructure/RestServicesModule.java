@@ -11,6 +11,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.warsawcitygamescommunication.Services.AccountService;
+import com.warsawcitygamescommunication.Services.FriendshipsService;
 import com.warsawcitygamescommunication.Services.MissionsService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
@@ -95,10 +96,15 @@ public class RestServicesModule {
         return retrofit.create(MissionsService.class);
     }
 
+    @Provides
+    @Singleton
+    UserProfileService provideUserProfileService(Retrofit retrofit){
+        return retrofit.create(UserProfileService.class);
+    }
 
     @Provides
     @Singleton
-    UserProfileService provideUserProfileServeice(Retrofit retrofit){
-        return retrofit.create(UserProfileService.class);
+    FriendshipsService provideFriendshipsService(Retrofit retrofit){
+        return retrofit.create(FriendshipsService.class);
     }
 }
