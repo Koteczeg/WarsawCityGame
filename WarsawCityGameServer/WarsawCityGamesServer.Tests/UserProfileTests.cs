@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Controllers;
 using System.Web.Http.Results;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -59,18 +63,23 @@ namespace WarsawCityGamesServer.Tests
             IMapper mapper = CreateMapper();
             var controller = new UserProfileController(service, mapper);
 
+            var mockC = new Mock<HttpControllerContext>();
+            controller.ControllerContext = mockC.Object;
+            controller.ControllerContext.RequestContext.Principal = new GenericPrincipal(new GenericIdentity("bakalam", "Type"), new string[] { });
+            controller.Configuration = new HttpConfiguration();
+            controller.Request = new HttpRequestMessage();
             var res = await controller.GetProfileData();
-            //var ret = res as OkNegotiatedContentResult<PlayerProfileDto>;
-            //var dto = ret?.Content;
+            var ret = res as OkNegotiatedContentResult<PlayerProfileDto>;
+            var dto = ret?.Content;
 
-            //Assert.NotNull(res);
-            //Assert.NotNull(ret);
-            //Assert.NotNull(dto);
+            Assert.NotNull(res);
+            Assert.NotNull(ret);
+            Assert.NotNull(dto);
 
-            //Assert.Equal(players[0].Description, dto?.Description);
-            //Assert.Equal(players[0].Exp, dto?.Exp);
-            //Assert.Equal(players[0].Name, dto?.Name);
-            //Assert.Equal(players[0].Level?.Name, dto?.Level);
+            Assert.Equal(players[0].Description, dto?.Description);
+            Assert.Equal(players[0].Exp, dto?.Exp);
+            Assert.Equal(players[0].Name, dto?.Name);
+            Assert.Equal(players[0].Level?.Name, dto?.Level);
         }
 
         private IMapper CreateMapper()
@@ -81,6 +90,10 @@ namespace WarsawCityGamesServer.Tests
                 cfg.CreateMap<PlayerRegisterDto, Player>().
                     ForMember(dest => dest.Exp,
                         opts => opts.MapFrom(src => 0));
+                cfg.CreateMap<Player, PlayerProfileDto>()
+                    .ForMember(dto => dto.Username, p => p.MapFrom(pl => pl.User.UserName))
+                    .ForMember(dto => dto.Email, p => p.MapFrom(pl => pl.User.Email))
+                    .ForMember(dto => dto.Level, p => p.MapFrom(s => "Słoik"));
             });
             return mapperConfig.CreateMapper();
         }
