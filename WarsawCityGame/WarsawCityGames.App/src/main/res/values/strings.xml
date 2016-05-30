@@ -80,4 +80,7 @@
     <string name="loginFailedDescription">Make sure your credentials are correct and try again. Login failed.</string>
     <string name="loginFailedtext">An error occured</string>
     <string name="removePhotoText">REMOVE PHOTO</string>
+    <string name="addFriendText">Add a friend</string>
+    <string name="yourFriendsText">Your friends</string>
+    <string name="connectionErrorText">An error occured. Make sure your connection is valid and try again.</string>
 </resources>

@@ -4,39 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_weight="110"
-    android:background="@xml/main_header_selector_blu"
-    >
-
+    android:background="@xml/main_header_selector_blu">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        >
+        android:layout_marginTop="5dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add a friend"
+            android:text="@string/addFriendText"
             android:fontFamily="sans-serif-light"
             android:textColor="#FFFFFF"
             android:textAlignment="center"
-            android:textSize="25sp"
-            />
+            android:textSize="25sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchPlate"
-        >
+        android:id="@+id/searchPlate">
         <SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/searchView"
             android:background="#FFFFFF"
-            android:iconifiedByDefault="false"
-            />
+            android:iconifiedByDefault="false"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +39,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/searchResults"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:text="Your friends"
+            android:text="@string/yourFriendsText"
             android:fontFamily="sans-serif-light"
             android:textColor="#FFFFFF"
             android:textAlignment="center"
@@ -64,8 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="70"
-            android:id = "@+id/friendsList"
-            >
+            android:id = "@+id/friendsList">
         </ListView>
     </LinearLayout>
 </LinearLayout>
