@@ -29,5 +29,4 @@
         android:padding="@dimen/activity_horizontal_margin"
         android:text="@string/updateProfileImageText"
         android:id="@+id/cropImageButton"/>
-
 </LinearLayout>
