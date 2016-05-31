@@ -110,7 +110,7 @@ public class FriendsFragment extends Fragment
                     hideDialog();
                     return;
                 }
-                FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), searchResults, (FriendsFragment)getTargetFragment(), R.layout.friend_search_result);
+                FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), searchResults);
                 ListView searchResultList = (ListView) rootView.findViewById(R.id.searchResults);
                 searchResultList.setAdapter(searchResultsAdapter);
                 hideDialog();
@@ -169,7 +169,7 @@ public class FriendsFragment extends Fragment
                 {
                     friends = null;
                 }
-                FriendListViewAdapter friendsAdapter = new FriendListViewAdapter(rootView.getContext(), friends, (FriendsFragment)getTargetFragment());
+                FriendListViewAdapter friendsAdapter = new FriendListViewAdapter(rootView.getContext(), friends);
                 int[] colors = {0, 0xFF00BFFF, 0};
                 friendsList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
                 friendsList.setDividerHeight(3);

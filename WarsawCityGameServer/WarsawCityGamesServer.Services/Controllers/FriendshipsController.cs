@@ -28,7 +28,7 @@ namespace WarsawCityGamesServer.Services.Controllers
         [Route("FindFriend")]
         public IHttpActionResult FindFriend(string username)
         {
-            var player = _service.FindFriend(username);
+            var player = _service.FindFriend(User.Identity.Name,username);
             return Ok(player);
         }
     }

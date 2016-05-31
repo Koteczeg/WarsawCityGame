@@ -10,6 +10,10 @@ namespace WarsawCityGamesServer.Models.Friendships
         [DataMember(Name = "image")]
         public string Image { get; set; }
         [DataMember(Name = "name")]
-        public string Name { get; set; } 
+        public string Name { get; set; }
+        [DataMember(Name = "username")]
+        public string Username { get; set; }
+        [DataMember(Name = "actionType")]
+        public string ActionType { get; set; }
     }
 }

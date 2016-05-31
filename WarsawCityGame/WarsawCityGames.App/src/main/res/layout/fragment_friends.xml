@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addFriendText"
+            android:text="@string/findPlayerText"
             android:fontFamily="sans-serif-light"
             android:textColor="#FFFFFF"
             android:textAlignment="center"

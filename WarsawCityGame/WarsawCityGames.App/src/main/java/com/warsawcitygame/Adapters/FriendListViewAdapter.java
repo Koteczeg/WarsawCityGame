@@ -1,5 +1,6 @@
 package com.warsawcitygame.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygames.models.friends_models.FriendModel;
 
 import java.util.List;
@@ -25,19 +28,11 @@ public class FriendListViewAdapter extends BaseAdapter
     private Context context;
     private List<FriendModel> friends;
     private int layoutId;
-    private final FriendsFragment friendsFragment;
 
-    public FriendListViewAdapter(Context context, List<FriendModel> friends, FriendsFragment friendsFragment)
+    public FriendListViewAdapter(Context context, List<FriendModel> friends)
     {
         this.context = context;
         this.friends = friends;
-        this.layoutId = R.layout.friend_list_item;
-        this.friendsFragment = friendsFragment;
-    }
-
-    public FriendListViewAdapter(Context context, List<FriendModel> friends, FriendsFragment friendsFragment, int layoutId)
-    {
-        this(context, friends, friendsFragment);
         this.layoutId = R.layout.friend_list_item;
     }
 
@@ -57,31 +52,27 @@ public class FriendListViewAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View element = inflater.inflate(layoutId, parent, false);
         TextView name = (TextView) element.findViewById(R.id.friendName);
         CircleImageView friendAvatar = (CircleImageView)element.findViewById(R.id.friendAvatar);
         byte[] imageAsBytes = Base64.decode(friends.get(position).Image.getBytes(), Base64.DEFAULT);
-        Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        final Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
         if(bm!=null)
         {
             friendAvatar.setImageBitmap(bm);
         }
         name.setText(friends.get(position).Name);
-        if(layoutId != R.layout.friend_list_item)
+        element.setOnClickListener(new View.OnClickListener()
         {
-            Button addButton = (Button)element.findViewById(R.id.addFriendButton);
-            addButton.setOnClickListener(new View.OnClickListener()
+            @Override
+            public void onClick(View v)
             {
-                @Override
-                public void onClick(View view)
-                {
-                    //TODO
-                }
-            });
-        }
+                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position).Name, friends.get(position).Username, friends.get(position).ActionType);
+            }
+        });
         return element;
     }
 }

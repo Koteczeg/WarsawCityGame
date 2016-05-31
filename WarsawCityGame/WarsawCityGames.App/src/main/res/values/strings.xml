@@ -84,4 +84,10 @@
     <string name="yourFriendsText">Your friends</string>
     <string name="connectionErrorText">An error occured. Make sure your connection is valid and try again.</string>
     <string name="errorText">Error</string>
+    <string name="backText">BACK</string>
+    <string name="removeFriendText">REMOVE FRIEND</string>
+    <string name="addFriendText2">ADD FRIEND</string>
+    <string name="findPlayerText">Find player</string>
+    <string name="success_account_registered">Registered. Logging..</string>
+    <string name="welcomeText">Welcome :)</string>
 </resources>

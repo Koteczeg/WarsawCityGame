@@ -14,10 +14,18 @@ public class FriendModel
     @SerializedName("name")
     public String Name;
 
-    public FriendModel(int id, String image, String name)
+    @SerializedName("username")
+    public String Username;
+
+    @SerializedName("actionType")
+    public String ActionType;
+
+    public FriendModel(int id, String image, String name, String username, String actionType)
     {
         this.Id = id;
         this.Image = image;
         this.Name = name;
+        this.Username = username;
+        this.ActionType = actionType;
     }
 }

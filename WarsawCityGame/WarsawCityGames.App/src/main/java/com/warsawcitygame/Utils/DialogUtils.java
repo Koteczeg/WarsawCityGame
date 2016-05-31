@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,27 +96,58 @@ public class DialogUtils
         dialog.show();
     }
 
-    public static void RaiseDialogShowProfile(Context context, Activity activity, String name, String levelDescription)
+    public static void RaiseDialogShowProfile(Context context, Bitmap bitmap, String name, String username, String actionType)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_profile, null);
-        builder.setView(dialogView);
-        final TextView descriptionTxt = (TextView)dialogView.findViewById(R.id.level);
-        descriptionTxt.setText(levelDescription);
-        final TextView usernameTxt = (TextView)dialogView.findViewById(R.id.userNameTop);
+        final Dialog dialog = new Dialog(context, R.style.TransparentStretchedDialog);
+        dialog.setContentView(R.layout.dialog_profile);
+        final TextView descriptionTxt = (TextView)dialog.findViewById(R.id.level);
+        descriptionTxt.setText(username);
+        final TextView usernameTxt = (TextView)dialog.findViewById(R.id.userNameTop);
         usernameTxt.setText(name);
-        final ImageView imageView = (ImageView)dialogView.findViewById(R.id.profilePic);
-        imageView.setImageResource(R.drawable.tiger);
-        final Button negativeButton = (Button)dialogView.findViewById(R.id.btn_dialog);
-        final Dialog dialog = builder.create();
+        final ImageView imageView = (ImageView)dialog.findViewById(R.id.profilePic);
+        if(bitmap!=null)
+            imageView.setImageBitmap(bitmap);
+        final Button negativeButton = (Button)dialog.findViewById(R.id.btn_dialog);
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+        final Button friendActionButton = (Button)dialog.findViewById(R.id.btn_profile_action);
 
+        if(actionType.equals("add"))
+        {
+            friendActionButton.setVisibility(View.VISIBLE);
+            friendActionButton.setText(R.string.addFriendText2);
+            friendActionButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    //TODO
+                    dialog.dismiss();
+                }
+            });
+        }
+        else if(actionType.equals("remove"))
+        {
+            friendActionButton.setVisibility(View.VISIBLE);
+            friendActionButton.setText(R.string.removeFriendText);
+            friendActionButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    //TODO
+                    dialog.dismiss();
+                }
+            });
+        }
+        else
+        {
+            friendActionButton.setVisibility(View.INVISIBLE);
+        }
         dialog.show();
     }
 

@@ -8,14 +8,14 @@
               android:paddingTop="20dp"
               android:weightSum="100">
 
-    <com.warsawcitygame.CustomControls.MLRoundedImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/tiger"/>
+        android:src="@drawable/default_image"/>
 
     <TextView
         android:id="@+id/userNameTop"
@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:text="Tajger"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
         android:textSize="30sp"/>
@@ -34,22 +33,36 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:text="Lvl. 7 Kurczak"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#00BFFF"
         android:textSize="22sp"/>
 
-    <Button
-        android:id="@+id/btn_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_below="@+id/text_dialog"
-        android:layout_centerHorizontal="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:background="#00BFFF"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="OK"
-        android:textColor="#ffffffff"/>
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_profile_action"
+            style="@style/roundedbutton"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|center_horizontal"/>
+
+        <Button
+            android:id="@+id/btn_dialog"
+            style="@style/roundedbutton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/backText"/>
+    </LinearLayout>
 </LinearLayout>

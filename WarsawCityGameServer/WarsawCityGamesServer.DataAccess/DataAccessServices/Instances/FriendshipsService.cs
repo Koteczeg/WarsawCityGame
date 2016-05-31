@@ -18,25 +18,41 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         public List<FriendshipDto> GetFriendsForUser(string username)
         {
             var friendships = _unitOfWork.FriendshipsRepository.DbSet.Where(x => x.Player.User.UserName == username);
-            return friendships.ToList().Select(x => new FriendshipDto
+            var friends = friendships.ToList().Select(x => new FriendshipDto
             {
                 Id = x.Friend.Id,
                 Name = x.Friend.Name,
-                Image = Convert.ToBase64String(x.Friend.UserImage)
+                Image = Convert.ToBase64String(x.Friend.UserImage),
+                Username = x.Friend.User.UserName,
+                ActionType = "remove"
             }).ToList();
-
+            return friends;
         }
 
-        public FriendshipDto FindFriend(string username)
+        public FriendshipDto FindFriend(string player_username, string username)
         {
             var player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(x => x.User.UserName == username);
             if (player == null) return null;
-            return new FriendshipDto
+            var dto = new FriendshipDto
             {
                 Id= player.Id,
                 Image=Convert.ToBase64String(player.UserImage),
-                Name=player.Name
+                Name=player.Name,
+                Username = player.User.UserName,
             };
+            if (!_unitOfWork.FriendshipsRepository.DbSet.Any(x=> x.Player.User.UserName==player_username && x.Friend.User.UserName==username) && player_username!=username)
+            {
+                dto.ActionType = "add";
+            }
+            else if (_unitOfWork.FriendshipsRepository.DbSet.Any(x => x.Player.User.UserName == player_username && x.Friend.User.UserName == username) && player_username != username)
+            {
+                dto.ActionType = "remove";
+            }
+            else
+            {
+                dto.ActionType = "other";
+            }
+            return dto;
         }
     }
 }

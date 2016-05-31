@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity
     @Inject SharedPreferences preferences;
 
     private Dialog dialog;
-    private static final String GRANT_TYPE = "password";
+    public static final String GRANT_TYPE = "password";
     public static final String ACCESS_TOKEN_KEY = "accessToken";
     public static final String USERNAME_KEY = "username";
     public static final String USER_LOGGED_IN_KEY = "userLoggedIn";

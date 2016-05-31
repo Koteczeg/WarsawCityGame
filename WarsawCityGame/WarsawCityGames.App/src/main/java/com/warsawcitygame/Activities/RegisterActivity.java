@@ -26,6 +26,7 @@ import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygame.Utils.ValidationUtils;
+import com.warsawcitygames.models.AccessTokenModel;
 import com.warsawcitygames.models.RegisterAccountModel;
 import com.warsawcitygamescommunication.Services.AccountService;
 
@@ -64,6 +65,50 @@ public class RegisterActivity extends AppCompatActivity
         ((MyApplication) getApplication()).getServicesComponent().inject(this);
         ButterKnife.bind(this);
         fadeOutLayout();
+    }
+
+    private void getToken(final String username, String password) {
+        dialog = DialogUtils.RaiseDialogLoading(registerButton.getContext());
+        dialog.show();
+        Call<AccessTokenModel> call = service.getToken(username, password, LoginActivity.GRANT_TYPE);
+        call.enqueue(new CustomCallback<AccessTokenModel>(this)
+        {
+            @Override
+            public void onSuccess(AccessTokenModel model)
+            {
+                String token = model.getAccessToken();
+                if (!TextUtils.isEmpty(token))
+                {
+                    Toast.makeText(RegisterActivity.this, R.string.welcomeText, Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor edit = preferences.edit();
+                    edit.putString(LoginActivity.ACCESS_TOKEN_KEY, token);
+                    edit.putString(LoginActivity.USERNAME_KEY, username);
+                    edit.putBoolean(LoginActivity.USER_LOGGED_IN_KEY, true);
+                    edit.apply();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onResponse(Response<AccessTokenModel> response, Retrofit retrofit)
+            {
+                if (!response.isSuccess() && response.code() == 400)
+                {
+                    dialog.dismiss();
+                } else
+                {
+                    super.onResponse(response, retrofit);
+                }
+            }
+
+            @Override
+            public void always()
+            {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void fadeOutLayout()
@@ -128,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity
                     public void onSuccess(ResponseBody model)
                     {
                         Toast.makeText(RegisterActivity.this, R.string.success_account_registered, Toast.LENGTH_LONG).show();
-                        redirectToLogin();
+                        getToken(loginEditText.getText().toString(), passwordEditText.getText().toString());
                     }
 
                     @Override
