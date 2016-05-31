@@ -222,6 +222,7 @@
     <None Include="Properties\PublishProfiles\warsawcitygames - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygames - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygames - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\warsawcitygamesapi - Web Deploy %287%29.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

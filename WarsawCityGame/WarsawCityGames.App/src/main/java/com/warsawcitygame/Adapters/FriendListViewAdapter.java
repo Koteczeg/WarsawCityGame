@@ -38,7 +38,7 @@ public class FriendListViewAdapter extends BaseAdapter
     public FriendListViewAdapter(Context context, List<FriendModel> friends, FriendsFragment friendsFragment, int layoutId)
     {
         this(context, friends, friendsFragment);
-        this.layoutId = layoutId;
+        this.layoutId = R.layout.friend_list_item;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class FriendListViewAdapter extends BaseAdapter
                 @Override
                 public void onClick(View view)
                 {
-                    friendsFragment.onAddFriend();
+                    //TODO
                 }
             });
         }

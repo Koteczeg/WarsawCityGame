@@ -2,29 +2,23 @@ package com.warsawcitygame.Fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.warsawcitygame.Adapters.FriendListViewAdapter;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygames.models.friends_models.FriendModel;
 import com.warsawcitygamescommunication.Services.FriendshipsService;
-import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,12 +32,13 @@ import retrofit.Retrofit;
 
 public class FriendsFragment extends Fragment
 {
-    @Inject
-    FriendshipsService service;
+    @Inject FriendshipsService service;
     private SearchView searchView;
     private ListView friendsList;
 
     private List<FriendModel> friends = new LinkedList<>();
+    List<FriendModel> searchResults = new LinkedList<>();
+
     private Dialog dialog;
 
     public FriendsFragment()
@@ -62,30 +57,91 @@ public class FriendsFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
         initializeViews(rootView);
-
-        loadFriends(rootView, friendsList);
+        loadFriends(rootView);
         return rootView;
     }
 
-    private void initializeViews(View rootView)
+    private void initializeViews(final View rootView)
     {
         searchView = ButterKnife.findById(rootView, R.id.searchView);
         friendsList = ButterKnife.findById(rootView,R.id.friendsList);
+        searchView.setBackgroundColor(0xFFC0E8FC);
+        searchView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                searchFriend(rootView);
+            }
+        });
     }
 
-    private void prepareSearchView(View rootView, SearchView searchView)
+    public void searchFriend(View rootView)
     {
-//        editText.setTextColor(Color.BLACK);
-//        searchView.setBackgroundColor(0xFFC0E8FC);
-//        List<String> searchResults = new LinkedList<>();
-//        searchResults.add("Mateusz");
-//        FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), searchResults, this, R.layout.friend_search_result);
-//        ListView searchResultList = (ListView) rootView.findViewById(R.id.searchResults);
-//        searchResultList.setAdapter(searchResultsAdapter);
+        try
+        {
+            getSearchingResults(rootView);
+        }
+        catch(Exception e)
+        {
+            DialogUtils.RaiseDialogShowError(getActivity(), getActivity().getString(R.string.errorText), getActivity().getString(R.string.connectionErrorText));
+        }
+    }
+
+    private List<FriendModel> getSearchingResults(final View rootView)
+    {
+        showLoadingDialog();
+        Call<FriendModel> callData = service.FindFriend(searchView.getQuery().toString());
+        callData.enqueue(new CustomCallback<FriendModel>(getActivity())
+        {
+            @Override
+            public void onResponse(Response<FriendModel> response, Retrofit retrofit)
+            {
+                if (response.isSuccess())
+                {
+                    searchResults.clear();
+                    hideDialog();
+                    if(response.body()==null) return;
+                    searchResults.add(response.body());
+
+                } else
+                {
+                    searchResults.clear();
+                    hideDialog();
+                    return;
+                }
+                FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), searchResults, (FriendsFragment)getTargetFragment(), R.layout.friend_search_result);
+                ListView searchResultList = (ListView) rootView.findViewById(R.id.searchResults);
+                searchResultList.setAdapter(searchResultsAdapter);
+                hideDialog();
+            }
+
+            @Override
+            public void onSuccess(FriendModel model)
+            {
+            }
+
+            @Override
+            public void onFailure(Throwable t)
+            {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
+            }
+        });
+        return friends;
+    }
+
+    private void hideDialog()
+    {
+        if (dialog != null)
+        {
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 
 
-    private void loadFriends(View rootView, ListView friendsList)
+    private void loadFriends(View rootView)
     {
         try
         {
@@ -93,14 +149,8 @@ public class FriendsFragment extends Fragment
         }
         catch(Exception e)
         {
-            DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.connectionErrorText));
+            DialogUtils.RaiseDialogShowError(getActivity(), getActivity().getString(R.string.errorText), getActivity().getString(R.string.connectionErrorText));
         }
-    }
-
-    public void onAddFriend()
-    {
-        Toast toast = Toast.makeText(getActivity(), "Friend added", Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     public List<FriendModel> getFriends(final View rootView)
@@ -124,11 +174,7 @@ public class FriendsFragment extends Fragment
                 friendsList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
                 friendsList.setDividerHeight(3);
                 friendsList.setAdapter(friendsAdapter);
-                if (dialog != null)
-                {
-                    dialog.dismiss();
-                    dialog = null;
-                }
+                hideDialog();
             }
 
             @Override
