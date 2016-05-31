@@ -31,5 +31,23 @@ namespace WarsawCityGamesServer.Services.Controllers
             var player = _service.FindFriend(User.Identity.Name,username);
             return Ok(player);
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("AssignFriend")]
+        public IHttpActionResult AssignFriend(int playerId)
+        {
+            _service.AssignFriend(User.Identity.Name, playerId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("RemoveFriend")]
+        public IHttpActionResult RemoveFriend(int playerId)
+        {
+            _service.RemoveFriend(User.Identity.Name, playerId);
+            return Ok();
+        }
     }
 }

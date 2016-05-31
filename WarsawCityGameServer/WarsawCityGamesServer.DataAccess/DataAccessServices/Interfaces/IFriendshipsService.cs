@@ -7,5 +7,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
     {
         List<FriendshipDto> GetFriendsForUser(string username);
         FriendshipDto FindFriend(string player_username, string username);
+        void AssignFriend(string username, int playerId);
+        void RemoveFriend(string username, int playerId);
     }
 }
