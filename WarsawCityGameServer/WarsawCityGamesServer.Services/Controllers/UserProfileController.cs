@@ -67,5 +67,21 @@ namespace WarsawCityGamesServer.Services.Controllers
         {
             return await _service.TryChangeUserData(User.Identity.Name,dto.Name, dto.Email, dto.Description) ? (IHttpActionResult)Ok() : BadRequest();
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("RemoveImage")]
+        public async Task<IHttpActionResult> RemoveImage()
+        {
+            try
+            {
+                await _service.RemoveUserImage(User.Identity.Name);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.io.ByteArrayOutputStream;
@@ -44,6 +45,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class CropUserImageActivity extends AppCompatActivity
 {
@@ -96,25 +99,21 @@ public class CropUserImageActivity extends AppCompatActivity
     public void onRemoveButtonClick(View view)
     {
         showLoadingDialog();
-        String encoded = null;
         SharedPreferences.Editor edit = preferences.edit();
-        edit.putString(USER_IMAGE, encoded);
+        edit.putString(USER_IMAGE, null);
         edit.apply();
-        Call<ResponseBody> call = service.UpdateImage(encoded);
-
-        call.enqueue(new CustomCallback<ResponseBody>(this)
-        {
+        Call<ResponseBody> call = service.RemoveImage();
+        call.enqueue(new CustomCallback<ResponseBody>(this) {
             @Override
-            public void onSuccess(ResponseBody model)
-            {
+            public void onSuccess(ResponseBody model) {
                 dialog.dismiss();
                 finish();
             }
+
             @Override
-            public void onFailure(Throwable t)
-            {
+            public void onFailure(Throwable t) {
                 dialog.dismiss();
-                DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
+                //DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
                 super.onFailure(t);
             }
         });
@@ -149,7 +148,7 @@ public class CropUserImageActivity extends AppCompatActivity
                 public void onFailure(Throwable t)
                 {
                     dialog.dismiss();
-                    DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
+                    //DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
                     super.onFailure(t);
                 }
             });
