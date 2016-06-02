@@ -14,6 +14,7 @@ import com.warsawcitygamescommunication.Services.AccountService;
 import com.warsawcitygamescommunication.Services.AchievementsService;
 import com.warsawcitygamescommunication.Services.FriendshipsService;
 import com.warsawcitygamescommunication.Services.MissionsService;
+import com.warsawcitygamescommunication.Services.RankingService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.io.IOException;
@@ -114,5 +115,11 @@ public class RestServicesModule {
     AchievementsService provideAchievementsService(Retrofit retrofit)
     {
         return retrofit.create(AchievementsService.class);
+    }
+
+    @Provides
+    @Singleton
+    RankingService provideRankingService(Retrofit retrofit){
+        return retrofit.create(RankingService.class);
     }
 }

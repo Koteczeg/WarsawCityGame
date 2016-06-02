@@ -35,7 +35,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
                 PlayerImage = Convert.ToBase64String(x.UserImage),
                 LevelName = x.Level.Name,
                 LevelNumber = x.Level.Id
-            }).ToList();
+            }).OrderByDescending(x=>x.PlayerExp).ToList();
         }
     }
 }
