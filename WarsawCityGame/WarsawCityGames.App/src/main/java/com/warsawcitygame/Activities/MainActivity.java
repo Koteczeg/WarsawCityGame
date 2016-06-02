@@ -154,8 +154,7 @@ public class MainActivity extends Activity
                 activeFragment = new GetMissionFragment();
                 break;
             case 4:
-                activeFragment = new LoadingFragment();
-                getDataForAchievementsFragment();
+                activeFragment = new AchievementsFragment();
                 break;
             case 5:
                 activeFragment = new HallOfFameFragment();
@@ -171,11 +170,6 @@ public class MainActivity extends Activity
         fadeOutAnimationNewFragment(frameLayout);
     }
 
-    private void getDataForAchievementsFragment()
-    {
-        DownloadAchievements da = new DownloadAchievements();
-        da.execute();
-    }
 
     private void replaceFragment(int position)
     {
@@ -219,37 +213,7 @@ public class MainActivity extends Activity
 
 
 
-    //TODO communication architecture
-    //TODO layer must be able to aggregate menuLayout and activeFragment (to invoke post executive)
-    //TODO or we can find another way to replace fragments?
-    class DownloadAchievements extends AsyncTask<String, Void, List<String>>
-    {
-        @Override
-        protected List<String> doInBackground(String... params)
-        {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(List<String> result)
-        {
-            activeFragment = new AchievementsFragment();
-            frameLayout.setVisibility(View.INVISIBLE);
-            fadeOutAnimationNewFragment(frameLayout);
-            if (activeFragment != null) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.frame_container, activeFragment).commit();
-                menuLayout.closeDrawer(menuList);
-            } else {
-                Log.e("MainActivity", "Error in creating activeFragment");
-            }
-        }
-    }
 }
 
 

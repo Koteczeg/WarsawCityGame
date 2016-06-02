@@ -2,10 +2,7 @@ package com.warsawcitygame.Fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +13,8 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygames.models.achievements_models.AchievementModel;
 import com.warsawcitygamescommunication.Services.AchievementsService;
-import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.util.ArrayList;
 import java.util.List;
