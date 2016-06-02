@@ -11,13 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.warsawcitygame.Adapters.FriendListViewAdapter;
 import com.warsawcitygame.Adapters.ListViewAdapter;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.friends_models.FriendModel;
 import com.warsawcitygames.models.friends_models.RankingModel;
 import com.warsawcitygamescommunication.Services.RankingService;
 
@@ -35,11 +33,6 @@ public class HallOfFameFragment extends Fragment
 {
     ListView ranking;
     ListViewAdapter adapter;
-    String[] ranks;
-    String[] levels;
-    String[] levelsDescriptions;
-    String[] names;
-    int[] pics;
     private Dialog dialog;
     private List<RankingModel> rankingModels;
 
@@ -60,13 +53,13 @@ public class HallOfFameFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.fragment_hall_of_fame, container, false);
         ranking = ButterKnife.findById(rootView,R.id.listview);
-        initializeRanking(rootView);
+        initializeRanking();
         return rootView;
     }
 
-    private void initializeRanking(View rootView)
+    private void initializeRanking()
     {
-        List<RankingModel> list = downloadData();
+        downloadData();
         setRankingLayout();
     }
 
@@ -81,11 +74,15 @@ public class HallOfFameFragment extends Fragment
     {
         showLoadingDialog();
         Call<List<RankingModel>> callData = service.GetPlayerRanking();
-        callData.enqueue(new CustomCallback<List<RankingModel>>(getActivity()) {
+        callData.enqueue(new CustomCallback<List<RankingModel>>(getActivity())
+        {
             @Override
-            public void onResponse(Response<List<RankingModel>> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
-                    if (response.body() != null) {
+            public void onResponse(Response<List<RankingModel>> response, Retrofit retrofit)
+            {
+                if (response.isSuccess())
+                {
+                    if (response.body() != null)
+                    {
                         rankingModels = response.body();
                     }
                 }
@@ -97,11 +94,13 @@ public class HallOfFameFragment extends Fragment
             }
 
             @Override
-            public void onSuccess(List<RankingModel> model) {
+            public void onSuccess(List<RankingModel> model)
+            {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Throwable t)
+            {
                 hideDialog();
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
