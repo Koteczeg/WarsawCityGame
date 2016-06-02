@@ -2,11 +2,13 @@ package com.warsawcitygame.Fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.warsawcitygame.Adapters.FriendListViewAdapter;
@@ -39,6 +41,7 @@ public class HallOfFameFragment extends Fragment
     String[] names;
     int[] pics;
     private Dialog dialog;
+    private List<RankingModel> rankingModels;
 
     @Inject
     RankingService service;
@@ -65,8 +68,6 @@ public class HallOfFameFragment extends Fragment
     {
         List<RankingModel> list = downloadData();
         setRankingLayout();
-        adapter = new ListViewAdapter(rootView.getContext(), list);
-        ranking.setAdapter(adapter);
     }
 
     private void setRankingLayout()
@@ -78,39 +79,66 @@ public class HallOfFameFragment extends Fragment
 
     private List<RankingModel> downloadData()
     {
-        final List<RankingModel> rankingModels = new LinkedList<>();
         showLoadingDialog();
         Call<List<RankingModel>> callData = service.GetPlayerRanking();
-        callData.enqueue(new CustomCallback<List<RankingModel>>(getActivity())
-        {
+        callData.enqueue(new CustomCallback<List<RankingModel>>(getActivity()) {
             @Override
-            public void onResponse(Response<List<RankingModel>> response, Retrofit retrofit)
-            {
-                if (response.isSuccess())
-                {
-                    if(response.body()!=null) {
-                        for(RankingModel model: response.body()){
-                            rankingModels.add(model);
-                        }
+            public void onResponse(Response<List<RankingModel>> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    if (response.body() != null) {
+                        rankingModels = response.body();
                     }
                 }
+                if (rankingModels == null) rankingModels = new LinkedList<>();
+                adapter = new ListViewAdapter(getActivity(), rankingModels);
+                ranking.setAdapter(adapter);
+                setImages();
                 hideDialog();
             }
 
             @Override
-            public void onSuccess(List<RankingModel> model)
-            {
+            public void onSuccess(List<RankingModel> model) {
             }
 
             @Override
-            public void onFailure(Throwable t)
-            {
+            public void onFailure(Throwable t) {
                 hideDialog();
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
         return rankingModels;
+    }
+
+    private void setImages(){
+        ImageView first = (ImageView)getView().findViewById(R.id.FirstPlace);
+        ImageView second = (ImageView)getView().findViewById(R.id.SecondPlace);
+        ImageView third = (ImageView)getView().findViewById(R.id.ThirdPlace);
+
+        if(rankingModels.size()>=1)
+        {
+            Bitmap b1 = ListViewAdapter.convertPic(rankingModels.get(0).PlayerImage);
+            if(b1!=null)
+                first.setImageBitmap(b1);
+            else
+                first.setImageResource(R.drawable.default_image);
+        }
+        if(rankingModels.size()>=2)
+        {
+            Bitmap b1 = ListViewAdapter.convertPic(rankingModels.get(1).PlayerImage);
+            if(b1!=null)
+                second.setImageBitmap(b1);
+            else
+                second.setImageResource(R.drawable.default_image);
+        }
+        if(rankingModels.size()>=3)
+        {
+            Bitmap b1 = ListViewAdapter.convertPic(rankingModels.get(2).PlayerImage);
+            if(b1!=null)
+                third.setImageBitmap(b1);
+            else
+                third.setImageResource(R.drawable.default_image);
+        }
     }
 
     private void showLoadingDialog()

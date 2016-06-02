@@ -27,7 +27,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         {
             var friendships = _unitOfWork.FriendshipsRepository.DbSet.Where(x => x.Player.User.UserName.Equals(username));
             var friends = friendships.Select(f => f.Friend).Include(p => p.Level).Include(p => p.User);
-            return friends.Select(x => new PlayerRankingDto()
+            return friends.ToList().Select(x => new PlayerRankingDto()
             {
                 PlayerName = x.Name,
                 PlayerLogin = x.User.UserName,

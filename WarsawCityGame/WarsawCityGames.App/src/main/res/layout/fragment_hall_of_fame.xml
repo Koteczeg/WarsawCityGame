@@ -46,7 +46,8 @@
                         android:layout_height="0dp"
                         android:layout_weight="3"
                         android:layout_width="match_parent"
-                        android:src="@drawable/adamlevine"/>
+                        android:id="@+id/SecondPlace"
+                        />
                     <ImageView
                         android:id="@+id/rectimage"
                         android:layout_height="0dp"
@@ -73,7 +74,7 @@
                         android:layout_weight="3"
                         android:layout_width="match_parent"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/tiger"/>
+                        android:id="@+id/FirstPlace"/>
                     <ImageView
                         android:layout_height="0dp"
                         android:layout_weight="6"
@@ -98,7 +99,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="3"
                         android:layout_width="match_parent"
-                        android:src="@drawable/arianagrande"/>
+                        android:id="@+id/ThirdPlace"/>
                     <ImageView
                         android:layout_height="0dp"
                         android:layout_weight="4"

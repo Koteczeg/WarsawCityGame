@@ -7,16 +7,16 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class RankingModel {
-    @SerializedName("PlayerLogin")
+    @SerializedName("playerLogin")
     public String PlayerLogin;
-    @SerializedName("PlayerName")
+    @SerializedName("playerName")
     public String PlayerName;
-    @SerializedName("PlayerExp")
+    @SerializedName("playerExp")
     public int PlayerExp;
-    @SerializedName("PlayerImage")
+    @SerializedName("playerImage")
     public String PlayerImage;
-    @SerializedName("LevelNumber")
+    @SerializedName("levelNumber")
     public int LevelNumber;
-    @SerializedName("LevelName")
+    @SerializedName("levelName")
     public String LevelName;
 }

@@ -108,7 +108,7 @@ public class ListViewAdapter extends BaseAdapter
         return itemView;
     }
 
-    private static Bitmap convertPic(String encoded){
+    public static Bitmap convertPic(String encoded){
         if(encoded==null) return null;
         byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
         if(imageAsBytes==null)
