@@ -36,6 +36,7 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievements\AchievementDto.cs" />
     <Compile Include="Friendships\FriendshipDto.cs" />
     <Compile Include="Missions\CurrentMissionDto.cs" />
     <Compile Include="Missions\PlayerMissionDto.cs" />

@@ -1,4 +1,6 @@
-﻿namespace WarsawCityGamesServer.Entities.Entities
+﻿using System.Collections.Generic;
+
+namespace WarsawCityGamesServer.Entities.Entities
 {
     public class Player : Entity
     {

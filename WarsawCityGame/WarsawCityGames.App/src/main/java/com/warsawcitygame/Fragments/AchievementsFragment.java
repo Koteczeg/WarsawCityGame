@@ -1,7 +1,11 @@
 package com.warsawcitygame.Fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,68 +13,127 @@ import android.widget.GridView;
 
 import com.warsawcitygame.Adapters.GridViewAdapter;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.CustomCallback;
+import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.PlayerProfileDataModel;
+import com.warsawcitygames.models.achievements_models.AchievementModel;
+import com.warsawcitygamescommunication.Services.AchievementsService;
+import com.warsawcitygamescommunication.Services.UserProfileService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class AchievementsFragment extends Fragment
 {
-
+    @Inject
+    AchievementsService service;
     GridView ranking;
+    private Dialog dialog;
 
 
-	public AchievementsFragment(){}
-	
-	@Override
+    public AchievementsFragment()
+    {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
+    }
+
+    private void showLoadingDialog()
+    {
+        dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
+        Runnable runnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                dialog.show();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
- 
+
         View rootView = inflater.inflate(R.layout.fragment_achievements, container, false);
         ranking = ButterKnife.findById(rootView, R.id.ranking_gridview);
 
-        //TODO we will get it from async task from main activity, look for 'pass list to fragment' in google, parcelable and so on
-        ArrayList<String> descriptions= new ArrayList<>();
-        ArrayList<Integer> pics= new ArrayList<>(); //its okay because achievements are static resources in application
-        //TODO this method not here; async loading must be invoked in main activity so we can display loading fragment meanwhile
-        prepareList(descriptions, pics);
+        showLoadingDialog();
+        Call<List<AchievementModel>> callData = service.GetUserAchievements();
+        callData.enqueue(new CustomCallback<List<AchievementModel>>(getActivity())
+        {
+            @Override
+            public void onSuccess(List<AchievementModel> model)
+            {
+            }
 
-        GridViewAdapter rankingAdapter= new GridViewAdapter(getActivity(),descriptions, pics);
-        ranking.setAdapter(rankingAdapter);
+            @Override
+            public void onResponse(Response<List<AchievementModel>> response, Retrofit retrofit)
+            {
+                ArrayList<String> descriptions = new ArrayList<>();
+                ArrayList<Integer> pics = new ArrayList<>();
+                prepareList(descriptions, pics, response.body());
+                GridViewAdapter rankingAdapter = new GridViewAdapter(getActivity(), descriptions, pics);
+                ranking.setAdapter(rankingAdapter);
+                if (dialog != null)
+                {
+                    dialog.dismiss();
+                    dialog = null;
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t)
+            {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
+            }
+        });
         return rootView;
     }
 
-    //TODO will be removed, async loading from parent activity will be invoked
-    public void prepareList(final ArrayList<String> listCountry,final  ArrayList<Integer> listFlag)
+    public void prepareList(final ArrayList<String> listCountry, final ArrayList<Integer> listFlag, List<AchievementModel> body)
     {
-
-        listCountry.add("Account created");
-        listCountry.add("Logged in for a very first time");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-        listCountry.add("");
-
-        listFlag.add(R.drawable.acccreated);
-        listFlag.add(R.drawable.loggedin);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-
+        int count=15;
+        for(AchievementModel model : body){
+            listCountry.add(model.Description);
+            switch (model.Name)
+            {
+                case "loggedIn":
+                    listFlag.add(R.drawable.loggedin);
+                    break;
+                case "accountCreated":
+                    listFlag.add(R.drawable.acccreated);
+                    break;
+                default:
+                    listFlag.add(R.drawable.dontknow);
+                    break;
+            }
+            count--;
+        }
+        for(int i=0; i<count; i++)
+        {
+            listCountry.add("");
+            listFlag.add(R.drawable.dontknow);
+        }
     }
 
-    @Override public void onDestroyView()
+    @Override
+    public void onDestroyView()
     {
         super.onDestroyView();
         ButterKnife.unbind(this);
