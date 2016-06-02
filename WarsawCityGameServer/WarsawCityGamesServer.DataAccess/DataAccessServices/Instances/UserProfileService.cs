@@ -65,5 +65,12 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
                 return false;
             }
         }
+
+        public async Task RemoveUserImage(string username)
+        {
+            var player = await FindPlayer(username);
+            player.UserImage = null;
+            _unitOfWork.Save();
+        }
     }
 }

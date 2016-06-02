@@ -73,11 +73,9 @@ public class ProfileFragment extends Fragment
         setDialogListener(userLoginEditable, getActivity().getString(R.string.enterLoginText), new ChangeDataAction());
         setDialogListener(userEmailEditable, getActivity().getString(R.string.enterEmailText), new ChangeDataAction());
         setPasswordDialogListener(userPasswordEditable, new ChangePasswordAction());
-        profilePic.setOnClickListener(new View.OnClickListener()
-        {
+        profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CropUserImageActivity.class);
                 startActivity(intent);
             }
@@ -123,8 +121,15 @@ public class ProfileFragment extends Fragment
     public void onResume()
     {
         String encoded = preferences.getString(CropUserImageActivity.USER_IMAGE, null);
-        assert encoded != null;
-        byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
+        byte[] imageAsBytes=null;
+        if(encoded!=null)
+        imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
+        if(imageAsBytes==null)
+        {
+            profilePic.setImageResource(R.drawable.default_image);
+            super.onResume();
+            return;
+        }
         Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
         if(bm!=null)
         {
@@ -152,44 +157,32 @@ public class ProfileFragment extends Fragment
             {
                 setProfileView(response.body());
                 Call<String> call = service.GetUserImage();
-                call.enqueue(new CustomCallback<String>(getActivity())
-                {
+                call.enqueue(new CustomCallback<String>(getActivity()) {
                     @Override
-                    public void onSuccess(String model)
-                    {
+                    public void onSuccess(String model) {
                     }
 
                     @Override
-                    public void onResponse(Response<String> response, Retrofit retrofit)
-                    {
-                        if (response.isSuccess())
-                        {
-                            if (response.body() != null)
-                            {
+                    public void onResponse(Response<String> response, Retrofit retrofit) {
+                        if (response.isSuccess()) {
+                            if (response.body() != null) {
                                 byte[] imageAsBytes = Base64.decode(response.body().getBytes(), Base64.DEFAULT);
                                 Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-                                if(bm!=null)
-                                {
+                                if (bm != null) {
                                     profilePic.setImageBitmap(bm);
                                 }
-                                if (dialog != null)
-                                {
-                                    dialog.dismiss();
-                                    dialog = null;
-                                }
-                            } else
-                            {
-                                // TODO
                             }
-                        } else
-                        {
-                            // TODO
+                        } else {
+                            //DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load user image");
+                        }
+                        if (dialog != null) {
+                            dialog.dismiss();
+                            dialog = null;
                         }
                     }
 
                     @Override
-                    public void onFailure(Throwable t)
-                    {
+                    public void onFailure(Throwable t) {
                         DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                         super.onFailure(t);
                     }

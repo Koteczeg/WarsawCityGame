@@ -219,10 +219,14 @@
     </Content>
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <None Include="Properties\PublishProfiles\warsawcitygames - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\warsawcitygames - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygames - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygames - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\warsawcitygames - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygames - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\warsawcitygamesapi - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\warsawcitygamesapi - Web Deploy %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\warsawcitygamesapi - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

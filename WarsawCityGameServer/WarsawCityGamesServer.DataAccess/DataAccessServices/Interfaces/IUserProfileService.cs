@@ -10,5 +10,6 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
         Task<bool> TryChangeUserData(string username, string name, string email, string description);
         Task<string> GetPlayerLevelName(string username);
         Task<bool> TryUpdateProfilePicture(string file, string username);
+        Task RemoveUserImage(string username);
     }
 }

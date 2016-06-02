@@ -29,6 +29,9 @@ public interface UserProfileService {
     @POST("UserProfile/Upload")
     Call<ResponseBody> UpdateImage(@Body String file);
 
+    @POST("UserProfile/RemoveImage")
+    Call<ResponseBody> RemoveImage();
+
     @GET("UserProfile/GetUserImage")
     Call<String> GetUserImage();
 }
