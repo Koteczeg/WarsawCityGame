@@ -16,11 +16,16 @@ import android.widget.TextView;
 import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.friends_models.FriendModel;
+import com.warsawcitygamescommunication.Services.FriendshipsService;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit.Retrofit;
 
 
 public class FriendListViewAdapter extends BaseAdapter
@@ -28,9 +33,11 @@ public class FriendListViewAdapter extends BaseAdapter
     private Context context;
     private List<FriendModel> friends;
     private int layoutId;
+    FriendshipsService service;
 
-    public FriendListViewAdapter(Context context, List<FriendModel> friends)
+    public FriendListViewAdapter(Context context, List<FriendModel> friends, FriendshipsService service)
     {
+        this.service = service;
         this.context = context;
         this.friends = friends;
         this.layoutId = R.layout.friend_list_item;
@@ -70,7 +77,7 @@ public class FriendListViewAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position).Name, friends.get(position).Username, friends.get(position).ActionType);
+                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position).Name, friends.get(position).Username, friends.get(position).Id, service, friends.get(position).ActionType);
             }
         });
         return element;

@@ -1,6 +1,6 @@
 package com.warsawcitygamescommunication.Services;
 
-import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygames.models.friends_models.FriendModel;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface FriendshipsService
     @POST("Friendships/FindFriend")
     Call<FriendModel> FindFriend(@Query("username") String username);
     @POST("Friendships/AssignFriend")
-    Call<Response> AssignFriend(@Query("playerId") int playerId);
+    Call<ResponseBody> AssignFriend(@Query("playerId") int playerId);
     @POST("Friendships/RemoveFriend")
-    Call<Response> RemoveFriend(@Query("playerId") int playerId);
+    Call<ResponseBody> RemoveFriend(@Query("playerId") int playerId);
 }

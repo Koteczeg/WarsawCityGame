@@ -21,11 +21,14 @@ import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.R;
 import com.warsawcitygames.models.UserMissionModel;
+import com.warsawcitygamescommunication.Services.FriendshipsService;
 
 import java.io.IOError;
 import java.util.InputMismatchException;
 
 import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class DialogUtils
 {
@@ -96,7 +99,7 @@ public class DialogUtils
         dialog.show();
     }
 
-    public static void RaiseDialogShowProfile(Context context, Bitmap bitmap, String name, String username, String actionType)
+    public static void RaiseDialogShowProfile(final Context context, Bitmap bitmap, String name, String username, final int playerId, final FriendshipsService service, final String actionType)
     {
         final Dialog dialog = new Dialog(context, R.style.TransparentStretchedDialog);
         dialog.setContentView(R.layout.dialog_profile);
@@ -115,39 +118,59 @@ public class DialogUtils
             }
         });
         final Button friendActionButton = (Button)dialog.findViewById(R.id.btn_profile_action);
-
         if(actionType.equals("add"))
-        {
-            friendActionButton.setVisibility(View.VISIBLE);
-            friendActionButton.setText(R.string.addFriendText2);
-            friendActionButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    //TODO
-                    dialog.dismiss();
-                }
-            });
-        }
+            friendActionButton.setText("Add friend");
         else if(actionType.equals("remove"))
-        {
-            friendActionButton.setVisibility(View.VISIBLE);
-            friendActionButton.setText(R.string.removeFriendText);
-            friendActionButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    //TODO
-                    dialog.dismiss();
-                }
-            });
-        }
+            friendActionButton.setText("Remove friend");
         else
-        {
             friendActionButton.setVisibility(View.INVISIBLE);
-        }
+
+        friendActionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                final Dialog loading = DialogUtils.RaiseDialogLoading(context, true);
+                Call<ResponseBody> call = null;
+                if(actionType.equals("add"))
+                    call = service.AssignFriend(playerId);
+                else if(actionType.equals("remove"))
+                    call = service.RemoveFriend(playerId);
+
+                if (call != null)
+                {
+                    call.enqueue(new CustomCallback<ResponseBody>(context)
+                    {
+                        @Override
+                        public void onSuccess(ResponseBody model)
+                        {
+                            DialogUtils.RaiseDialogShowError(context, "Success", "Successfully completed action.");
+                            loading.dismiss();
+                        }
+
+                        @Override
+                        public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+                        {
+                            if (!response.isSuccess())
+                                DialogUtils.RaiseDialogShowError(context, "Error", "Something went wrong");
+                            else
+                            {
+                                DialogUtils.RaiseDialogShowError(context, "Success", "Successfully completed action.");
+                            }
+                            loading.dismiss();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t)
+                        {
+                            loading.dismiss();
+                            DialogUtils.RaiseDialogShowError(context, "Error", "Something went wrong");
+                        }
+                    });
+                }
+            }
+        });
         dialog.show();
     }
 

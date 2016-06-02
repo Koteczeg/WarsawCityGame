@@ -6,6 +6,7 @@ import com.warsawcitygame.Activities.MainActivity;
 import com.warsawcitygame.Activities.MapsActivity;
 import com.warsawcitygame.Activities.RegisterActivity;
 import com.warsawcitygame.Activities.SplashActivity;
+import com.warsawcitygame.Adapters.FriendListViewAdapter;
 import com.warsawcitygame.Fragments.AchievementsFragment;
 import com.warsawcitygame.Fragments.BlankCurrentMissionFragment;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
@@ -41,4 +42,5 @@ public interface ApplicationComponent {
     void inject(HallOfFameFragment fragment);
     void inject(LoadingFragment fragment);
     void inject(ProfileFragment fragment);
+    void inject(FriendListViewAdapter adapter);
 }
