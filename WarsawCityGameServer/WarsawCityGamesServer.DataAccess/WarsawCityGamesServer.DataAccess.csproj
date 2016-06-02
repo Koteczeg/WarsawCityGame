@@ -55,9 +55,11 @@
   <ItemGroup>
     <Compile Include="DataAccessServices\Instances\FriendshipsService.cs" />
     <Compile Include="DataAccessServices\Instances\PlayerService.cs" />
+    <Compile Include="DataAccessServices\Instances\RankingService.cs" />
     <Compile Include="DataAccessServices\Instances\UserProfileService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IFriendshipsService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IPlayerService.cs" />
+    <Compile Include="DataAccessServices\Interfaces\IRankingService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IUserProfileService.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
