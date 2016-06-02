@@ -18,13 +18,17 @@ import android.widget.Toast;
 
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygame.Activities.LoginActivity;
+import com.warsawcitygame.Adapters.FriendListViewAdapter;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.R;
 import com.warsawcitygames.models.UserMissionModel;
+import com.warsawcitygames.models.friends_models.FriendModel;
 import com.warsawcitygamescommunication.Services.FriendshipsService;
 
 import java.io.IOError;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Response;
@@ -99,14 +103,14 @@ public class DialogUtils
         dialog.show();
     }
 
-    public static void RaiseDialogShowProfile(final Context context, Bitmap bitmap, String name, String username, final int playerId, final FriendshipsService service, final String actionType)
+    public static void RaiseDialogShowProfile(final Context context, Bitmap bitmap, final FriendModel modelObj, final FriendshipsService service, final List<FriendModel> friends, final List<FriendModel> searchResults, final FriendListViewAdapter adapter)
     {
         final Dialog dialog = new Dialog(context, R.style.TransparentStretchedDialog);
         dialog.setContentView(R.layout.dialog_profile);
         final TextView descriptionTxt = (TextView)dialog.findViewById(R.id.level);
-        descriptionTxt.setText(username);
+        descriptionTxt.setText(modelObj.Username);
         final TextView usernameTxt = (TextView)dialog.findViewById(R.id.userNameTop);
-        usernameTxt.setText(name);
+        usernameTxt.setText(modelObj.Name);
         final ImageView imageView = (ImageView)dialog.findViewById(R.id.profilePic);
         if(bitmap!=null)
             imageView.setImageBitmap(bitmap);
@@ -118,9 +122,9 @@ public class DialogUtils
             }
         });
         final Button friendActionButton = (Button)dialog.findViewById(R.id.btn_profile_action);
-        if(actionType.equals("add"))
+        if(modelObj.ActionType.equals("add"))
             friendActionButton.setText("Add friend");
-        else if(actionType.equals("remove"))
+        else if(modelObj.ActionType.equals("remove"))
             friendActionButton.setText("Remove friend");
         else
             friendActionButton.setVisibility(View.INVISIBLE);
@@ -133,11 +137,10 @@ public class DialogUtils
                 dialog.dismiss();
                 final Dialog loading = DialogUtils.RaiseDialogLoading(context, true);
                 Call<ResponseBody> call = null;
-                if(actionType.equals("add"))
-                    call = service.AssignFriend(playerId);
-                else if(actionType.equals("remove"))
-                    call = service.RemoveFriend(playerId);
-
+                if(modelObj.ActionType.equals("add"))
+                    call = service.AssignFriend(modelObj.Id);
+                else if(modelObj.ActionType.equals("remove"))
+                    call = service.RemoveFriend(modelObj.Id);
                 if (call != null)
                 {
                     call.enqueue(new CustomCallback<ResponseBody>(context)
@@ -145,6 +148,17 @@ public class DialogUtils
                         @Override
                         public void onSuccess(ResponseBody model)
                         {
+                            if(modelObj.ActionType.equals("add"))
+                            {
+                                friends.add(modelObj);
+                                searchResults.remove(modelObj);
+                            }
+                            else
+                            {
+                                friends.remove(modelObj);
+                                searchResults.remove(modelObj);
+                            }
+                            adapter.notifyDataSetChanged();
                             DialogUtils.RaiseDialogShowError(context, "Success", "Successfully completed action.");
                             loading.dismiss();
                         }
@@ -156,6 +170,17 @@ public class DialogUtils
                                 DialogUtils.RaiseDialogShowError(context, "Error", "Something went wrong");
                             else
                             {
+                                if(modelObj.ActionType.equals("add"))
+                                {
+                                    friends.add(modelObj);
+                                    searchResults.remove(modelObj);
+                                }
+                                else
+                                {
+                                    friends.remove(modelObj);
+                                    searchResults.remove(modelObj);
+                                }
+                                adapter.notifyDataSetChanged();
                                 DialogUtils.RaiseDialogShowError(context, "Success", "Successfully completed action.");
                             }
                             loading.dismiss();

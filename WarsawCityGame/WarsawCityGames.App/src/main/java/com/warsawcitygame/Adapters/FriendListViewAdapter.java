@@ -34,12 +34,13 @@ public class FriendListViewAdapter extends BaseAdapter
     private List<FriendModel> friends;
     private int layoutId;
     FriendshipsService service;
-
-    public FriendListViewAdapter(Context context, List<FriendModel> friends, FriendshipsService service)
+    List<FriendModel> searchResults;
+    public FriendListViewAdapter(Context context, List<FriendModel> friends,List<FriendModel> searchResults, FriendshipsService service)
     {
         this.service = service;
         this.context = context;
         this.friends = friends;
+        this.searchResults=searchResults;
         this.layoutId = R.layout.friend_list_item;
     }
 
@@ -67,6 +68,7 @@ public class FriendListViewAdapter extends BaseAdapter
         CircleImageView friendAvatar = (CircleImageView)element.findViewById(R.id.friendAvatar);
         byte[] imageAsBytes = Base64.decode(friends.get(position).Image.getBytes(), Base64.DEFAULT);
         final Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        final FriendListViewAdapter adapter= this;
         if(bm!=null)
         {
             friendAvatar.setImageBitmap(bm);
@@ -77,7 +79,7 @@ public class FriendListViewAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position).Name, friends.get(position).Username, friends.get(position).Id, service, friends.get(position).ActionType);
+                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position), service, friends,searchResults, adapter);
             }
         });
         return element;

@@ -1,4 +1,7 @@
-﻿namespace WarsawCityGamesServer.Entities.Entities
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace WarsawCityGamesServer.Entities.Entities
 {
     public class Achievement : Entity
     {
