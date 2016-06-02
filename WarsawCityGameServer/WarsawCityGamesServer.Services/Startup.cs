@@ -61,6 +61,7 @@ namespace WarsawCityGamesServer.Services
             builder.RegisterType<PlayerService>().As<IPlayerService>();
             builder.RegisterType<UserProfileService>().As<IUserProfileService>();
             builder.RegisterType<FriendshipsService>().As<IFriendshipsService>();
+            builder.RegisterType<RankingService>().AsImplementedInterfaces();
             builder.RegisterType<AchievementsService>().As<IAchievementsService>();
         }
 

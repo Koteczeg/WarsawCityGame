@@ -202,6 +202,7 @@
     <Compile Include="Controllers\FriendshipsController.cs" />
     <Compile Include="Controllers\MissionController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
+    <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Essentials\EmptyTask.cs" />

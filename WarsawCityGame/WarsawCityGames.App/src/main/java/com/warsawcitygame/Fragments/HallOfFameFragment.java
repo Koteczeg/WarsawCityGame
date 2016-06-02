@@ -1,5 +1,6 @@
 package com.warsawcitygame.Fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -8,10 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.warsawcitygame.Adapters.FriendListViewAdapter;
 import com.warsawcitygame.Adapters.ListViewAdapter;
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.CustomCallback;
+import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.friends_models.FriendModel;
+import com.warsawcitygames.models.friends_models.RankingModel;
+import com.warsawcitygamescommunication.Services.RankingService;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class HallOfFameFragment extends Fragment
 {
@@ -22,8 +38,19 @@ public class HallOfFameFragment extends Fragment
     String[] levelsDescriptions;
     String[] names;
     int[] pics;
+    private Dialog dialog;
+
+    @Inject
+    RankingService service;
 
     public HallOfFameFragment(){}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -36,9 +63,9 @@ public class HallOfFameFragment extends Fragment
 
     private void initializeRanking(View rootView)
     {
-        getData();
+        List<RankingModel> list = downloadData();
         setRankingLayout();
-        adapter = new ListViewAdapter(rootView.getContext(), ranks, levels, levelsDescriptions, names, pics);
+        adapter = new ListViewAdapter(rootView.getContext(), list);
         ranking.setAdapter(adapter);
     }
 
@@ -49,16 +76,64 @@ public class HallOfFameFragment extends Fragment
         ranking.setDividerHeight(2);
     }
 
-    private void getData()
+    private List<RankingModel> downloadData()
     {
-        ranks = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        levels = new String[] { "5", "5", "5", "4", "4", "3", "3", "2", "1", "1" };
-        levelsDescriptions = new String[] { "Siren", "Siren", "Siren", "Jar", "Jar", "Jar", "Jar", "Wars", "Newbie", "Newbie" };
-        names = new String[] { "John","John","John","John","John","John","John","John","John","John" };
-        pics = new int[] {
-                R.drawable.tiger, R.drawable.arianagrande,
-                R.drawable.adamlevine, R.drawable.tiger,
-                R.drawable.arianagrande, R.drawable.adamlevine, R.drawable.tiger,
-                R.drawable.adamlevine, R.drawable.arianagrande, R.drawable.arianagrande };
+        final List<RankingModel> rankingModels = new LinkedList<>();
+        showLoadingDialog();
+        Call<List<RankingModel>> callData = service.GetPlayerRanking();
+        callData.enqueue(new CustomCallback<List<RankingModel>>(getActivity())
+        {
+            @Override
+            public void onResponse(Response<List<RankingModel>> response, Retrofit retrofit)
+            {
+                if (response.isSuccess())
+                {
+                    if(response.body()!=null) {
+                        for(RankingModel model: response.body()){
+                            rankingModels.add(model);
+                        }
+                    }
+                }
+                hideDialog();
+            }
+
+            @Override
+            public void onSuccess(List<RankingModel> model)
+            {
+            }
+
+            @Override
+            public void onFailure(Throwable t)
+            {
+                hideDialog();
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                super.onFailure(t);
+            }
+        });
+        return rankingModels;
+    }
+
+    private void showLoadingDialog()
+    {
+        dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
+        Runnable runnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                dialog.show();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
+    }
+
+    private void hideDialog()
+    {
+        if (dialog != null)
+        {
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 }
