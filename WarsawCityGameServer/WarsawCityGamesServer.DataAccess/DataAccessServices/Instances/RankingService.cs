@@ -32,7 +32,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
                 PlayerName = x.Name,
                 PlayerLogin = x.User.UserName,
                 PlayerExp = x.Exp,
-                PlayerImage = x.UserImage,
+                PlayerImage = Convert.ToBase64String(x.UserImage),
                 LevelName = x.Level.Name,
                 LevelNumber = x.Level.Id
             }).ToList();
