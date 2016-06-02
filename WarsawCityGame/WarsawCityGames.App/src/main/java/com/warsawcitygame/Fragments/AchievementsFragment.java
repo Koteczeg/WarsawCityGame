@@ -111,32 +111,25 @@ public class AchievementsFragment extends Fragment
         int count=15;
         for(AchievementModel model : body){
             listCountry.add(model.Description);
-            if(model.Name.equals("loggedIn"))
+            switch (model.Name)
             {
-                listFlag.add(R.drawable.loggedin);
-            }
-            else if(model.Name.equals("accountCreated"))
-            {
-                listFlag.add(R.drawable.acccreated);
-            }
-            else
-            {
-                listFlag.add(R.drawable.dontknow);
+                case "loggedIn":
+                    listFlag.add(R.drawable.loggedin);
+                    break;
+                case "accountCreated":
+                    listFlag.add(R.drawable.acccreated);
+                    break;
+                default:
+                    listFlag.add(R.drawable.dontknow);
+                    break;
             }
             count--;
         }
-        //for(int i=0; )
-        listFlag.add(R.drawable.loggedin);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-        listFlag.add(R.drawable.dontknow);
-
+        for(int i=0; i<count; i++)
+        {
+            listCountry.add("");
+            listFlag.add(R.drawable.dontknow);
+        }
     }
 
     @Override
