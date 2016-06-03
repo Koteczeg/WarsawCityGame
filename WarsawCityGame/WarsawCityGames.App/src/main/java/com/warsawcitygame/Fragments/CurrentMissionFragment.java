@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class CurrentMissionFragment extends Fragment
 
     TextView missionDesc;
     TextView missionName;
-
+    ImageView missionImage;
     public CurrentMissionFragment(){}
 
     @Inject
@@ -73,6 +74,7 @@ public class CurrentMissionFragment extends Fragment
         accomplishMissionButton = ButterKnife.findById(rootView, R.id.accomplishMissionButton);
         missionDesc = ButterKnife.findById(rootView,R.id.missionDesc);
         missionName = ButterKnife.findById(rootView,R.id.missionName);
+        missionImage = ButterKnife.findById(rootView,R.id.imageView2);
 
         abortMissionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +91,11 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        mapButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
             }
@@ -129,9 +133,9 @@ public class CurrentMissionFragment extends Fragment
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
             {
-                if(response.code() == 200)
+                if (response.code() == 200)
                 {
-                    RaiseAchievementDialog("Well Done !",getActivity());
+                    RaiseAchievementDialog("Well Done !", getActivity());
                     showBlank();
                 }
                 if (response.code() == 400)
@@ -142,8 +146,10 @@ public class CurrentMissionFragment extends Fragment
                     super.onResponse(response, retrofit);
                 }
             }
+
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Throwable t)
+            {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
@@ -153,7 +159,6 @@ public class CurrentMissionFragment extends Fragment
     private void checkForCurrentMission()
     {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        //only for testing
         Call<CurrentMissionModel> call = service.GetCurrentMission(username);
         showLoadingDialog();
         call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity()) {
@@ -210,7 +215,8 @@ public class CurrentMissionFragment extends Fragment
 
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Throwable t)
+            {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
@@ -221,6 +227,13 @@ public class CurrentMissionFragment extends Fragment
     private void showBlank()
     {
         Fragment fragment = new BlankCurrentMissionFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+    }
+
+    private void showFilled()
+    {
+        Fragment fragment = new CurrentMissionFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
     }

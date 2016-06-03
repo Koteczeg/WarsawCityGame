@@ -2,6 +2,7 @@ package com.warsawcitygame.Activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -49,49 +50,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-        LatLng center = new LatLng(52.23, 21.011944);
-        mMap.addMarker(new MarkerOptions().position(center).title("Centrum"));
-        LatLng dsRiviera = new LatLng(52.216689, 21.020656);
-        mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DS Riviera"));
-        mMap.moveCamera(CameraUpdateFactory.scrollBy(5, 50));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 14), 4000, null);
-        initializeListeners();
+        final LatLng center = new LatLng(52.222169, 21.007087);
+        mMap.addMarker(new MarkerOptions().position(center).title("HERE YOU ARE").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        final LatLng dsRiviera = new LatLng(52.237165, 21.041384);
+        mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DESTINATION").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mMap.moveCamera(CameraUpdateFactory.scrollBy(5, 50));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 14), 4000, null);
+                //initializeListeners();
+            }
+        }, 1500);
+        String url = getDirectionsUrl(center, dsRiviera);
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(url);
     }
 
     private void initializeListeners()
     {
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
-        {
-            @Override
-            public void onMapClick(LatLng point)
-            {
-                if (markerPoints.size() > 1)
-                {
-                    markerPoints.clear();
-                    mMap.clear();
-                }
-                markerPoints.add(point);
-                MarkerOptions options = new MarkerOptions();
-                options.position(point);
-                if (markerPoints.size() == 1)
-                {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                }
-                else if (markerPoints.size() == 2)
-                {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
-                mMap.addMarker(options);
-                if (markerPoints.size() >= 2)
-                {
-                    LatLng origin = markerPoints.get(0);
-                    LatLng dest = markerPoints.get(1);
-                    String url = getDirectionsUrl(origin, dest);
-                    DownloadTask downloadTask = new DownloadTask();
-                    downloadTask.execute(url);
-                }
-            }
-        });
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
+//        {
+//            @Override
+//            public void onMapClick(LatLng point)
+//            {
+//                if (markerPoints.size() > 1)
+//                {
+//                    markerPoints.clear();
+//                    mMap.clear();
+//                }
+//                markerPoints.add(point);
+//                MarkerOptions options = new MarkerOptions();
+//                options.position(point);
+//                if (markerPoints.size() == 1)
+//                {
+//                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+//                }
+//                else if (markerPoints.size() == 2)
+//                {
+//                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//                }
+//                mMap.addMarker(options);
+//                if (markerPoints.size() >= 2)
+//                {
+//                    LatLng origin = markerPoints.get(0);
+//                    LatLng dest = markerPoints.get(1);
+//                    String url = getDirectionsUrl(origin, dest);
+//                    DownloadTask downloadTask = new DownloadTask();
+//                    downloadTask.execute(url);
+//                }
+//            }
+//        });
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest)
@@ -200,7 +212,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     points.add(position);
                 }
                 lineOptions.addAll(points);
-                lineOptions.width(5);
+                lineOptions.width(15);
                 lineOptions.color(0xFF00BFFF);
             }
             mMap.addPolyline(lineOptions);
