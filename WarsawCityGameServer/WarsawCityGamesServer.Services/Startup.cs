@@ -63,6 +63,7 @@ namespace WarsawCityGamesServer.Services
             builder.RegisterType<FriendshipsService>().As<IFriendshipsService>();
             builder.RegisterType<RankingService>().AsImplementedInterfaces();
             builder.RegisterType<AchievementsService>().As<IAchievementsService>();
+            builder.RegisterType<MissionService>().AsImplementedInterfaces();
         }
 
         private static void RegisterAutoMapperConfiguration(ContainerBuilder builder)
