@@ -4,18 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.warsawcitygame.R;
 import com.warsawcitygames.models.RankingModel;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.xml.datatype.Duration;
 
 import butterknife.ButterKnife;
 
@@ -105,14 +109,10 @@ public class ListViewAdapter extends BaseAdapter
         if(bm!=null){
             pic.setImageBitmap(bm);
         }
-        else{
+        else {
             pic.setImageResource(R.drawable.default_image);
         }
-        for(boolean b: bools)
-            if(b){
-                itemView.setBackgroundColor(0xFF00A600);
-            }
-
+        
         return itemView;
     }
 
