@@ -10,7 +10,7 @@ The main purpose was to get familiar with programming for mobile devices and als
 
 ## Installation
 To run Warsaw Sleep Time you will need to set up the API service and database. The fastest way is to deploy both of it via web services, for ex. Microsoft Azure or Amazon provide it.
-In that case you should update the connection string in `Web.config` for WarsawCityGame.Services project and `App.config`  for WarsawCityGame.Entities. To initialize the database and seed it with the test data run the following command in the Package Manager Console:
+In that case you should update the connection string in `Web.config` for WarsawCityGame.Services project and `App.config`  for WarsawCityGame.Entities. You will need to update API address in client application too (in WarsawCityGame.App module). To initialize the database and seed it with the test data run the following command in the Package Manager Console:
 ```
 Update-Database -ProjectName WarsawCityGame.Entities
 ```
