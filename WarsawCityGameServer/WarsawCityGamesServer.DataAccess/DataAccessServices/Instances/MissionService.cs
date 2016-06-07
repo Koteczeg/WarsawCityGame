@@ -29,6 +29,11 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return await Task.Run(() => AbortCurrentMission(username));
         }
 
+        public async Task<bool> SetCurrentMissionAsync(PlayerMissionDto dto)
+        {
+            return await Task.Run(() => SetCurrentMission(dto));
+        }
+
         private MissionDto GetCurrentMission(string username)
         {
             var player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(p => p.User.UserName.Equals(username));
@@ -58,6 +63,22 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return true;
         }
 
-        
+        private bool SetCurrentMission(PlayerMissionDto dto)
+        {
+
+            var mission = _unitOfWork.MissionRepository.DbSet.FirstOrDefault(x => x.Name == dto.MissionName);
+            if (mission == null) return false;
+
+            var player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(x => x.User.UserName == dto.UserName);
+            if (player == null) return false;
+
+            if (player.CurrentMission != null) return false;
+
+            player.CurrentMission = mission;
+            _unitOfWork.Save();
+            return true;
+        }
+
+
     }
 }
