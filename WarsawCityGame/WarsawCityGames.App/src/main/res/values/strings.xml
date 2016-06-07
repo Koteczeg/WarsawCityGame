@@ -90,4 +90,7 @@
     <string name="findPlayerText">Find player</string>
     <string name="success_account_registered">Registered. Logging..</string>
     <string name="welcomeText">Welcome :)</string>
+    <string name="sampleDescriptionTxt">Sample description</string>
+    <string name="showOnMapText">SHOW ON MAP</string>
+    <string name="detailsText">DETAILS</string>
 </resources>
