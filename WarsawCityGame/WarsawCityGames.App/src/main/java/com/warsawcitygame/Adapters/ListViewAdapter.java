@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.warsawcitygame.R;
-import com.warsawcitygames.models.friends_models.RankingModel;
+import com.warsawcitygames.models.RankingModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +30,7 @@ public class ListViewAdapter extends BaseAdapter
     String[] names;
     //TODO Drawable pics
     int[] pics;
+    List<Boolean> bools;
     List<String> picsl;
 
     public ListViewAdapter(Context context, String[] ranks, String[] levels, String[] levelDescriptions, String[] names, int[] flag)
@@ -48,6 +49,7 @@ public class ListViewAdapter extends BaseAdapter
         List<String> levelsl = new LinkedList<>();
         List<String> levelDesl = new LinkedList<>();
         List<String> namesl = new LinkedList<>();
+        bools = new LinkedList<>();
         picsl = new LinkedList<>();
         if(list!=null){
             Integer i=1;
@@ -56,6 +58,7 @@ public class ListViewAdapter extends BaseAdapter
                 levelsl.add(new Integer(model.LevelNumber).toString());
                 levelDesl.add(model.LevelName);
                 namesl.add(model.PlayerName);
+                bools.add(model.IsCurrentPlayer);
                 picsl.add(model.PlayerImage);
                 i++;
             }
@@ -105,6 +108,11 @@ public class ListViewAdapter extends BaseAdapter
         else{
             pic.setImageResource(R.drawable.default_image);
         }
+        for(boolean b: bools)
+            if(b){
+                itemView.setBackgroundColor(0xFF00A600);
+            }
+
         return itemView;
     }
 

@@ -1,7 +1,6 @@
 package com.warsawcitygamescommunication.Services;
 
-import com.warsawcitygames.models.friends_models.FriendModel;
-import com.warsawcitygames.models.friends_models.RankingModel;
+import com.warsawcitygames.models.RankingModel;
 
 import java.util.List;
 
