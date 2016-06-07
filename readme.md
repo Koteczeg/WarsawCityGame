@@ -2,8 +2,8 @@
 Warsaw City Game is a simple traveler application for devices with Android operating system. Developed for a Mobile applications: Android course at our university.
 
 The system consists of two modules:
-* Client application
-* RESTful API service providing common interface for Client application
+* Client application (Java SE & android libraries)
+* RESTful API service providing common interface for Client application (ASP.NET Web API)
 
 ## Motivation
 The main purpose was to get familiar with programming for mobile devices and also develop an application which would stand out from the crowd of other traveler applications.
