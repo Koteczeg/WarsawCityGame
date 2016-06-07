@@ -35,7 +35,7 @@ public class FriendsFragment extends Fragment
     @Inject FriendshipsService service;
     private SearchView searchView;
     private ListView friendsList;
-
+    private ListView resultList;
     private List<FriendModel> friends = new LinkedList<>();
     List<FriendModel> searchResults = new LinkedList<>();
 
@@ -65,6 +65,7 @@ public class FriendsFragment extends Fragment
     {
         searchView = ButterKnife.findById(rootView, R.id.searchView);
         friendsList = ButterKnife.findById(rootView,R.id.friendsList);
+        resultList = ButterKnife.findById(rootView,R.id.searchResults);
         searchView.setBackgroundColor(0xFFC0E8FC);
         searchView.setOnClickListener(new View.OnClickListener()
         {
@@ -110,9 +111,8 @@ public class FriendsFragment extends Fragment
                     hideDialog();
                     return;
                 }
-                FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), friends, searchResults, service);
-                ListView searchResultList = (ListView) rootView.findViewById(R.id.searchResults);
-                searchResultList.setAdapter(searchResultsAdapter);
+                FriendListViewAdapter searchResultsAdapter = new FriendListViewAdapter(rootView.getContext(), searchResults, service);
+                resultList.setAdapter(searchResultsAdapter);
                 hideDialog();
             }
 
@@ -169,7 +169,7 @@ public class FriendsFragment extends Fragment
                 {
                     friends = null;
                 }
-                FriendListViewAdapter friendsAdapter = new FriendListViewAdapter(rootView.getContext(), friends,searchResults, service);
+                FriendListViewAdapter friendsAdapter = new FriendListViewAdapter(rootView.getContext(), friends, service);
                 int[] colors = {0, 0xFF00BFFF, 0};
                 friendsList.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
                 friendsList.setDividerHeight(3);

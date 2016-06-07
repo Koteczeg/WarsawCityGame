@@ -31,27 +31,26 @@ import retrofit.Retrofit;
 public class FriendListViewAdapter extends BaseAdapter
 {
     private Context context;
-    private List<FriendModel> friends;
+    private List<FriendModel> results;
     private int layoutId;
     FriendshipsService service;
     List<FriendModel> searchResults;
-    public FriendListViewAdapter(Context context, List<FriendModel> friends,List<FriendModel> searchResults, FriendshipsService service)
+    public FriendListViewAdapter(Context context, List<FriendModel> results, FriendshipsService service)
     {
         this.service = service;
         this.context = context;
-        this.friends = friends;
-        this.searchResults=searchResults;
+        this.results = results;
         this.layoutId = R.layout.friend_list_item;
     }
 
     @Override
     public int getCount() {
-        return friends.size();
+        return results.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return friends.get(position);
+        return results.get(position);
     }
 
     @Override
@@ -66,20 +65,20 @@ public class FriendListViewAdapter extends BaseAdapter
         View element = inflater.inflate(layoutId, parent, false);
         TextView name = (TextView) element.findViewById(R.id.friendName);
         CircleImageView friendAvatar = (CircleImageView)element.findViewById(R.id.friendAvatar);
-        byte[] imageAsBytes = Base64.decode(friends.get(position).Image.getBytes(), Base64.DEFAULT);
+        byte[] imageAsBytes = Base64.decode(results.get(position).Image.getBytes(), Base64.DEFAULT);
         final Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
         final FriendListViewAdapter adapter= this;
         if(bm!=null)
         {
             friendAvatar.setImageBitmap(bm);
         }
-        name.setText(friends.get(position).Name);
+        name.setText(results.get(position).Name);
         element.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                DialogUtils.RaiseDialogShowProfile(context, bm, friends.get(position), service, friends,searchResults, adapter);
+                DialogUtils.RaiseDialogShowProfile(context, bm, results.get(position), service, results,searchResults, adapter);
             }
         });
         return element;
