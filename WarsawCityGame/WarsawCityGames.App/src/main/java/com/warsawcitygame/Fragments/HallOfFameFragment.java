@@ -16,7 +16,7 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
-import com.warsawcitygames.models.friends_models.RankingModel;
+import com.warsawcitygames.models.RankingModel;
 import com.warsawcitygamescommunication.Services.RankingService;
 
 import java.util.LinkedList;

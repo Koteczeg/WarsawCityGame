@@ -1,4 +1,4 @@
-package com.warsawcitygames.models.friends_models;
+package com.warsawcitygames.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -19,4 +19,6 @@ public class RankingModel {
     public int LevelNumber;
     @SerializedName("levelName")
     public String LevelName;
+    @SerializedName("isCurrentPlayer")
+    public boolean IsCurrentPlayer;
 }

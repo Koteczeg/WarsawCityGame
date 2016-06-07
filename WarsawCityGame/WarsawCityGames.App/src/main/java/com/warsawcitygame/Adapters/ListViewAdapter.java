@@ -4,18 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.warsawcitygame.R;
-import com.warsawcitygames.models.friends_models.RankingModel;
+import com.warsawcitygames.models.RankingModel;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.xml.datatype.Duration;
 
 import butterknife.ButterKnife;
 
@@ -30,6 +34,7 @@ public class ListViewAdapter extends BaseAdapter
     String[] names;
     //TODO Drawable pics
     int[] pics;
+    List<Boolean> bools;
     List<String> picsl;
 
     public ListViewAdapter(Context context, String[] ranks, String[] levels, String[] levelDescriptions, String[] names, int[] flag)
@@ -48,6 +53,7 @@ public class ListViewAdapter extends BaseAdapter
         List<String> levelsl = new LinkedList<>();
         List<String> levelDesl = new LinkedList<>();
         List<String> namesl = new LinkedList<>();
+        bools = new LinkedList<>();
         picsl = new LinkedList<>();
         if(list!=null){
             Integer i=1;
@@ -56,6 +62,7 @@ public class ListViewAdapter extends BaseAdapter
                 levelsl.add(new Integer(model.LevelNumber).toString());
                 levelDesl.add(model.LevelName);
                 namesl.add(model.PlayerName);
+                bools.add(model.IsCurrentPlayer);
                 picsl.add(model.PlayerImage);
                 i++;
             }
@@ -102,9 +109,10 @@ public class ListViewAdapter extends BaseAdapter
         if(bm!=null){
             pic.setImageBitmap(bm);
         }
-        else{
+        else {
             pic.setImageResource(R.drawable.default_image);
         }
+        
         return itemView;
     }
 

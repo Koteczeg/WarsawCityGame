@@ -22,5 +22,7 @@ namespace WarsawCityGamesServer.Models.Players
         public int LevelNumber { get; set; }
         [DataMember(Name = "LevelName")]
         public string LevelName { get; set; }
+        [DataMember(Name = "isCurrentPlayer")]
+        public bool IsCurrentPlayer { get; set; }
     }
 }
