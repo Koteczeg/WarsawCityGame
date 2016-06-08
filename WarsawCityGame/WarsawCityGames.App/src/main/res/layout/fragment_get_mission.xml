@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:gravity="end"
-                    android:text="EXP: 500"
+                    android:text=""
                     android:textAlignment="viewEnd"
                     android:textColor="#FF0000" />
 

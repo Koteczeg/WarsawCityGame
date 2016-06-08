@@ -101,7 +101,7 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
-        checkForCurrentMission();
+       // checkForCurrentMission();
         return rootView;
     }
 

@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class MissionModel
 {
-    @SerializedName("name")
-    public String Name;
     @SerializedName("missionId")
     public int MissionId;
     @SerializedName("missionName")
@@ -29,10 +27,9 @@ public class MissionModel
     @SerializedName("userName")
     public String UserName;
 
-    public MissionModel(String name, int missionId, String missionName, String missionDescription,
+    public MissionModel(int missionId, String missionName, String missionDescription,
                         String minimalLevelName, int minimalLevelNumber, int expReward, String placeName,
                         double placeX, double placeY, String image, String userName) {
-        Name = name;
         MissionId = missionId;
         MissionName = missionName;
         MissionDescription = missionDescription;

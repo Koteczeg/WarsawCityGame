@@ -1,8 +1,12 @@
 package com.warsawcitygame.Fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +21,7 @@ import com.dd.morphingbutton.MorphingButton;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.okhttp.ResponseBody;
+import com.warsawcitygame.Activities.CropUserImageActivity;
 import com.warsawcitygame.Activities.LoginActivity;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
@@ -44,11 +49,13 @@ public class GetMissionFragment extends Fragment
     TextView placeExp;
     ImageView leftButton;
     ImageView rightButton;
-    int[] placePicTab;
+    Bitmap[] placePicTab;
     String[] placeDescriptionTab;
     String[] placeExpTab;
     String[] placeNameTab;
     int i = 0;
+
+    Dialog dialog;
 
     @Inject
     MissionsService service;
@@ -67,10 +74,13 @@ public class GetMissionFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+
+
         final View rootView = inflater.inflate(R.layout.fragment_get_mission, container, false);
         initializeReferences(rootView);
+
         getData();
-        UpdateView();
+
 
         final Animation fadeOutLeft = new AlphaAnimation(0f, 1f);
         final Animation fadeOutRight = new AlphaAnimation(0f, 1f);
@@ -80,6 +90,9 @@ public class GetMissionFragment extends Fragment
         final TextView missionButtonDescription =  (TextView)rootView.findViewById(R.id.missionacceptedId);
         missionButtonDescription.setVisibility(View.GONE);
         setAcceptMissionButton(rootView, missionButtonDescription);
+
+
+
         return rootView;
     }
 
@@ -115,23 +128,19 @@ public class GetMissionFragment extends Fragment
         //only for testing
         UserMissionModel model = new UserMissionModel(username, placeNameTab[i]);
         Call<ResponseBody> call = service.SetCurrentMission(model);
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
-        {
+
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
             @Override
-            public void onSuccess(ResponseBody model)
-            {
+            public void onSuccess(ResponseBody model) {
                 Toast toast = Toast.makeText(getActivity(), "Current mission added !", Toast.LENGTH_LONG);
                 toast.show();
             }
 
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
-            {
-                if (response.code() == 400)
-                {
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 400) {
                     DialogUtils.RaiseDialogShowError(getActivity(), "Warning", "You already have a mission !");
-                } else
-                {
+                } else {
                     super.onResponse(response, retrofit);
                 }
             }
@@ -156,8 +165,7 @@ public class GetMissionFragment extends Fragment
                     return modelState.getErrors();
                 }
 
-                 class ModelState
-                {
+                class ModelState {
                     @SerializedName("")
                     private String[] errors;
 
@@ -169,39 +177,54 @@ public class GetMissionFragment extends Fragment
 
             @Override
             public void onFailure(Throwable t) {
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error "+t.getMessage());
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
+    }
+
+
+    private void showLoadingDialog(){
+        dialog = DialogUtils.RaiseDialogLoading(getActivity(), false);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.run();
     }
 
     private void initializeAnimations(Animation fadeOutLeft, Animation fadeOutRight)
     {
         fadeOutLeft.setDuration(300);
         fadeOutRight.setDuration(300);
-        fadeOutLeft.setAnimationListener(new Animation.AnimationListener()
-        {
+        fadeOutLeft.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
+
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {
+            }
+
             @Override
-            public void onAnimationEnd(Animation animation)
-            {
+            public void onAnimationEnd(Animation animation) {
                 leftButton.setVisibility(View.VISIBLE);
             }
         });
-        fadeOutRight.setAnimationListener(new Animation.AnimationListener()
-        {
+        fadeOutRight.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation)
-            {}
+            public void onAnimationStart(Animation animation) {
+            }
+
             @Override
-            public void onAnimationRepeat(Animation animation)
-            {}
+            public void onAnimationRepeat(Animation animation) {
+            }
+
             @Override
-            public void onAnimationEnd(Animation animation)
-            {
+            public void onAnimationEnd(Animation animation) {
                 rightButton.setVisibility(View.VISIBLE);
             }
         });
@@ -209,8 +232,7 @@ public class GetMissionFragment extends Fragment
 
     private void setNavigationButtonsListeners(final Animation leftButtonAnimation, final Animation rightButtonAnimation)
     {
-        leftButton.setOnClickListener(new View.OnClickListener()
-        {
+        leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 i--;
@@ -221,11 +243,10 @@ public class GetMissionFragment extends Fragment
                 UpdateView();
             }
         });
-        rightButton.setOnClickListener(new View.OnClickListener()
-        {
+        rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            i++;
+                i++;
                 if (i == placePicTab.length) {
                     i = 0;
                 }
@@ -237,12 +258,68 @@ public class GetMissionFragment extends Fragment
 
     private void getData()
     {
-        //TODO take it from database
-        placePicTab = new int[]{R.drawable.ppolitechniki, R.drawable.warsawcentral, R.drawable.wisla};
 
-        placeDescriptionTab = new String[]{"Visit main building of Warsaw University of Technology","Go to the Warsaw central station.", "Get to the Wisła river and try to catch some fish."};
-        placeExpTab = new String[]{"EXP: 200", "EXP: 500", "EXP: 300"};
-        placeNameTab = new String[] {"Warsaw University Of Technology", "Warsaw Central Station", "Wisla"};
+        placeNameTab = new String[10];
+        placeDescriptionTab = new String [10];
+        placeExpTab = new String[10];
+        placePicTab = new Bitmap[10];
+
+        Call<List<MissionModel>> call = service.GetAllMissions();
+        showLoadingDialog();
+        call.enqueue(new CustomCallback<List<MissionModel>>(getActivity()) {
+            @Override
+            public void onSuccess(List<MissionModel> model) {
+            }
+
+            @Override
+            public void onResponse(Response<List<MissionModel>> response, Retrofit retrofit) {
+
+                if (response.isSuccess())
+                    fillTablesWithData(response.body());
+
+                else {
+                    //DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load user image");
+                }
+
+                if (dialog != null) {
+                    dialog.dismiss();
+                    UpdateView();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
+                //if (dialog != null) {
+                    //dialog.dismiss();
+               // }
+                super.onFailure(t);
+            }
+        });
+
+    }
+
+    private void fillTablesWithData(List<MissionModel> body)
+    {
+        MissionModel[] model = new MissionModel[body.size()];
+
+        placeNameTab = new String[model.length];
+        placeDescriptionTab = new String [model.length];
+        placeExpTab = new String[model.length];
+        placePicTab = new Bitmap[model.length];
+        for(int i = 0; i< model.length; i++)
+        {
+
+            model[i] = body.get(i);
+            placeDescriptionTab[i] = model[i].MissionDescription;
+            placeExpTab[i] = String.valueOf(model[i].ExpReward);
+            placeNameTab[i] = model[i].MissionName;
+
+            byte[] imageAsBytes=Base64.decode(model[i].Image.getBytes(), Base64.DEFAULT);
+            Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+            placePicTab[i] = bm;
+        }
     }
 
     private void initializeReferences(View rootView)
@@ -255,7 +332,8 @@ public class GetMissionFragment extends Fragment
     }
 
     private void UpdateView() {
-        placePic.setImageResource(placePicTab[i]);
+        //placePic.setImageResource(placePicTab[i]);
+        placePic.setImageBitmap(placePicTab[i]);
         placeDescription.setText(placeDescriptionTab[i]);
         placeExp.setText(placeExpTab[i]);
     }
