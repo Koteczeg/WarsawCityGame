@@ -278,7 +278,7 @@ public class GetMissionFragment extends Fragment
                     fillTablesWithData(response.body());
 
                 else {
-                    //DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load user image");
+                    //DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load missions");
                 }
 
                 if (dialog != null) {

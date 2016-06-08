@@ -20,10 +20,10 @@ public interface MissionsService
     Call<ResponseBody> SetCurrentMission(@Body UserMissionModel userMissionModel);
 
     @POST("Missions/AbortCurrentMission")
-    Call<ResponseBody> AbortCurrentMission(@Body UserMissionModel userMissionModel);
+    Call<ResponseBody> AbortCurrentMission();
 
     @GET("Missions/GetCurrentMission")
-    Call<CurrentMissionModel> GetCurrentMission();
+    Call<MissionModel> GetCurrentMission();
 
     @POST("Missions/AccomplishCurrentMission")
     Call<ResponseBody> AccomplishCurrentMission(@Body UserMissionModel userMissionModel);

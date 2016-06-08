@@ -5,7 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.CurrentMissionModel;
+import com.warsawcitygames.models.MissionModel;
 import com.warsawcitygames.models.PlayerProfileDataModel;
 import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
@@ -101,7 +105,7 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
-       // checkForCurrentMission();
+        checkForCurrentMission();
         return rootView;
     }
 
@@ -158,22 +162,25 @@ public class CurrentMissionFragment extends Fragment
 
     private void checkForCurrentMission()
     {
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<CurrentMissionModel> call = service.GetCurrentMission();
+
+        Call<MissionModel> call = service.GetCurrentMission();
         showLoadingDialog();
-        call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity()) {
+        call.enqueue(new CustomCallback<MissionModel>(getActivity()) {
             @Override
-            public void onSuccess(CurrentMissionModel model) {
+            public void onSuccess(MissionModel model) {
             }
 
             @Override
-            public void onResponse(Response<CurrentMissionModel> response, Retrofit retrofit) {
+            public void onResponse(Response<MissionModel> response, Retrofit retrofit) {
 
-                if (response.code() == 200) {
-                    updateView(response.body());
+                if (response.isSuccess()) {
+                    if(response.body() != null)
+                        updateView(response.body());
+                    else showBlank();
                 }
-                if (response.code() == 400) {
-                    showBlank();
+               else
+                {
+                    ////DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load current mission");
                 }
                 if (dialog != null) {
                     dialog.dismiss();
@@ -191,18 +198,19 @@ public class CurrentMissionFragment extends Fragment
         });
     }
 
-    private void updateView(CurrentMissionModel model)
+    private void updateView(MissionModel model)
     {
-        this.missionDesc.setText(model.Description.toString());
-        this.missionName.setText(model.Name.toString());
+        this.missionDesc.setText(model.MissionDescription.toString());
+        this.missionName.setText(model.MissionName.toString());
+
+        byte[] imageAsBytes= Base64.decode(model.Image.getBytes(), Base64.DEFAULT);
+        Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        this.missionImage.setImageBitmap(bm);
     }
 
     public void abortCurrentMission() {
 
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        //only for testing
-        UserMissionModel model = new UserMissionModel(username, "");
-        Call<ResponseBody> call = service.AbortCurrentMission(model);
+        Call<ResponseBody> call = service.AbortCurrentMission();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
