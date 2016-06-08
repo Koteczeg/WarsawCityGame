@@ -18,6 +18,10 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<MissionDto>> GetAllMissionsAsync(string username)
+        {
+            return await Task.Run(() => GetAllMissions(username));
+        }
 
         public async Task<MissionDto> GetCurrentMissionAsync(string username)
         {
@@ -32,6 +36,32 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         public async Task<bool> SetCurrentMissionAsync(PlayerMissionDto dto)
         {
             return await Task.Run(() => SetCurrentMission(dto));
+        }
+
+        private List<MissionDto> GetAllMissions(string username)
+        {
+            var list = new List<MissionDto>();
+            var player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(p => p.User.UserName.Equals(username));
+            if (player == null) return list;
+            var missions =_unitOfWork.MissionRepository.DbSet.Where(x => (x.MinimumLevel.ExpRequired <= player.Level.ExpRequired));
+            foreach (var mission in missions)
+            {
+                list.Add(new MissionDto
+                {
+                    MissionId = mission.Id,
+                    UserName = player.User.UserName,
+                    ExpReward = mission.ExpReward,
+                    Image = Convert.ToBase64String(mission.Place.Image),
+                    MinimalLevelName = player.Level.Name,
+                    MinimalLevelNumber = player.Level.Id,
+                    MissionDescription = mission.Description,
+                    MissionName = mission.Name,
+                    PlaceName = mission.Place.Name,
+                    PlaceX = mission.Place.XCoordinate,
+                    PlaceY = mission.Place.YCoordinate
+                });
+            }
+            return list;
         }
 
         private MissionDto GetCurrentMission(string username)

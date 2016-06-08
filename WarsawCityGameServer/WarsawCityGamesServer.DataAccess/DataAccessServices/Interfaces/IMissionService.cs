@@ -11,5 +11,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
     {
         Task<MissionDto> GetCurrentMissionAsync(string username);
         Task<bool> AbortCurrentMissionAsync(string username);
+        Task<bool> SetCurrentMissionAsync(PlayerMissionDto username);
+        Task<List<MissionDto>> GetAllMissionsAsync(string username);
     }
 }

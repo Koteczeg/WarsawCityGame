@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
+using WarsawCityGamesServer.Models.Missions;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
@@ -18,6 +19,29 @@ namespace WarsawCityGamesServer.Services.Controllers
         public MissionsController(IMissionService service)
         {
             _service = service;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetAllMissions")]
+        public async Task<IHttpActionResult> GetAllMissions()
+        {
+            if (User?.Identity?.Name == null)
+                return Unauthorized();
+            var result = await _service.GetAllMissionsAsync(User.Identity.Name);
+            if (result != null) return Ok(result);
+            return BadRequest();
+        }
+
+        [Authorize]
+        [Route("SetCurrentMission"), HttpPost]
+        public async Task<IHttpActionResult> SetCurrentMission(PlayerMissionDto dto)
+        {
+            if (User?.Identity?.Name == null)
+                return Unauthorized();
+            var result = await _service.SetCurrentMissionAsync(dto);
+            if (result) return Ok();
+            return BadRequest();
         }
 
         [Authorize]
