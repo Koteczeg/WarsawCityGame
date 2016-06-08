@@ -22,10 +22,13 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygames.models.CurrentMissionModel;
+import com.warsawcitygames.models.MissionModel;
 import com.warsawcitygames.models.UserMissionModel;
 import com.warsawcitygamescommunication.Services.MissionsService;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -236,6 +239,7 @@ public class GetMissionFragment extends Fragment
     {
         //TODO take it from database
         placePicTab = new int[]{R.drawable.ppolitechniki, R.drawable.warsawcentral, R.drawable.wisla};
+
         placeDescriptionTab = new String[]{"Visit main building of Warsaw University of Technology","Go to the Warsaw central station.", "Get to the Wisła river and try to catch some fish."};
         placeExpTab = new String[]{"EXP: 200", "EXP: 500", "EXP: 300"};
         placeNameTab = new String[] {"Warsaw University Of Technology", "Warsaw Central Station", "Wisla"};

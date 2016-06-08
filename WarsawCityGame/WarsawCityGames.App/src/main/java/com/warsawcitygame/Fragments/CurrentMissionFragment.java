@@ -159,7 +159,7 @@ public class CurrentMissionFragment extends Fragment
     private void checkForCurrentMission()
     {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        Call<CurrentMissionModel> call = service.GetCurrentMission(username);
+        Call<CurrentMissionModel> call = service.GetCurrentMission();
         showLoadingDialog();
         call.enqueue(new CustomCallback<CurrentMissionModel>(getActivity()) {
             @Override
