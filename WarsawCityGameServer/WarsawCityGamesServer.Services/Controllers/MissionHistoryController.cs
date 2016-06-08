@@ -9,7 +9,7 @@ using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("History")]
     public class MissionHistoryController : ApiController
     {
@@ -20,21 +20,13 @@ namespace WarsawCityGamesServer.Services.Controllers
             _historyService = historyService;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("GetHistory")]
         public async Task<IHttpActionResult> GetAllUserMissions()
         {
             var l= await _historyService.GetHistoryAsync(User.Identity.Name);
             return l != null ? (IHttpActionResult) Ok(l) : BadRequest();
-        }
-
-        //Test local
-        [HttpGet]
-        [Route("GetHistory")]
-        public async Task<IHttpActionResult> GetAllUserMissionsLocal(string username)
-        {
-            var l = await _historyService.GetHistoryAsync(username);
-            return l != null ? (IHttpActionResult)Ok(l) : BadRequest();
         }
     }
 }

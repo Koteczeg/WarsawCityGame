@@ -55,12 +55,14 @@
   <ItemGroup>
     <Compile Include="DataAccessServices\Instances\AchievementsService.cs" />
     <Compile Include="DataAccessServices\Instances\FriendshipsService.cs" />
+    <Compile Include="DataAccessServices\Instances\MissionHistoryService.cs" />
     <Compile Include="DataAccessServices\Instances\MissionService.cs" />
     <Compile Include="DataAccessServices\Instances\PlayerService.cs" />
     <Compile Include="DataAccessServices\Instances\RankingService.cs" />
     <Compile Include="DataAccessServices\Instances\UserProfileService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IAchievementsService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IFriendshipsService.cs" />
+    <Compile Include="DataAccessServices\Interfaces\IMissionHistoryService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IMissionService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IPlayerService.cs" />
     <Compile Include="DataAccessServices\Interfaces\IRankingService.cs" />

@@ -40,6 +40,7 @@
     <Compile Include="Friendships\FriendshipDto.cs" />
     <Compile Include="Missions\CurrentMissionDto.cs" />
     <Compile Include="Missions\MissionDto.cs" />
+    <Compile Include="Missions\MissionHistoryDto.cs" />
     <Compile Include="Missions\PlayerMissionDto.cs" />
     <Compile Include="Players\PlayerRankingDto.cs" />
     <Compile Include="Players\PlayerRegisterDto.cs" />
