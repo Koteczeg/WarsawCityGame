@@ -1,5 +1,7 @@
 package com.warsawcitygame.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +52,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-        final LatLng center = new LatLng(52.222169, 21.007087);
+
+        //SharedPreferences sp = getSharedPreferences("pref", Context.MODE_PRIVATE);
+        //double x = Double.longBitsToDouble(sp.getLong("X", Double.doubleToLongBits(52.222169)));
+        //double y = Double.longBitsToDouble(sp.getLong("Y", Double.doubleToLongBits(21.007087)));
+
+        //double missionX = Double.longBitsToDouble(sp.getLong("currentMissionX", Double.doubleToLongBits(52.222169)));
+        //double missionY = Double.longBitsToDouble(sp.getLong("currentMissionY", Double.doubleToLongBits(21.007087)));
+
+        final LatLng center = new LatLng(52,21);
         mMap.addMarker(new MarkerOptions().position(center).title("HERE YOU ARE").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
         final LatLng dsRiviera = new LatLng(52.237165, 21.041384);
         mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DESTINATION").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));

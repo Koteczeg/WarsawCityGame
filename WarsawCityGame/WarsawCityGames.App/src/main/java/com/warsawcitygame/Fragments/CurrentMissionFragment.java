@@ -63,7 +63,7 @@ public class CurrentMissionFragment extends Fragment
     TextView missionName;
     ImageView missionImage;
     double currentMissionX;
-    double currentmissionY;
+    double currentMissionY;
     double currentX;
     double currentY;
     LocationManager locationManager;
@@ -114,6 +114,13 @@ public class CurrentMissionFragment extends Fragment
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putLong("X",Double.doubleToRawLongBits(currentX));
+                editor.putLong("Y",Double.doubleToRawLongBits(currentY));
+                editor.putLong("currentMissionX",Double.doubleToRawLongBits(currentMissionX));
+                editor.putLong("currentMissionY",Double.doubleToRawLongBits(currentMissionY));
+                editor.commit();
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
             }
@@ -178,7 +185,7 @@ public class CurrentMissionFragment extends Fragment
 
     private boolean checkLocation()
     {
-        double res = measure(currentY,currentX,currentMissionX,currentmissionY);
+        double res = measure(currentY,currentX,currentMissionX,currentMissionY);
         if(res < 100)
             return true;
         else
@@ -268,7 +275,7 @@ public class CurrentMissionFragment extends Fragment
     private void updateLocation(MissionModel model)
     {
         this.currentMissionX = model.PlaceX;
-        this.currentmissionY = model.PlaceY;
+        this.currentMissionY = model.PlaceY;
 
     }
 
