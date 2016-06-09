@@ -180,7 +180,7 @@ public class CurrentMissionFragment extends Fragment
                 }
                else
                 {
-                    ////DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load current mission");
+                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Cannot load current mission");
                 }
                 if (dialog != null) {
                     dialog.dismiss();
@@ -211,11 +211,15 @@ public class CurrentMissionFragment extends Fragment
     public void abortCurrentMission() {
 
         Call<ResponseBody> call = service.AbortCurrentMission();
+        showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
             public void onSuccess(ResponseBody model)
             {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
                 Toast toast = Toast.makeText(getActivity(), "Aborted !", Toast.LENGTH_LONG);
                 toast.show();
                 showBlank();
@@ -225,6 +229,9 @@ public class CurrentMissionFragment extends Fragment
             @Override
             public void onFailure(Throwable t)
             {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
