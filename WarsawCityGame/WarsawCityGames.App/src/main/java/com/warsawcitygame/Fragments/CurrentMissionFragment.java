@@ -179,7 +179,7 @@ public class CurrentMissionFragment extends Fragment
     private boolean checkLocation()
     {
         double res = measure(currentY,currentX,currentMissionX,currentmissionY);
-        if(res < 10)
+        if(res < 100)
             return true;
         else
             return false;
@@ -189,9 +189,10 @@ public class CurrentMissionFragment extends Fragment
     {
         if(!checkLocation()) {
             DialogUtils.RaiseDialogShowError(getActivity(), "Error", "You must go to destination!");
+            return;
         }
         Call<ResponseBody> call = service.AccomplishCurrentMission();
-
+        showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
@@ -209,6 +210,9 @@ public class CurrentMissionFragment extends Fragment
                         showBlank();
                     } else
                         DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error ");
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
                 }
             }
 
