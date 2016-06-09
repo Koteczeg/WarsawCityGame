@@ -55,7 +55,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             Mission mission = player.CurrentMission;
             player.Exp += mission.ExpReward;
             Level nextLevel =
-                _unitOfWork.LevelRepository.DbSet.Where(l => l.ExpRequired <= player.Exp)
+                _unitOfWork.LevelRepository.DbSet.Where(l => l.ExpRequired <= player.Exp).ToList()
                     .Aggregate((i1, i2) => i1.ExpRequired > i2.ExpRequired ? i1 : i2);
             if (player.Level != null && nextLevel != null && nextLevel.Id != player.Level.Id)
                 player.Level = nextLevel;
