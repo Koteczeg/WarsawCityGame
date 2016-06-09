@@ -27,16 +27,12 @@ public class MissionHistoryAdapter extends RecyclerView.Adapter<MissionHistoryAd
         TextView description;
         TextView exp;
         ImageView photo;
-        Button mapButton;
-        Button acceptButton;
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             title = (TextView)itemView.findViewById(R.id.mission_title);
             description = (TextView)itemView.findViewById(R.id.mission_description);
-            //photo = (ImageView)itemView.findViewById(R.id.mission_photo);
-            mapButton = (Button)itemView.findViewById(R.id.mission_location);
-            acceptButton = (Button)itemView.findViewById(R.id.mission_accept);
+            photo = (ImageView)itemView.findViewById(R.id.mission_photo);
             exp = (TextView)itemView.findViewById(R.id.mission_exp);
         }
     }
