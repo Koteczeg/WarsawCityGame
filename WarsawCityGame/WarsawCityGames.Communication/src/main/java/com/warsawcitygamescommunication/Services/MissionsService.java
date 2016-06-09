@@ -25,10 +25,9 @@ public interface MissionsService
     @GET("Missions/GetCurrentMission")
     Call<MissionModel> GetCurrentMission();
 
-    @POST("Missions/AccomplishCurrentMission")
-    Call<ResponseBody> AccomplishCurrentMission(@Body UserMissionModel userMissionModel);
+    @POST("Missions/AcceptMission")
+    Call<ResponseBody> AccomplishCurrentMission();
 
     @GET("Missions/GetAllMissions")
     Call<List<MissionModel>> GetAllMissions();
-    //@Query("username") String username
 }

@@ -200,7 +200,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AchievementsController.cs" />
     <Compile Include="Controllers\FriendshipsController.cs" />
-    <Compile Include="Controllers\MissionController.cs" />
     <Compile Include="Controllers\MissionHistoryController.cs" />
     <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />

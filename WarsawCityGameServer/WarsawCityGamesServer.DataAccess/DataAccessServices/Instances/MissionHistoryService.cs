@@ -24,6 +24,11 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             return await Task.Run(() => GetHistory(username, itemsCount));
         }
 
+        public async Task<bool> AcceptCurrentMissionAsync(string username)
+        {
+            return await Task.Run(() => AcceptCurrentMission(username));
+        }
+
         private List<MissionHistoryDto> GetHistory(string username, int? itemsCount = null)
         {
             Player player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(x => x.User.UserName.Equals(username));
@@ -41,6 +46,24 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
                 MissionId = x.Mission.Id,
                 MissionDescription = x.Mission.Description,
             }).ToList();
-        } 
+        }
+
+        private bool AcceptCurrentMission(string username)
+        {
+            Player player = _unitOfWork.PlayerRepository.DbSet.Include(x=>x.CurrentMission).FirstOrDefault(x => x.User.UserName.Equals(username));
+            if (player?.CurrentMission == null) return false;
+            Mission mission = player.CurrentMission;
+            player.Exp += mission.ExpReward;
+            MissionHistory missionHistory = new MissionHistory()
+            {
+                Mission = mission,
+                Player = player,
+                FinishDate = DateTime.Now
+            };
+            player.CurrentMission = null;
+            _unitOfWork.MissionHistoryRepository.DbSet.Add(missionHistory);
+            _unitOfWork.Save();
+            return true;
+        }
     }
 }
