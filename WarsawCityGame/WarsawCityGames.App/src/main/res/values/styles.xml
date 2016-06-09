@@ -41,7 +41,18 @@
         <item name="android:background">@xml/roundedbuttontransparent</item>
         <item name="android:layout_margin">5dp</item>
     </style>
-
+    <style name="roundedbuttontransparentgreen">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@xml/roundedbuttongreen</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="roundedbuttontransparentorange">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@xml/roundedbuttontransparentorange</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
     <style name="TextViewAppearance" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

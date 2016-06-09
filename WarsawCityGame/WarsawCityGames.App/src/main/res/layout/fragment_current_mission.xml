@@ -57,30 +57,27 @@
         android:layout_gravity="bottom"
         android:gravity="bottom">
     <Button
+        style="@style/roundedbuttontransparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
         android:text="Show map"
         android:id="@+id/map_button"
-        android:background="#00BFFF"
-        android:textColor="#ffffff"
-        android:clickable="true"
-        android:contextClickable="false"/>
-    <Button
-        android:id="@+id/abort_mission_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Abort mission"
-        android:maxWidth="100dp"
-        android:maxHeight="100dp"
-        android:textColor="#ffffff"
-        android:background="#ff4040"
         android:clickable="true"/>
     <Button
+        android:id="@+id/abort_mission_button"
+        style="@style/roundedbuttontransparentorange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="Abort mission"
+        android:clickable="true"/>
+    <Button
+        style="@style/roundedbuttontransparentgreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
         android:text="Done!"
-        android:id="@+id/accomplishMissionButton"
-        android:background="#62ff00"
-        android:textColor="#ffffff"/>
+        android:id="@+id/accomplishMissionButton"/>
     </LinearLayout>
 </LinearLayout>
