@@ -61,16 +61,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         mMap = googleMap;
 
-        //SharedPreferences sp = getSharedPreferences("pref", Context.MODE_PRIVATE);
-        //double x = Double.longBitsToDouble(sp.getLong("X", Double.doubleToLongBits(52.222169)));
-        //double y = Double.longBitsToDouble(sp.getLong("Y", Double.doubleToLongBits(21.007087)));
 
-        //double missionX = Double.longBitsToDouble(sp.getLong("currentMissionX", Double.doubleToLongBits(52.222169)));
-        //double missionY = Double.longBitsToDouble(sp.getLong("currentMissionY", Double.doubleToLongBits(21.007087)));
+        double x = Double.longBitsToDouble(preferences.getLong("X", Double.doubleToLongBits(52.222169)));
+        double y = Double.longBitsToDouble(preferences.getLong("Y", Double.doubleToLongBits(21.007087)));
 
-        final LatLng center = new LatLng(52,21);
+        double missionX = Double.longBitsToDouble(preferences.getLong("currentMissionX", Double.doubleToLongBits(52.222169)));
+        double missionY = Double.longBitsToDouble(preferences.getLong("currentMissionY", Double.doubleToLongBits(21.007087)));
+
+        final LatLng center = new LatLng(y,x);
         mMap.addMarker(new MarkerOptions().position(center).title("HERE YOU ARE").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        final LatLng dsRiviera = new LatLng(52.237165, 21.041384);
+        //final LatLng dsRiviera = new LatLng(52.237165, 21.041384);
+        final LatLng dsRiviera = new LatLng(missionX,missionY);
         mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DESTINATION").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable()
