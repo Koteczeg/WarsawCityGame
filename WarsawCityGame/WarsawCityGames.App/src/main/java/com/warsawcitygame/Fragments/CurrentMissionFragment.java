@@ -123,9 +123,7 @@ public class CurrentMissionFragment extends Fragment
 
     private void accomplishCurrentMission()
     {
-        String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
-        UserMissionModel model = new UserMissionModel(username, "");
-        Call<ResponseBody> call = service.AccomplishCurrentMission(model);
+        Call<ResponseBody> call = service.AccomplishCurrentMission();
 
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
@@ -137,17 +135,13 @@ public class CurrentMissionFragment extends Fragment
             @Override
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
             {
-                if (response.code() == 200)
-                {
-                    RaiseAchievementDialog("Well Done !", getActivity());
-                    showBlank();
-                }
-                if (response.code() == 400)
-                {
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error ");
-                } else
-                {
-                    super.onResponse(response, retrofit);
+                if(response!=null) {
+                    int c = response.code();
+                    if (response.isSuccess()) {
+                        RaiseAchievementDialog("Well Done !", getActivity());
+                        showBlank();
+                    } else
+                        DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error ");
                 }
             }
 
