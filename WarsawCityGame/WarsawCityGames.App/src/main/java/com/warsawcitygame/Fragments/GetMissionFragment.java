@@ -26,6 +26,7 @@ import com.warsawcitygame.Adapters.RVAdapter;
 import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DelegateAction;
+import com.warsawcitygame.Utils.DelegateActionOneParam;
 import com.warsawcitygame.Utils.DialogUtils;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.MissionModel;
@@ -85,41 +86,58 @@ public class GetMissionFragment extends Fragment
         return rootView;
     }
 
+    public class SetMissionCall implements DelegateActionOneParam
+    {
+        @Override
+        public void ExecuteAction(int id)
+        {
+            setNewMission(id);
+        }
+    }
+
+
     private void setNewMission(int ind) {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         //only for testing
         UserMissionModel model = new UserMissionModel(username,missions.get(ind).name);
         Call<ResponseBody> call = service.SetCurrentMission(model);
-
-        call.enqueue(new CustomCallback<ResponseBody>(getActivity()) {
+        showLoadingDialog();
+        call.enqueue(new CustomCallback<ResponseBody>(getActivity())
+        {
             @Override
-            public void onSuccess(ResponseBody model) {
+            public void onSuccess(ResponseBody model)
+            {
                 Toast toast = Toast.makeText(getActivity(), "Current mission added !", Toast.LENGTH_LONG);
                 toast.show();
+                dialog.dismiss();
             }
 
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
-                if (response.code() == 400) {
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit)
+            {
+                if (response.code() == 400)
+                {
+                    dialog.dismiss();
                     DialogUtils.RaiseDialogShowError(getActivity(), "Warning", "You already have a mission !");
-                } else {
+                } else
+                {
                     super.onResponse(response, retrofit);
                 }
-                if (dialog != null) {
+                if (dialog != null)
+                {
                     dialog.dismiss();
                 }
             }
 
 
-
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Throwable t)
+            {
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
     }
-
 
 
     private void showLoadingDialog(){
@@ -186,7 +204,7 @@ public class GetMissionFragment extends Fragment
     }
 
     private void initializeAdapter(){
-        RVAdapter adapter = new RVAdapter(missions);
+        RVAdapter adapter = new RVAdapter(missions, new SetMissionCall());
         rv.setAdapter(adapter);
     }
 }
