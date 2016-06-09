@@ -11,7 +11,7 @@ using WarsawCityGamesServer.Models.Missions;
 
 namespace WarsawCityGamesServer.Services.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("Missions")]
     public class MissionsController : ApiController
     {
