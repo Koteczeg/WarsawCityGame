@@ -26,6 +26,7 @@
         <item>Profile</item>
         <item>Friends</item>
         <item>Get mission</item>
+        <item>History</item>
         <item>Achievements</item>
         <item>Hall of fame</item>
         <item>Log out</item>
@@ -40,6 +41,7 @@
         <item>@drawable/profile</item>
         <item>@drawable/friends</item>
         <item>@drawable/getmission</item>
+        <item>@drawable/achievements</item>
         <item>@drawable/achievements</item>
         <item>@drawable/halloffame</item>
         <item>@drawable/logout</item>

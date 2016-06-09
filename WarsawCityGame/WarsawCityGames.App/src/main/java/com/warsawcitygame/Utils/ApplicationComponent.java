@@ -15,6 +15,7 @@ import com.warsawcitygame.Fragments.FriendsFragment;
 import com.warsawcitygame.Fragments.GetMissionFragment;
 import com.warsawcitygame.Fragments.HallOfFameFragment;
 import com.warsawcitygame.Fragments.LoadingFragment;
+import com.warsawcitygame.Fragments.MissionHistoryFragment;
 import com.warsawcitygame.Fragments.ProfileFragment;
 import com.warsawcitygamescommunication.Infrastructure.ApplicationModule;
 import com.warsawcitygamescommunication.Infrastructure.RestServicesModule;
@@ -43,4 +44,5 @@ public interface ApplicationComponent {
     void inject(LoadingFragment fragment);
     void inject(ProfileFragment fragment);
     void inject(FriendListViewAdapter adapter);
+    void inject(MissionHistoryFragment frag);
 }

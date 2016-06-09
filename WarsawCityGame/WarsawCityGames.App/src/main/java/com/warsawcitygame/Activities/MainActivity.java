@@ -23,6 +23,7 @@ import com.warsawcitygame.Fragments.DonateFragment;
 import com.warsawcitygame.Fragments.GetMissionFragment;
 import com.warsawcitygame.Fragments.CurrentMissionFragment;
 import com.warsawcitygame.Fragments.LoadingFragment;
+import com.warsawcitygame.Fragments.MissionHistoryFragment;
 import com.warsawcitygame.Fragments.ProfileFragment;
 import com.warsawcitygame.Fragments.AchievementsFragment;
 import com.warsawcitygame.Fragments.FriendsFragment;
@@ -154,15 +155,18 @@ public class MainActivity extends Activity
                 activeFragment = new GetMissionFragment();
                 break;
             case 4:
-                activeFragment = new AchievementsFragment();
+                activeFragment = new MissionHistoryFragment();
                 break;
             case 5:
-                activeFragment = new HallOfFameFragment();
+                activeFragment = new AchievementsFragment();
                 break;
             case 6:
-                logout();
+                activeFragment = new HallOfFameFragment();
                 break;
             case 7:
+                logout();
+                break;
+            case 8:
                 activeFragment = new DonateFragment();
                 break;
         }

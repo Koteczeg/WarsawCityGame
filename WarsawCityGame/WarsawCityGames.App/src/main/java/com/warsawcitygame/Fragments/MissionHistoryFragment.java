@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.warsawcitygame.R;
+import com.warsawcitygame.Utils.MyApplication;
+import com.warsawcitygamescommunication.Services.MissionHistoryService;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,16 +22,20 @@ import com.warsawcitygame.R;
  * Use the {@link MissionHistoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MissionHistoryFragment extends Fragment {
+public class MissionHistoryFragment extends android.app.Fragment{
     private OnFragmentInteractionListener mListener;
 
     public MissionHistoryFragment() {
         // Required empty public constructor
     }
 
+    @Inject
+    MissionHistoryService service;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
     }
 
     @Override

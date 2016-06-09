@@ -13,6 +13,7 @@ import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.warsawcitygamescommunication.Services.AccountService;
 import com.warsawcitygamescommunication.Services.AchievementsService;
 import com.warsawcitygamescommunication.Services.FriendshipsService;
+import com.warsawcitygamescommunication.Services.MissionHistoryService;
 import com.warsawcitygamescommunication.Services.MissionsService;
 import com.warsawcitygamescommunication.Services.RankingService;
 import com.warsawcitygamescommunication.Services.UserProfileService;
@@ -121,5 +122,11 @@ public class RestServicesModule {
     @Singleton
     RankingService provideRankingService(Retrofit retrofit){
         return retrofit.create(RankingService.class);
+    }
+
+    @Provides
+    @Singleton
+    MissionHistoryService provideMissionHistoryService(Retrofit retrofit){
+        return retrofit.create(MissionHistoryService.class);
     }
 }
