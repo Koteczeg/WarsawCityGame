@@ -50,10 +50,15 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
 
         private bool AcceptCurrentMission(string username)
         {
-            Player player = _unitOfWork.PlayerRepository.DbSet.Include(x=>x.CurrentMission).FirstOrDefault(x => x.User.UserName.Equals(username));
+            Player player = _unitOfWork.PlayerRepository.DbSet.Include(x=>x.CurrentMission).Include(p=>p.Level).FirstOrDefault(x => x.User.UserName.Equals(username));
             if (player?.CurrentMission == null) return false;
             Mission mission = player.CurrentMission;
             player.Exp += mission.ExpReward;
+            Level nextLevel =
+                _unitOfWork.LevelRepository.DbSet.Where(l => l.ExpRequired <= player.Exp)
+                    .Aggregate((i1, i2) => i1.ExpRequired > i2.ExpRequired ? i1 : i2);
+            if (player.Level != null && nextLevel != null && nextLevel.Id != player.Level.Id)
+                player.Level = nextLevel;
             MissionHistory missionHistory = new MissionHistory()
             {
                 Mission = mission,
