@@ -95,4 +95,5 @@
     <string name="sampleDescriptionTxt">Sample description</string>
     <string name="showOnMapText">SHOW ON MAP</string>
     <string name="detailsText">DETAILS</string>
+    <string name="acceptMissionText">ACCEPT MISSION</string>
 </resources>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.ResponseBody;
 import com.warsawcitygame.Activities.CropUserImageActivity;
@@ -221,7 +222,8 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangedUserDataText));
+                Toast toast = Toast.makeText(getActivity(), getActivity().getString(R.string.successChangedUserDataText), Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
@@ -267,7 +269,8 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangedPasswordText));
+                Toast toast = Toast.makeText(getActivity(), getActivity().getString(R.string.successChangedPasswordText), Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
@@ -282,7 +285,8 @@ public class ProfileFragment extends Fragment
                         dialog.dismiss();
                         dialog = null;
                     }
-                    DialogUtils.RaiseDialogShowError(getActivity(), "Success", getActivity().getString(R.string.successChangingPasswordText));
+                    Toast toast = Toast.makeText(getActivity(), getActivity().getString(R.string.successChangingPasswordText), Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
 
@@ -294,7 +298,8 @@ public class ProfileFragment extends Fragment
                     dialog.dismiss();
                     dialog = null;
                 }
-                DialogUtils.RaiseDialogShowError(getActivity(), "Error", getActivity().getString(R.string.changePasswordFailedText));
+                Toast toast = Toast.makeText(getActivity(), getActivity().getString(R.string.changePasswordFailedText), Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
