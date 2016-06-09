@@ -24,7 +24,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             _historyService = historyService;
         }
 
-        [AllowAnonymous]//[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("GetAllMissions")]
         public async Task<IHttpActionResult> GetAllMissions()
