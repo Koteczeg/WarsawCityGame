@@ -42,21 +42,17 @@ public class LocationService implements LocationListener {
         return instance;
     }
 
-    private LocationService( Context context )     {
+    public LocationService(Context context)     {
 
         initLocationService(context);
     }
 
 
-    @TargetApi(23)
     private void initLocationService(Context context) {
 
 
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return  ;
-        }
+
+
 
         try   {
             this.longitude = 0.0;
@@ -75,27 +71,32 @@ public class LocationService implements LocationListener {
             }
             //else
             {
-                this.locationServiceAvailable = true;
+                try {
+                    this.locationServiceAvailable = true;
 
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    if (locationManager != null)   {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        //updateCoordinates();
+                    if (isNetworkEnabled) {
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                                MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                        if (locationManager != null) {
+                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                            //updateCoordinates();
+                        }
+                    }//end if
+
+                    if (isGPSEnabled) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                                MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+                        if (locationManager != null) {
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                        }
                     }
-                }//end if
-
-                if (isGPSEnabled)  {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                    if (locationManager != null)  {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                    }
+                }catch(SecurityException e)
+                {
+                    int i = 7;
                 }
             }
         } catch (Exception ex)  {
@@ -106,7 +107,8 @@ public class LocationService implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location)     {
-
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
     }
 
     @Override
