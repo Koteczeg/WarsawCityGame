@@ -45,9 +45,9 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
             if (player == null) return list;
             var his = _unitOfWork.MissionHistoryRepository.DbSet.Where(x => x.Player.Id == player.Id);
             var missions =
-                _unitOfWork.MissionRepository.DbSet.Where(x => (x.MinimumLevel.ExpRequired <= player.Level.ExpRequired));
+                _unitOfWork.MissionRepository.DbSet.Where(x => (x.MinimumLevel.ExpRequired <= player.Exp));
             missions = missions.Where(x => !his.Any(h => h.Mission.Id == x.Id));
-            foreach (var mission in missions.ToList())
+            foreach (var mission in missions)
             {
                 list.Add(new MissionDto
                 {
