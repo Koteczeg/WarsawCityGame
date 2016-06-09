@@ -30,5 +30,4 @@ public interface MissionsService
 
     @GET("Missions/GetAllMissions")
     Call<List<MissionModel>> GetAllMissions();
-    //@Query("username") String username
 }
