@@ -74,8 +74,6 @@ public class GetMissionFragment extends Fragment
 
         initializeData();
 
-
-
         final View row = inflater.inflate(R.layout.missions_row_view,container,false);
         rv=(RecyclerView)rootView.findViewById(R.id.rv);
 
