@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/mission_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,27 +46,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/mission_location"
-                    style="@style/roundedbuttontransparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/showOnMapText"
-                    android:paddingRight="2dp"
-                    android:paddingLeft="2dp"/>
-                <Button
-                    android:id="@+id/mission_accept"
-                    style="@style/roundedbuttontransparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/detailsText"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
