@@ -62,6 +62,7 @@ public class CurrentMissionFragment extends Fragment
     TextView missionDesc;
     TextView missionName;
     ImageView missionImage;
+    TextView missionExp;
     double currentMissionX;
     double currentmissionY;
     double currentX;
@@ -95,7 +96,7 @@ public class CurrentMissionFragment extends Fragment
         missionDesc = ButterKnife.findById(rootView,R.id.missionDesc);
         missionName = ButterKnife.findById(rootView,R.id.missionName);
         missionImage = ButterKnife.findById(rootView,R.id.imageView2);
-
+        missionExp=ButterKnife.findById(rootView,R.id.missionExp);
         abortMissionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,7 +277,7 @@ public class CurrentMissionFragment extends Fragment
     {
         this.missionDesc.setText(model.MissionDescription.toString());
         this.missionName.setText(model.MissionName.toString());
-
+        this.missionExp.setText(model.ExpReward+ " EXP REWARD");
         byte[] imageAsBytes= Base64.decode(model.Image.getBytes(), Base64.DEFAULT);
         Bitmap bm = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
         this.missionImage.setImageBitmap(bm);
