@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces;
@@ -15,10 +16,12 @@ namespace WarsawCityGamesServer.Services.Controllers
     public class MissionsController : ApiController
     {
         private readonly IMissionService _service;
+        private readonly IMissionHistoryService _historyService;
 
-        public MissionsController(IMissionService service)
+        public MissionsController(IMissionService service, IMissionHistoryService historyService)
         {
             _service = service;
+            _historyService = historyService;
         }
 
         [Authorize]
@@ -66,6 +69,17 @@ namespace WarsawCityGamesServer.Services.Controllers
             if (!result)
                 return BadRequest();
             return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("AcceptMission")]
+        public async Task<IHttpActionResult> AcceptCurrentMission()
+        {
+            if (User?.Identity?.Name == null)
+                return Unauthorized();
+            var result = await _historyService.AcceptCurrentMissionAsync(User.Identity.Name);
+            return result ? (IHttpActionResult)Ok() : BadRequest();
         }
     }
 }

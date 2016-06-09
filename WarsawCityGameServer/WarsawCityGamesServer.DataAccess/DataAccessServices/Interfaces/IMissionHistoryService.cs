@@ -10,5 +10,6 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Interfaces
     public interface IMissionHistoryService
     {
         Task<List<MissionHistoryDto>> GetHistoryAsync(string username, int? itemsCount = null);
+        Task<bool> AcceptCurrentMissionAsync(string username);
     }
 }
