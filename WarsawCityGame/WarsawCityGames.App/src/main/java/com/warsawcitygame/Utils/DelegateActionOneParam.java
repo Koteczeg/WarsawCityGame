@@ -1,5 +1,5 @@
 package com.warsawcitygame.Utils;
 
 public interface DelegateActionOneParam {
-    void ExecuteAction(int id);
+    Boolean ExecuteAction(int id);
 }

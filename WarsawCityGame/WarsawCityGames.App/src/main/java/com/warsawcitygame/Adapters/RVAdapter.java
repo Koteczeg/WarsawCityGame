@@ -68,7 +68,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+    public void onBindViewHolder(final PersonViewHolder personViewHolder, int i) {
         personViewHolder.title.setText(persons.get(i).name);
         personViewHolder.description.setText(persons.get(i).description);
         personViewHolder.photo.setImageBitmap(persons.get(i).photo);
@@ -79,7 +79,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
             @Override
             public void onClick(View v)
             {
-                DelegateAction.ExecuteAction(j);
+                Boolean flag = DelegateAction.ExecuteAction(j);
+                if(flag.equals(true)){
+                    personViewHolder.acceptButton.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }

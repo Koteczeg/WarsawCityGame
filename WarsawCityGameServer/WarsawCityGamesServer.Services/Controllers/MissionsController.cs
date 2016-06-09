@@ -24,14 +24,14 @@ namespace WarsawCityGamesServer.Services.Controllers
             _historyService = historyService;
         }
 
-        [AllowAnonymous]//[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("GetAllMissions")]
         public async Task<IHttpActionResult> GetAllMissions()
         {
             if (User?.Identity?.Name == null)
                 return Unauthorized();
-            var result = await _service.GetAllMissionsAsync("xoxo");//User.Identity.Name);
+            var result = await _service.GetAllMissionsAsync(User.Identity.Name);
             if (result != null) return Ok(result);
             return BadRequest();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,20 +42,22 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
         private List<MissionDto> GetAllMissions(string username)
         {
             var list = new List<MissionDto>();
-            var player = _unitOfWork.PlayerRepository.DbSet.FirstOrDefault(p => p.User.UserName.Equals(username));
+            var player = _unitOfWork.PlayerRepository.DbSet.Include(p=>p.User).Include(p=>p.Level).
+                FirstOrDefault(p => p.User.UserName.Equals(username));
             if (player == null) return list;
             var his = _unitOfWork.MissionHistoryRepository.DbSet.Where(x => x.Player.Id == player.Id);
             var missions =
-                _unitOfWork.MissionRepository.DbSet.Where(x => (x.MinimumLevel.ExpRequired <= player.Exp));
+                _unitOfWork.MissionRepository.DbSet.Where(x => (x.MinimumLevel.ExpRequired <= player.Exp))
+                .Include(m=>m.Place);
             missions = missions.Where(x => !his.Any(h => h.Mission.Id == x.Id));
-            foreach (var mission in missions)
+            foreach (var mission in missions.ToList())
             {
                 list.Add(new MissionDto
                 {
                     MissionId = mission.Id,
                     UserName = player.User.UserName,
                     ExpReward = mission.ExpReward,
-                    Image = Convert.ToBase64String(mission.Place.Image),
+                    Image = mission.Place.Image!=null ? Convert.ToBase64String(mission.Place.Image) : null,
                     MinimalLevelName = player.Level.Name,
                     MinimalLevelNumber = player.Level.Id,
                     MissionDescription = mission.Description,

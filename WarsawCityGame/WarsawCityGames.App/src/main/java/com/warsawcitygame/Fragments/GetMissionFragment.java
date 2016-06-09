@@ -87,19 +87,24 @@ public class GetMissionFragment extends Fragment
     public class SetMissionCall implements DelegateActionOneParam
     {
         @Override
-        public void ExecuteAction(int id)
+        public Boolean ExecuteAction(int id)
         {
-            setNewMission(id);
+            return setNewMission(id);
         }
     }
 
+    private class SafeBoolean{
+        public Boolean flag;
+    }
 
-    private void setNewMission(int ind) {
+    private Boolean setNewMission(int ind) {
         String username = preferences.getString(LoginActivity.USERNAME_KEY, null);
         //only for testing
         UserMissionModel model = new UserMissionModel(username,missions.get(ind).name);
         Call<ResponseBody> call = service.SetCurrentMission(model);
         showLoadingDialog();
+        final SafeBoolean safeBoolean =new SafeBoolean();
+        safeBoolean.flag=true;
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
@@ -117,6 +122,7 @@ public class GetMissionFragment extends Fragment
                 {
                     dialog.dismiss();
                     DialogUtils.RaiseDialogShowError(getActivity(), "Warning", "You already have a mission !");
+                    safeBoolean.flag=false;
                 } else
                 {
                     super.onResponse(response, retrofit);
@@ -131,10 +137,12 @@ public class GetMissionFragment extends Fragment
             @Override
             public void onFailure(Throwable t)
             {
+                safeBoolean.flag=false;
                 DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error " + t.getMessage());
                 super.onFailure(t);
             }
         });
+        return safeBoolean.flag;
     }
 
 
