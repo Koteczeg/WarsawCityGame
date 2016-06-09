@@ -1,5 +1,6 @@
 package com.warsawcitygame.Fragments;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -9,7 +10,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import com.warsawcitygame.R;
 import com.warsawcitygame.Utils.CustomCallback;
 import com.warsawcitygame.Utils.DelegateAction;
 import com.warsawcitygame.Utils.DialogUtils;
+import com.warsawcitygame.Utils.LocationService;
 import com.warsawcitygame.Utils.MyApplication;
 import com.warsawcitygames.models.CurrentMissionModel;
 import com.warsawcitygames.models.MissionModel;
@@ -60,6 +64,11 @@ public class CurrentMissionFragment extends Fragment
     ImageView missionImage;
     double currentMissionX;
     double currentmissionY;
+    double currentX;
+    double currentY;
+    LocationManager locationManager;
+    LocationListener locationListener;
+
     public CurrentMissionFragment(){}
 
     private Location currentBestLocation = null;
@@ -76,7 +85,7 @@ public class CurrentMissionFragment extends Fragment
         ((MyApplication) getActivity().getApplication()).getServicesComponent().inject(this);
     }
 
-	@Override
+    @Override
     public View onCreateView( final LayoutInflater inflater,final ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_current_mission, container, false);
@@ -110,15 +119,49 @@ public class CurrentMissionFragment extends Fragment
             }
         });
 
+        locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        //LocationManager lm= (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-        //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) this);
 
-        //checkForCurrentMission();
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        try {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }catch(SecurityException s) {
+        }
+
+
+        checkForCurrentMission();
         return rootView;
     }
 
+    void makeUseOfNewLocation(Location location)
+    {
+        currentX = location.getLongitude();
+        currentY = location.getLatitude();
+    }
 
+    private double measure(double lat1,double lon1,double lat2,double lon2){
+        double R = 6378.137; // Radius of earth in KM
+        double dLat = (lat2 - lat1) * Math.PI / 180;
+        double dLon = (lon2 - lon1) * Math.PI / 180;
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                        Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = R * c;
+        return d * 1000; // meters
+    }
 
 
     private void showLoadingDialog(){
@@ -135,16 +178,21 @@ public class CurrentMissionFragment extends Fragment
 
     private boolean checkLocation()
     {
-        return true;
+        double res = measure(currentY,currentX,currentMissionX,currentmissionY);
+        if(res < 100)
+            return true;
+        else
+            return false;
     }
 
     private void accomplishCurrentMission()
     {
         if(!checkLocation()) {
             DialogUtils.RaiseDialogShowError(getActivity(), "Error", "You must go to destination!");
+            return;
         }
         Call<ResponseBody> call = service.AccomplishCurrentMission();
-
+        showLoadingDialog();
         call.enqueue(new CustomCallback<ResponseBody>(getActivity())
         {
             @Override
@@ -162,6 +210,9 @@ public class CurrentMissionFragment extends Fragment
                         showBlank();
                     } else
                         DialogUtils.RaiseDialogShowError(getActivity(), "Error", "Error ");
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
                 }
             }
 
