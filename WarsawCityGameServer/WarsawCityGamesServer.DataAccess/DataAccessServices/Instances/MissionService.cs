@@ -57,7 +57,7 @@ namespace WarsawCityGamesServer.DataAccess.DataAccessServices.Instances
                     MissionId = mission.Id,
                     UserName = player.User.UserName,
                     ExpReward = mission.ExpReward,
-                    Image = Convert.ToBase64String(mission.Place.Image),
+                    Image = mission.Place.Image!=null ? Convert.ToBase64String(mission.Place.Image) : null,
                     MinimalLevelName = player.Level.Name,
                     MinimalLevelNumber = player.Level.Id,
                     MissionDescription = mission.Description,

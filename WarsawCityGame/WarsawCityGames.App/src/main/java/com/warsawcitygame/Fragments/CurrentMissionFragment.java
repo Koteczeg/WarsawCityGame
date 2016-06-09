@@ -111,10 +111,10 @@ public class CurrentMissionFragment extends Fragment
         });
 
 
-        LocationManager lm= (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) this);
+        //LocationManager lm= (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (android.location.LocationListener) this);
 
-        checkForCurrentMission();
+        //checkForCurrentMission();
         return rootView;
     }
 
