@@ -14,11 +14,13 @@ namespace WarsawCityGamesServer.Services.Controllers
     {
         private readonly IPlayerService service;
         private readonly IMapper mapper;
+        private readonly IAchievementsService _achievementsService;
 
-        public PlayersController(IMapper mapper, IPlayerService service)
+        public PlayersController(IMapper mapper, IPlayerService service, IAchievementsService achievementsService)
         {
             this.mapper = mapper;
             this.service = service;
+            _achievementsService = achievementsService;
         }
 
         [AllowAnonymous]
@@ -36,6 +38,7 @@ namespace WarsawCityGamesServer.Services.Controllers
             var player = mapper.Map<Player>(newPlayer);
 
             var result = await service.AddPlayer(player, newPlayer.UserName, newPlayer.Password, newPlayer.Email);
+            _achievementsService.AssignAchievementToUser(newPlayer.UserName, "AccountCreated");
             return !result.Succeeded ? GetErrorResult(result) : Ok();
         }
 
