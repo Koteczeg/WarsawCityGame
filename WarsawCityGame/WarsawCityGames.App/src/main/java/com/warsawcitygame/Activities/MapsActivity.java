@@ -69,10 +69,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double missionY = Double.longBitsToDouble(preferences.getLong("currentMissionY", Double.doubleToLongBits(21.007087)));
 
         final LatLng center = new LatLng(y,x);
-        mMap.addMarker(new MarkerOptions().position(center).title("HERE YOU ARE").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.addMarker(new MarkerOptions().position(center).title(getString(R.string.hereYouAreText)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
         //final LatLng dsRiviera = new LatLng(52.237165, 21.041384);
         final LatLng dsRiviera = new LatLng(missionX,missionY);
-        mMap.addMarker(new MarkerOptions().position(dsRiviera).title("DESTINATION").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.addMarker(new MarkerOptions().position(dsRiviera).title(getString(R.string.destinationText)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable()
         {

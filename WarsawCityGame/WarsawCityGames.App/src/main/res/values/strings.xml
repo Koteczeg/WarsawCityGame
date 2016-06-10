@@ -96,4 +96,6 @@
     <string name="showOnMapText">SHOW ON MAP</string>
     <string name="detailsText">DETAILS</string>
     <string name="acceptMissionText">ACCEPT MISSION</string>
+    <string name="hereYouAreText">HERE YOU ARE</string>
+    <string name="destinationText">DESTINATION</string>
 </resources>

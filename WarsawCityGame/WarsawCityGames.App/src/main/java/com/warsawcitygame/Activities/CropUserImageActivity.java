@@ -86,9 +86,6 @@ public class CropUserImageActivity extends AppCompatActivity
         mCropImageView.setCropShape(CropImageView.CropShape.OVAL);
     }
 
-    /**
-     * On load image button click, start pick image chooser activity.
-     */
     @OnClick(R.id.chooseImageButton)
     public void onLoadImageClick(View view)
     {
@@ -113,15 +110,11 @@ public class CropUserImageActivity extends AppCompatActivity
             @Override
             public void onFailure(Throwable t) {
                 dialog.dismiss();
-                //DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
                 super.onFailure(t);
             }
         });
     }
 
-    /**
-     * Crop the image and set it back to the  cropping view.
-     */
     @OnClick(R.id.cropImageButton)
     public void onCropImageClick(View view)
     {
@@ -148,7 +141,6 @@ public class CropUserImageActivity extends AppCompatActivity
                 public void onFailure(Throwable t)
                 {
                     dialog.dismiss();
-                    //DialogUtils.RaiseDialogShowError(getApplicationContext(), t.getMessage(), t.toString());
                     super.onFailure(t);
                 }
             });
