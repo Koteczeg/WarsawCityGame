@@ -95,18 +95,20 @@ public class SplashActivity extends Activity
 
     private void setAnimation()
     {
+        final int dur = 1200;
+        final int dur2 = 500;
         ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(findViewById(R.id.welcome_text), "scaleX", 5.0F, 1.0F);
         scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        scaleXAnimation.setDuration(1200);
+        scaleXAnimation.setDuration(dur);
         ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(findViewById(R.id.welcome_text), "scaleY", 5.0F, 1.0F);
         scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        scaleYAnimation.setDuration(1200);
+        scaleYAnimation.setDuration(dur);
         ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(findViewById(R.id.welcome_text), "alpha", 0.0F, 1.0F);
         alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        alphaAnimation.setDuration(1200);
+        alphaAnimation.setDuration(dur);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
-        animatorSet.setStartDelay(500);
+        animatorSet.setStartDelay(dur2);
         animatorSet.start();
         findViewById(R.id.imagelogo).setAlpha(1.0F);
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_top_to_center);

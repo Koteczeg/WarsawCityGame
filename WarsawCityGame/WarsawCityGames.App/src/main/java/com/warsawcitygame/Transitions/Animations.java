@@ -10,8 +10,9 @@ public class Animations
 {
     public static void fadeOutAnimationNewFragment(final FrameLayout fl)
     {
+        final int dur = 800;
         Animation fadeOut = new AlphaAnimation(0f, 1f);
-        fadeOut.setDuration(800);
+        fadeOut.setDuration(dur);
         fadeOut.setAnimationListener(new Animation.AnimationListener()
         {
             @Override

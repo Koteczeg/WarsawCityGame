@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +14,6 @@ import com.warsawcitygames.models.MissionHistoryModel;
 
 import java.util.List;
 
-/**
- * Created by bakala12 on 08.06.2016.
- */
 public class MissionHistoryAdapter extends RecyclerView.Adapter<MissionHistoryAdapter.PersonViewHolder> {
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -51,8 +47,7 @@ public class MissionHistoryAdapter extends RecyclerView.Adapter<MissionHistoryAd
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.mission_history_ro_view, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
-        return pvh;
+        return new PersonViewHolder(v);
     }
 
     @Override
