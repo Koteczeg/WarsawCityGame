@@ -117,6 +117,7 @@ public class CurrentMissionFragment extends Fragment
             public void onClick(View v) {
 
                 SharedPreferences.Editor editor = preferences.edit();
+                if(!checkLocations()) return;
                 editor.putLong("X",Double.doubleToRawLongBits(currentX));
                 editor.putLong("Y",Double.doubleToRawLongBits(currentY));
                 editor.putLong("currentMissionX",Double.doubleToRawLongBits(currentMissionX));
@@ -151,6 +152,16 @@ public class CurrentMissionFragment extends Fragment
 
         checkForCurrentMission();
         return rootView;
+    }
+
+    boolean checkLocations()
+    {
+        if(currentX == 0 || currentY == 0 || currentMissionX == 0 || currentMissionY == 0)
+        {
+            DialogUtils.RaiseDialogShowError(getActivity(), "Warning", "There is a trouble with checking Your location!");
+            return false;
+        }
+        return true;
     }
 
     void makeUseOfNewLocation(Location location)
