@@ -112,9 +112,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AchievementsTests.cs" />
+    <Compile Include="FriendshipsTests.cs" />
+    <Compile Include="MissionsTests.cs" />
     <Compile Include="MockDbSetHelper.cs" />
     <Compile Include="MockHelper.cs" />
+    <Compile Include="PlayersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankingTests.cs" />
     <Compile Include="UserProfileTests.cs" />
   </ItemGroup>
   <ItemGroup>
